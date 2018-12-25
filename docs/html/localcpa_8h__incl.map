@@ -1,0 +1,8 @@
+<map id="plugins/cpaengine/localcpa/localcpa.h" name="plugins/cpaengine/localcpa/localcpa.h">
+<area shape="rect" id="node4" href="$cpaengine_8h.html" title="CPA computation plugin interface for use e.g. in stan. " alt="" coords="239,95,331,121"/>
+<area shape="rect" id="node11" href="$exceptions_8hpp.html" title="This header file contains exceptions. " alt="" coords="497,319,607,345"/>
+<area shape="rect" id="node15" href="$ompcpa_8hpp.html" title="Implementation of CPA statistical algorithms as function templates for various SICAK plugins..." alt="" coords="356,95,449,121"/>
+<area shape="rect" id="node6" href="$types__power_8hpp.html" title="This header file contains class templates of power traces and power consumption containers. " alt="" coords="229,169,349,196"/>
+<area shape="rect" id="node14" href="$types__stat_8hpp.html" title="This header file contains class templates of statistical computational contexts. " alt="" coords="97,169,205,196"/>
+<area shape="rect" id="node7" href="$types__basic_8hpp.html" title="This header file contains class templates of basic data containers. " alt="" coords="231,244,348,271"/>
+</map>

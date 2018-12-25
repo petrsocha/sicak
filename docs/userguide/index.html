@@ -1,0 +1,1462 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>SICAK User Guide, ver. 1.0</title>
+  <meta name="author" content="Petr Socha">
+  <meta name="description" content="SICAK 1.0 User Guide, ver. 1.0">
+  
+  <style>
+    body {
+        font-family: Verdana, Arial, sans;
+        font-size: 100%;
+        background-color: #eee;
+    }
+    main {
+        max-width: 950px;
+        margin: 50px auto;
+        background-color: #fff;
+        padding: 40px;
+    }
+    h1:first-child {
+        margin-top: 0;
+    }
+    h1, h2, h3 {
+        color: #007bb5;
+    }
+    h2 {
+        margin-top: 5rem;
+    }
+    li {
+        margin-bottom: 0.4rem;
+        margin-top: 0.4rem;
+    }
+    .toplink {
+        display: block;
+        float: right;
+        font-size: 0.8rem;
+    }
+    a {
+        color: #3b5997;
+    }
+    a:hover {
+        color: #ff0085;
+    }
+    code {
+        display: block;
+        border: 1px solid #ccc;
+        background: #eee;
+        padding: 1rem;
+        margin: 1rem;
+        font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
+    }
+    code:hover {
+        border: 1px solid #ff0085;
+    }
+    img {
+        max-width: 100%;
+    }
+  </style>
+</head>
+
+    <!-- SUP, SVINE -->
+
+<body id="top">
+
+    <main>
+        <h1>SICAK: SIde-Channel Analysis toolKit 1.0</h1>
+        <h1>User's Guide, ver. 1.0</h1>
+        
+        <h2>Contents</h2>
+            <ol>
+                <li><a href="#intro">Introduction</a></li>
+                <li><a href="#meas">meas</a> (<a href="#measusage">Usage</a>, <a href="#measosc">Oscilloscope configuration</a>, <a href="#measdev">Character device configuration</a>, <a href="#measexamples">Examples</a>) </li>            
+                <li><a href="#prep">prep</a> (<a href="#prepusage">Usage</a>, <a href="#prepexamples">Examples</a>) </li>
+                <li><a href="#stan">stan</a> (<a href="#stanusage">Usage</a>, <a href="#stanexamples">Examples</a>) </li>
+                <li><a href="#correv">correv</a> (<a href="#correvusage">Usage</a>, <a href="#correvexamples">Examples</a>) </li>
+                <li><a href="#visu">visu</a> (<a href="#visuusage">Usage</a>, <a href="#visuexamples">Examples</a>) </li>
+                <li><a href="#chardevice">chardevice (meas) plug-ins</a> (<a href="#serialport">serialport</a>)</li>
+                <li><a href="#oscilloscope">oscilloscope (meas) plug-ins</a> (<a href="#keysight3000">keysight3000</a>, <a href="#ps6000">ps6000</a>)</li>
+                <li><a href="#measurement">measurement (meas) plug-ins</a> (<a href="#random128co">random128co</a>, <a href="#ttest128co">ttest128co</a>)</li>
+                <li><a href="#blockprocess">blockprocess (prep) plug-ins</a> (<a href="#predictaes128back">predictaes128back</a>, <a href="#predictaes128front">predictaes128front</a>)</li>
+                <li><a href="#tracesprocess">tracesprocess (prep) plug-ins</a></li>
+                <li><a href="#cpaengine">cpaengine (stan) plug-ins</a> (<a href="#cpa">cpa</a>, <a href="#oclcpa">oclcpa</a>)</li>
+                <li><a href="#ttestengine">ttestengine (stan) plug-ins</a> (<a href="#ttest">ttest</a>)</li>
+                <li><a href="#cpacorreval">cpacorreval (correv) plug-ins</a> (<a href="#maxabscoef">maxabscoef</a>, <a href="#maxcoef">maxcoef</a>, <a href="#maxedge">maxedge</a>, <a href="#mincoef">mincoef</a>)</li>
+                <li><a href="#cpakeyeval">cpakeyeval (correv) plug-ins</a> (<a href="#aes128back">aes128back</a>, <a href="#plainchar">plainchar</a>)</li>
+                <li><a href="#tips">Tips</a></li>
+                <li><a href="#license">License</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ol>
+        
+        <a href="#top" class="toplink">back to top &uarr;</a>
+        <h2 id="intro">1. Introduction</h2>
+        
+        <p>
+            Sicak is a side-channel analysis toolkit, consisting of following <strong>text-based utilities</strong>:
+        </p>
+            <ul>
+                <li><strong><a href="#meas">meas</a>: Measurement utility</strong>, useful e.g. for controlling a cryptographic device and oscilloscope</li>
+                <li><strong><a href="#prep">prep</a>: Pre-processing utility</strong>, useful e.g. for pre-processing power traces or e.g. for creating power predictions based on plain-/cipher-text</li>
+                <li><strong><a href="#stan">stan</a>: Statistical utility</strong>, useful e.g. for correlation-based (CPA) attacks or t-tests</li>
+                <li><strong><a href="#correv">correv</a>: Correlation Evaluation utility</strong>, useful for algorithmic evaluation of the CPA attack</li>
+                <li><strong><a href="#visu">visu</a>: Visualisation utility</strong>, useful e.g. for plotting power/correlation traces or t-values
+            </ul>
+        <p>
+            These utilities are moreless interfaces for different types of <strong>plug-in modules</strong>:
+        </p>
+            <ul>
+                <li><strong>meas</strong>
+                    <ul>
+                        <li><strong><a href="#chardevice">chardevice</a></strong>: Character device plug-in, useful e.g. for communication over serial port</li>
+                        <li><strong><a href="#oscilloscope">oscilloscope</a></strong> plug-in, useful for setting-up oscilloscope channels, trigger, timing, for running the oscilloscope and downloading the sampled power traces</li>
+                        <li><strong><a href="#measurement">measurement</a></strong> scenario plug-in, which receives instances of <i>chardevice</i> and <i>oscilloscope</i> modules and performs the measurement itself</li>
+                    </ul>
+                </li>
+                <li><strong>prep</strong>
+                    <ul>
+                        <li><strong><a href="#blockprocess">blockprocess</a></strong>: Block data processing plug-in, useful e.g. for creating the power predictions when performing the CPA attack</li>
+                        <li><strong><a href="#tracesprocess">tracesprocess</a></strong>: Power traces processing plug-in, useful e.g. for pre-processing the power traces when performing higher-order statistics</li>
+                    </ul>
+                </li>
+                <li><strong>stan</strong>
+                    <ul>
+                        <li><strong><a href="#cpaengine">cpaengine</a></strong>: CPA computation engine plug-in (plug-in API supports arbitrary order analysis)</li>
+                        <li><strong><a href="#ttestengine">ttestengine</a></strong>: t-test computation engine plug-in</li>
+                    </ul>
+                </li>
+                <li><strong>correv</strong>
+                    <ul>
+                        <li><strong><a href="#cpacorreval">cpacorreval</a></strong>: CPA matrix evaluation plug-in, e.g. for searching maximum coefficients in a set of matrices</li>
+                        <li><strong><a href="#cpakeyeval">cpakeyeval</a></strong>: CPA keyguess evaluation plug-in, which takes the result of <i>cpacorreval</i>, i.e. array of key candidates (e.g. based on maximums), and turns it into a cipher key; e.g. reversing last round key to the cipher key</li>
+                    </ul>
+            </ul>
+            
+            <p>Following sections document usage of the utilities and currently available plug-in modules.</p>
+            
+            
+            
+            
+            <a href="#top" class="toplink">back to top &uarr;</a>
+            <h2 id="meas">2. meas</h2>
+            
+            <p>
+                <strong>meas</strong> is a measurement utility. It runs a measurement scenario module, which may produce different output files.
+            </p>
+            
+            <p>
+                The Measurement scenario gets an Oscilloscope and Character Device instances, if they are set. Most of the measurement scenarios is expected to require both modules to be set. Both oscilloscope and character device need to be initialized (appropriate device id must be set), and may be configured (if configuration file is set).
+            </p>
+            
+            <a href="#top" class="toplink">back to top &uarr;</a>
+            <h3 id="measusage">Usage</h3>
+            
+            <p>
+                Brief usage is also printed when the program is run with <i>-h</i> option.
+            </p>
+            
+            <code>./meas [options] config</code>
+            
+            <h3>Options</h3>
+            
+                <h4>-I, --id {string}</h4>
+                
+                    <p>The ID string will be used in output files' filenames. Default value is current datetime.</p>
+                
+                <h4>-Q, --query</h4>
+                
+                    <p>Query available traces and block data preprocessing plug-in modules (-M, -O, -C).</p>
+                
+                <h4>-M, --measurement-module {string}</h4>
+                
+                    <p>ID of measurement scenario plug-in module to use.</p>
+                
+                <h4>-O, --oscilloscope-module {string}</h4>
+                
+                    <p>ID of oscilloscope plug-in module to use.</p>
+                
+                <h4>-R, --oscilloscope-device {string}</h4>     
+                
+                    <p>ID of oscilloscope device to use.</p>
+                
+                <h4>-S, --oscilloscope-config {filepath}</h4>  
+                
+                    <p>Oscilloscope JSON configuration file.</p>
+                    
+                    <p>See below for config file format.</p>
+                
+                <h4>-C, --chardevice-module {string}</h4>      
+                
+                    <p>ID of character device plug-in module to use.</p>
+                
+                <h4>-D, --chardevice-device {string}</h4>     
+                
+                    <p>ID of character device to use.</p>
+                
+                <h4>-E, --chardevice-config {filepath}</h4>    
+                
+                    <p>Character device JSON configuration file.</p>
+                    
+                    <p>See below for config file format.</p>
+                
+                <h4>-n, --measurements {positive integer}</h4>
+                
+                    <p>Number of measurements to make.</p>
+                
+                <h4>--param {param}</h4>                      
+                
+                    <p>Optional measurement plug-in module parameters. Module specific option.</p>
+                
+                <h4>-h, --help</h4>                             
+                
+                    <p>Displays help.</p>
+                
+                <h4>-v, --version</h4>                          
+                
+                    <p>Displays version information.</p>
+            
+            <h3>Arguments</h3>
+            
+                <h4>config</h4>
+                
+                    <p>JSON configuration file(s) with Options.</p>
+                    
+                    <p>The JSON configuration file may contain <strong>key:string</strong> pairs, where <strong>key</strong> is a long option name and <strong>string</strong> is the value.</p>
+                    
+                    <p>For example: { "id":"myMeasurement" }</p>
+            
+            <a href="#top" class="toplink">back to top &uarr;</a>
+            <h3 id="measosc">Oscilloscope configuration file</h3>
+            
+            <p>The utility expects a JSON config file.</p>
+            
+            <h4>Format</h4>
+            
+            <p>JSON document may contain following objects, with following key:vals. </p>
+            
+            <p>When an object is defined (e.g. "channel1"), all it's settings must be set.</p>
+            
+            <ul>
+                <li><strong>channelN</strong>: settings for channel N (N>=1)
+                    <ul>
+                        <li><strong>enabled</strong>: {true|false}
+                        </li>
+                        <li><strong>coupling</strong>: {"AC"|"DC"}
+                        </li>
+                        <li><strong>impedance</strong>: {"50"|"1M"}
+                        </li>
+                        <li><strong>rangemV</strong>: {integer} (e.g. 1000 sets the oscilloscopes range to -1V..+1V)
+                        </li>
+                        <li><strong>offsetmV</strong>: {integer} (i.e. voltage that is added to the channel before sampling}
+                        </li>
+                        <li><strong>bwLimit</strong>: {"FULL"|"25MHz"|"20MHz"}
+                        </li>
+                    </ul>
+                </li>
+                <li><strong>trigger</strong>: trigger settings
+                    <ul>
+                        <li><strong>enabled</strong>: {true|false}
+                        </li>
+                        <li><strong>channel</strong>: {positive integer}
+                        </li>
+                        <li><strong>level</strong>: {float} (e.g. with range is -1V..1V and no offset: level 0 is -1V, level 0.5 is 0V, level 0.75 is 0.5V)
+                        </li>
+                        <li><strong>slope</strong>: {"rising"|"falling"|"either"}
+                        </li>                       
+                    </ul>
+                </li>
+                <li><strong>timing</strong>: timebase and sampling settings
+                    <ul>
+                        <li><strong>preTriggerRange</strong>: {float} (time range in seconds)
+                        </li>
+                        <li><strong>postTriggerRange</strong>: {float} (time range in seconds)
+                        </li>
+                        <li><strong>samples</strong>: {positive integer} (this is a soft value: oscilloscope driver has final word)
+                        </li>
+                        <li><strong>captures</strong>: {positive integer} (number of captures to catch per one oscilloscope run; some oscilloscopes only support one capture per run)
+                        </li>     
+                    </ul>
+                </li>
+            </ul>
+            
+            <h4>Example of a JSON config file</h4>
+            
+            <code>
+                {<br>
+                <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;"channel1": {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"enabled": true,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"coupling": "DC",<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"impedance": "50",<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"rangemV": 50,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"offsetmV": 0,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"bwLimit": "25MHz"<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;},<br>
+                <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;"channel2": {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"enabled": false,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"coupling": "DC",<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"impedance": "1M",<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"rangemV": 50,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"offsetmV": 0,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"bwLimit": "FULL"<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;},<br>
+                <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;"channel3": {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"enabled": true,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"coupling": "DC",<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"impedance": "1M",<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"rangemV": 1000,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"offsetmV": 0,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"bwLimit": "FULL"<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;},<br>
+                <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;"channel4": {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"enabled": false,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"coupling": "DC",<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"impedance": "1M",<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"rangemV": 50,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"offsetmV": 0,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"bwLimit": "FULL"<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;},<br>
+                <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;"trigger": {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"enabled":true,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"channel": 3,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"level": 0.7,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"slope": "rising"<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;},<br>
+                <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;"timing": {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"preTriggerRange": 0.0,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"postTriggerRange": 3.2e-6,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"samples": 2000,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"captures": 1<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                <br>
+                }<br>
+            </code>
+            
+            <a href="#top" class="toplink">back to top &uarr;</a>
+            <h3 id="measdev">Character device configuration file</h3>
+            
+            <p>The utility expects a JSON config file.</p>
+            
+            <p>These are the values that may be set. Not all the Character Device modules have to consider them. Read module documentation to find out more.</p>
+            
+            <h4>Format</h4>
+            
+            <p>JSON document may contain following key:vals.</p>
+            
+            <ul>
+                <li><strong>baudrate</strong>: {positive integer} (the baudrate value must be supported by the selected module)</li>
+                <li><strong>parity</strong>: {0|1|2} (0=none, 1=odd, 2=even)</li>
+                <li><strong>stopbits</strong>: {1|2} </li>
+                <li><strong>timeoutms</strong>: {positive integer} (timeout of the device in ms, default is 5000)
+            </ul>
+            
+            <h4>Example of a JSON config file</h4>
+            
+            <code>
+                {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;"baudrate": 115200,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;"parity": 0,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;"stopbits": 1<br>
+                }<br>
+            </code>
+            
+            <a href="#top" class="toplink">back to top &uarr;</a>
+            <h3 id="measexamples">Examples</h3>
+            
+                <h4>Query available plug-ins</h4>
+                
+                <code>
+                    $ ./meas -Q<br>
+                    <br>
+                    Found following measurement scenario plug-ins:<br>
+                    <br>
+                    * Plug-in ID: 'random128co', name: 'AES-128 random (command oriented)'<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;Description: 'Sends 0x01 followed by cipher key, then N times {0x02 followed by 128 bits of random data}, receives back every cipher text, and captures the power consumption.'<br>
+                    <br>
+                    * Plug-in ID: 'ttest128co', name: 'AES-128 t-test (command oriented)'<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;Description: 'Sends 0x01 followed by cipher key, then N times {0x02 followed by 128 bits of either random or constant data}, receives back every cipher text, and captures the power consumption'<br>
+                    <br>
+                    <br>
+                    Found following oscilloscope plug-ins:<br>
+                    <br>
+                    * Plug-in ID: 'keysight3000', name: 'Keysight 3000 series oscilloscope (formerly Agilent)'<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;* Device ID: 'FILEPATH', where FILEPATH is path to a usbtmc device, e.g. "/dev/usbtmc0"<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;  Make sure you have permissions to access the file, and the usbtmc module loaded.<br>
+                    <br>
+                    * Plug-in ID: 'ps6000', name: 'PicoScope 6000 series oscilloscope'<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;* Device ID: 'SERIALNO', where SERIALNO is a serial number of the oscilloscope. Leave empty to let driver automatically select first device found.<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;  On Linux, make sure you have permissions to access the device (/dev/usb/...).<br>
+                    <br>
+                    <br>
+                    Found following character device plug-ins:<br>
+                    <br>
+                    * Plug-in ID: 'serialport', name: 'Win32/POSIX Serial Port'<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;* Device ID: 'FILEPATH', where FILEPATH is path to a terminal device, e.g. "/dev/ttyUSB0"<br>
+                </code>
+                
+                <h4>Launch measurement</h4>
+                
+                This command launches the ttest128co measurement scenario using ps6000 oscilloscope and serialport chardevice modules.
+            
+                <code>
+                    $ ./meas -I id -M ttest128co -O keysight3000 -R /dev/usbtmc0 -S ./conf.json -C serialport -D /dev/ttyUSB0 -E ./conf.json -n 1000<br>
+                    SICAK MEASurements 1.0<br>
+                    * 20.12.2018 18:25:01 Starting...<br>
+                    * Measurement scenario module loaded: 'AES-128 t-test (command oriented)'<br>
+                    * Oscilloscope module loaded: 'Keysight 3000 series oscilloscope (formerly Agilent)'<br>
+                    * Oscilloscope successfully opened: '/dev/usbtmc0'<br>
+                    * Oscilloscope configuration file found: './conf.json'<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;* Requesting oscilloscope channel settings:<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Channel: '1'<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Enabled: 'true'<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Coupling: 'DC'<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Impedance: '50'<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Range: -+'50mV'<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Offset: '0mV'<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Bandwidth Limit: '25MHz'<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;* Real oscilloscope channel settings (after setup):<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Channel: '1'<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Enabled: 'true'<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Coupling: 'DC'<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Impedance: '50'<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Range: -+'50mV'<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Offset: '0mV'<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Bandwidth Limit: '25MHz'<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;* Requesting oscilloscope channel settings:<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Channel: '3'<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Enabled: 'true'<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Coupling: 'DC'<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Impedance: '1M'<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Range: -+'1000mV'<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Offset: '0mV'<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Bandwidth Limit: 'FULL'<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;* Real oscilloscope channel settings (after setup):<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Channel: '3'<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Enabled: 'true'<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Coupling: 'DC'<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Impedance: '1M'<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Range: -+'1000mV'<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Offset: '0mV'<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Bandwidth Limit: 'FULL'<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;* Requesting oscilloscope trigger settings:<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Enabled: 'true'<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Source channel: '3'<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Trigger level: '0.7' for channel range 0..1<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Edge slope: 'either'<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;* Real oscilloscope trigger settings (after setup):<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Enabled: 'true'<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Source channel: '3'<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Trigger level: '0.7' for channel range 0..1<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Edge slope: 'either'<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;* Requesting oscilloscope timing settings:<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Pre-trigger time range: '0s'<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Post-trigger time range: '3.2e-06s'<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Samples: '2000'<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Captures per run: '100'<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;* Real oscilloscope timing settings (after setup):<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Pre-trigger time range: '0s'<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Post-trigger time range: '3.2e-06s'<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Samples: '30000'<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Captures per run: '1'<br>
+                    * Character device module loaded: 'Win32/POSIX Serial Port'<br>
+                    * Character device configuration file found: ./conf.json<br>
+                    * Character device successfully opened: '/dev/ttyUSB0'<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;* Using following settings:<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Baudrate: '115200'<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Parity: 'no parity'<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Stop bits: 'one'<br>
+                    * Character device timeout set: '5000ms'<br>
+                    * Launching 1000 measurements...<br>
+                    0% done... remaining time not yet available<br>
+                </code>
+                
+                <p>conf.json: (input)</p>
+                
+                <code>
+                    {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;"channel1": {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"enabled": true,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"coupling": "DC",<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"impedance": "50",<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"rangemV": 50,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"offsetmV": 0,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"bwLimit": "25MHz"<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},<br>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;"channel3": {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"enabled": true,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"coupling": "DC",<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"impedance": "1M",<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"rangemV": 1000,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"offsetmV": 0,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"bwLimit": "FULL"<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},<br>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;"trigger": {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"enabled":true,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"channel": 3,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"level": 0.7,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"slope": "either"<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},<br>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;"timing": {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"preTriggerRange": 0.0,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"postTriggerRange": 3.2e-6,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"samples": 2000,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"captures": 100<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},<br>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;"baudrate": 115200,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;"parity": 0,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;"stopbits": 1<br>
+                    }<br>
+                </code>
+                
+                <p>id.json: (output)</p>
+                
+                <code>
+                    {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;"blocks-count": "643",<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;"blocks-length": "16",<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;"constant-traces": "constant-traces-id.bin",<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;"constant-traces-count": "357",<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;"random-traces": "random-traces-id.bin",<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;"random-traces-count": "643",<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;"samples-per-trace": "2000"<br>
+                    }<br>
+                </code>
+            
+            <a href="#top" class="toplink">back to top &uarr;</a>
+            <h2 id="prep">3. prep</h2>
+            
+            <p>
+                <strong>prep</strong> is a data preprocessing utility. 
+            </p><p>    
+                It loads either blocks of (char) data and processes them using Block Preprocessing Module, or it loads power traces containing (int16_t) samples and processes them using Traces Preprocessing Module.
+            </p>
+            
+            <a href="#top" class="toplink">back to top &uarr;</a>
+            <h3 id="prepusage">Usage</h3>
+            
+            <p>
+                Brief usage is also printed when the program is run with <i>-h</i> option.
+            </p>
+            
+            <code>./prep [options] config</code>
+            
+            <h3>Options</h3>
+            
+                <h4>-I, --id {string}</h4>
+                
+                    <p>The ID string will be used in output files' filenames. Default value is current datetime.</p>
+                
+                <h4>-Q, --query</h4>
+                
+                    <p>Query available traces and block data preprocessing plug-in modules (-T, -B).</p>
+                    
+                <h4>-T, --traces-preprocess-module {string}</h4>    
+                    
+                    <p>ID of traces preprocessing plug-in module to use. Select either -T or -B.</p>
+                    
+                <h4>-B, --block-preprocess-module {string}</h4>     
+                    
+                    <p>ID of block data preprocessing plug-in module to use. Select either -T or -B.</p>
+                    
+                <h4>-t, --traces {filepath}</h4>                
+                    
+                    <p>File containing -n traces, each of which containing -s samples (int16).</p>
+                    
+                <h4>-n, --traces-count {positive integer}</h4>     
+                    
+                    <p>Number of power traces in -t file.</p>
+                    
+                <h4>-s, --samples-per-trace {positive integer}</h4>
+                    
+                    <p>Number of samples per trace.</p>
+                    
+                <h4>-b, --blocks {filepath}</h4>                 
+                    
+                    <p>File containing -m blocks of data, each of which -k bytes long.</p>
+                    
+                <h4>-m, --blocks-count {positive integer}</h4>     
+                    
+                    <p>Number of blocks of data in -b file.</p>
+                    
+                <h4>-k, --blocks-length {positive integer}</h4>    
+                    
+                    <p>Length of data block in -b file, in bytes.</p>
+                    
+                <h4>--param {param}</h4>                            
+                    
+                    <p>Optional plug-in module parameters. Module specific option.</p>
+                    
+                <h4>-h, --help</h4>                           
+                    
+                    <p>Displays help.</p>
+                    
+                <h4>-v, --version</h4>                               
+                    
+                    <p>Displays version information.</p>
+
+            <h3>Arguments</h3>
+            
+                <h4>config</h4>
+                
+                    <p>JSON configuration file(s) with Options.</p>
+                    
+                    <p>The JSON configuration file may contain <strong>key:string</strong> pairs, where <strong>key</strong> is a long option name and <strong>string</strong> is the value.</p>
+                    
+                    <p>For example: { "blocks-length":"16" }</p>            
+            
+            <a href="#top" class="toplink">back to top &uarr;</a>
+            <h3 id="prepexamples">Examples</h3>
+            
+            <h4>Query available plug-ins</h4>
+            
+            <code>
+                $ ./prep -Q<br>
+                <br>
+                Found following traces preprocessing plug-ins:<br>
+                <br>
+                * No traces preprocessing plug-in found!<br>
+                <br>
+                Found following block data preprocessing plug-ins:<br>
+                <br>
+                * Plug-in ID: 'predictaes128back', name: 'Create AES-128 byte power predictions using last round working register Hamming distance'<br>
+                * Plug-in ID: 'predictaes128front', name: 'Create AES-128 byte power predictions using first round S-Box Hamming weight'<br>
+            </code>
+            
+            <h4>Create power predictions for CPA attack on AES-128 first round S-box</h4>
+            
+            <code>
+                $ ./prep -B predictaes128front -b ciphertext-id.bin -m 100000 -k 16 -I id<br>
+                SICAK PREProcessing 1.0<br>
+                Preprocessing block data...<br>
+                100% done... 3s elapsed.<br>                                                          
+                Created 16 power prediction sets, each containing 256 power predictions for each of 100000 data blocks,<br>
+                and saved to 'aes128front-id.16prd'.<br>
+            </code>
+            
+            <p>id.json: (output)</p>
+            
+            <code>
+                {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;"prediction-candidates-count": "256",<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;"prediction-sets-count": "16",<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;"predictions": "aes128front-id.16prd",<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;"random-traces-count": "100000"<br>
+                }
+            </code>
+            
+            <a href="#top" class="toplink">back to top &uarr;</a>
+            <h2 id="stan">4. stan</h2>
+            
+            <p>
+                <strong>stan</strong> is a statistical processing utility. 
+            </p>
+            <p>
+                The utility loads one of the two different types of plug-in modules (CPA, t-test) and runs one of the tasks:
+                <ul>
+                    <li><strong>CPA</strong>
+                        <ul>
+                            <li><strong>create</strong>: Creates a file with new contexts, based on power traces and power prediction sets.
+                            </li>
+                            <li><strong>merge</strong>: Merges two files with existing non-empty contexts.
+                            </li>
+                            <li><strong>finalize</strong>: Creates a file with correlation matrices, based on a context.
+                            </li>                            
+                        </ul>
+                    </li>
+                    <li><strong>t-test</strong>
+                        <ul>
+                            <li><strong>create</strong>: Creates a file with new contexts, based on random data power traces and constant data power traces.
+                            </li>
+                            <li><strong>merge</strong>: Merges two files with existing non-empty contexts.
+                            </li>
+                            <li><strong>finalize</strong>: Creates a file with t-values and degrees of freedom, based on a context.
+                            </li>                            
+                        </ul>
+                    </li>
+                </ul>
+            </p>
+            <p>    
+                It loads either CPA module or t-test module. Then it runs one of the functions (create, merge, finalize) on a specified computational device.
+            </p>
+            
+            <a href="#top" class="toplink">back to top &uarr;</a>
+            <h3 id="stanusage">Usage</h3>
+            
+            <p>
+                Brief usage is also printed when the program is run with <i>-h</i> option.
+            </p>
+            
+            <code>./stan [options] config</code>
+            
+            <h3>Options</h3>
+            
+                <h4>-I, --id {string}</h4>
+                
+                    <p>The ID string will be used in output files' filenames. Default value is current datetime.</p>
+                
+                <h4>-Q, --query</h4>
+
+                    <p>Query available CPA and t-test plug-in modules (-C, -T), platforms (-P) and devices (-D).</p>
+
+                <h4>-C, --cpa-module {string}</h4>
+
+                    <p>ID of a CPA plug-in module to launch. Select either -C or -T.</p>
+
+                <h4>-T, --ttest-module {string}</h4>
+
+                    <p>ID of a t-test plug-in module to launch. Select either -C or -T. </p>
+
+                <h4>-P, --platform {positive integer}</h4>
+
+                    <p>Platform from which to choose a device (-D). Default is 0.</p>
+
+                <h4>-D, --device {positive integer}</h4>
+
+                    <p>Device from a platform (-P) to run computation on. Default is 0.</p>
+
+                <h4>-F, --function {create|merge|finalize}</h4>
+
+                    <p>Select a function:</p>
+                    <ul><li>'create' a new context from traces/predictions</li>
+                    <li>'merge' existing contexts A,B </li>
+                    <li>'finalize' existing context A.</li></ul>
+
+                <h4>-r, --random-traces {filepath}</h4> 
+
+                    <p>File containing -n random data traces, each of which containing -s samples (int16).</p>
+
+                <h4>-n, --random-traces-count {positive integer}</h4>
+
+                    <p>Number of random data power traces in -r file. </p>
+
+                <h4>-c, --constant-traces {filepath}</h4>
+
+                    <p>File containing -m constant data traces, each of which containing -s samples (int16).</p>
+
+                <h4>-m, --constant-traces-count {positive integer}</h4>
+
+                    <p>Number of constant data power traces in -c file.</p>
+
+                <h4>-s, --samples-per-trace {positive integer}</h4>
+
+                    <p>Number of samples per trace.</p>
+
+                <h4>-p, --predictions {filepath}</h4>
+
+                    <p>File containing -q power prediction sets, each of which containing -k power predictions (uint8) for every random trace in -r file. </p>
+
+                <h4>-q, --prediction-sets-count, --contexts-count {positive integer}</h4>
+
+                    <p>Number of power prediction sets/number of contexts. E.g. attacking AES-128 key, this value would be 16.</p>
+
+                <h4>-k, --prediction-candidates-count {positive integer}</h4>
+
+                    <p>Number of power predictions for each power trace in -p file. E.g. attacking AES-128 key, this value would be 256.</p>
+
+                <h4>-a, --context-a {filepath}</h4>
+
+                    <p>Context file A, for use in Finalize or Merge functions.</p>
+
+                <h4>-b, --context-b {filepath}</h4>
+
+                    <p>Context file B, for use in Merge function.</p>
+
+                <h4>--param {param}</h4>
+
+                    <p>Optional plug-in module parameters. Module specific option.</p>
+
+                <h4>-h, --help</h4>
+
+                    <p>Displays help.</p>
+
+                <h4>-v, --version</h4> 
+
+                    <p>Displays version information.</p>
+                    
+            <h3>Arguments</h3>
+            
+                <h4>config</h4>
+                
+                    <p>JSON configuration file(s) with Options.</p>
+                    
+                    <p>The JSON configuration file may contain <strong>key:string</strong> pairs, where <strong>key</strong> is a long option name and <strong>string</strong> is the value.</p>
+                    
+                    <p>For example: { "random-traces-count":"10000" }</p>
+            
+            <h3>Output</h3>
+            
+            <p>stan produces following files:</p>
+            
+            <ul>
+                <li><strong>cpa create: </strong> cpa-ID.Qctx</li>
+                <li><strong>cpa merge: </strong> cpa-ID-merged.Qctx</li>
+                <li><strong>cpa finalize: </strong> cpa-ID.Qcor</li>
+                <li><strong>ttest create: </strong> ttest-ID.ctx</li>
+                <li><strong>ttest merge: </strong> ttest-ID-merged.ctx</li>
+                <li><strong>ttest finalize: </strong> ttest-ID.tvals</li>
+                <li>ID.json</li>
+                
+            </ul>
+            
+            <p>where ID is stan given parameter or default, and Q is number of power prediction sets/contexts created (when Q=1, it's omitted).</p>
+            
+            <p>.Qcor files contain Q correlation matrices, each SxK large, where Q is number of power prediction sets, S is number of samples per trace and K is number of key candidates.</p>
+            
+            <p>.tvals file contain Sx2 matrix, where S is number of samples per trace, where in the first row there are t-values, in the second row there are degrees of freedom.</p>
+            
+            <a href="#top" class="toplink">back to top &uarr;</a>
+            <h3 id="stanexamples">Examples</h3>
+            
+            <h4>Query available plug-ins</h4>
+            
+            <code>
+                $ ./stan -Q<br>
+                <br>
+                Found following CPA plug-ins, platforms and devices:<br>
+                <br>
+                * Plug-in ID: 'cpa', name: 'First Order Univariate CPA'<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;* Platform ID: '0', name: 'localcpu'<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Device ID: '0', name: 'localcpu'<br>
+                <br>
+                * Plug-in ID: 'oclcpa', name: 'OpenCL accelerated First Order Univariate CPA'<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;* Platform ID: '0', name: 'Intel(R) OpenCL' (OpenCL 1.2 LINUX)<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Device ID: '0', name: 'Intel(R) Core(TM) i5-3230M CPU @ 2.60GHz'<br>
+                <br>
+                <br>
+                Found following t-test plug-ins, platforms and devices:<br>
+                <br>
+                * Plug-in ID: 'ttest', name: 'First Order Non-Specific Univariate Welch's t-test'<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;* Platform ID: '0', name: 'localcpu'<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Device ID: '0', name: 'localcpu'<br>
+            </code>
+            
+            <h4>Create Univariate First-Order CPA context</h4>
+            
+            <code>
+            $ ./stan -I ug -C cpa -F create -r random-traces-id.bin -n 10000 -s 2000 -p aes128back-10k.16prd -q 16 -k 256<br>
+            SICAK STatistical ANalysis 1.0<br>
+            Creating new CPA contexts...<br>
+            100% done... 1m, 19s elapsed.<br>                                                         
+            Created 16 new CPA contexts using<br>
+            * 10000 power traces with 2000 samples per trace, from 'random-traces-id.bin',<br>
+            * 16 prediction sets containing 256 power predictions for each of these power traces, from 'aes128back-10k.16prd'<br>
+            and saved to 'cpa-ug.16ctx'.<br>
+            </code>
+            
+            <p>ug.json: (output)</p>
+            
+            <code>
+                {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;"context-a": "cpa-ug.16ctx",<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;"contexts-count": "16",<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;"prediction-sets-count": "16"<br>
+                }
+            </code>
+            
+            <h4>Create correlation matrices from Univariate First-Order CPA contexts</h4>
+            
+            <code>
+                $ ./stan -I ugc -C cpa -F finalize ug.json <br>
+                SICAK STatistical ANalysis 1.0<br>
+                Finalizing CPA context...<br>
+                100% done... 1s elapsed.<br>                                                         
+                Created 16 correlation matrices (2000x256) using<br>
+                * 16 contexts based on 10000 from 'cpa-ug.16ctx'<br>
+                and saved to 'cpa-ugc.16cor'.<br>
+            </code>
+            
+            <p>ugc.json: (output)</p>
+            
+            <code>
+                {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;"contexts-count": "16",<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;"correlations": "cpa-ugc.16cor",<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;"correlations-candidates-count": "256",<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;"correlations-sets-count": "16",<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;"prediction-candidates-count": "256",<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;"prediction-sets-count": "16",<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;"samples-per-trace": "2000"<br>
+                }
+            </code>
+            
+            <a href="#top" class="toplink">back to top &uarr;</a>
+            <h2 id="correv">5. correv</h2>
+            
+            <p><strong>correv</strong> is a correlation evaluation utility. It loads correlation matrices from a file and evaluates them using specified modules.</p>
+            
+            <a href="#top" class="toplink">back to top &uarr;</a>
+            <h3 id="correvusage">Usage</h3>
+            
+            <p>
+                Brief usage is also printed when the program is run with <i>-h</i> option.
+            </p>
+            
+            <code>./correv [options] config</code>
+            
+            <h3>Options</h3>
+            
+                <h4>-Q, --query </h4>
+
+                    <p>Query available CPA correlation matrix evaluation and keyguess evaluation plug-in modules (-E, -K).</p>
+
+                <h4>-E, --correlations-eval-module {string} </h4>
+
+                    <p>ID of a CPA correlation matrix evaluation plug-in module to use.</p>
+
+                <h4>-K, --keyguess-eval-module {string} </h4>
+
+                    <p>ID of a CPA keyguess evaluation plug-in module to use.</p>
+
+                <h4>-c, --correlations {filepath} </h4>
+
+                    <p>File containing -q correlation matrices, each of which -s wide and -k tall (double).</p>
+
+                <h4>-q, --prediction-sets-count, --contexts-count {positive integer}</h4>
+
+                    <p>Number of correlation matrices. E.g. attacking AES-128 key, this value would be 16.</p>
+
+                <h4>-k, --prediction-candidates-count {positive integer}</h4>
+
+                    <p>Number of key candidates, i.e. rows of correlation matrix. E.g. attacking AES-128 key, this value would be 256.</p>
+
+                <h4>-s, --samples-per-trace {positive integer}</h4>
+
+                    <p>Number of samples per trace, i.e. cols of correlation matrix.</p>
+
+                <h4>--param {param} </h4>
+
+                    <p>Optional plug-in module parameters. Module  specific option.</p>
+
+                <h4>-h, --help</h4>
+
+                    <p>Displays help.</p>
+
+                <h4>-v, --version </h4>
+
+                    <p>Displays version information.</p>
+                
+            <h3>Arguments</h3>
+            
+                <h4>config</h4>
+                
+                    <p>JSON configuration file(s) with Options.</p>
+                    
+                    <p>The JSON configuration file may contain <strong>key:string</strong> pairs, where <strong>key</strong> is a long option name and <strong>string</strong> is the value.</p>
+                    
+                    <p>For example: { "samples-per-trace":"2000" }</p>
+            
+            <a href="#top" class="toplink">back to top &uarr;</a>
+            <h3 id="correvexamples">Examples</h3>
+            
+            <h4>Query available plug-ins</h4>
+            
+            <code>
+                $ ./correv -Q<br>
+                <br>
+                Found following CPA correlation matrix evaluation plug-ins:<br>
+                <br>
+                * Plug-in ID: 'maxabscoef', name: 'Maximum absolute value correlation coefficient'<br>
+                * Plug-in ID: 'maxcoef', name: 'Maximum correlation coefficient'<br>
+                * Plug-in ID: 'maxedge', name: 'Maximum correlation trace derivative (param="d;sigma", e.g. param="23;8.0")'<br>
+                * Plug-in ID: 'mincoef', name: 'Minimum correlation coefficient'<br>
+                <br>
+                Found following CPA keyguess evaluation plug-ins:<br>
+                <br>
+                * Plug-in ID: 'aes128back', name: 'AES-128 last round CPA key evaluation: last round key gets reversed to the cipher key'<br>
+                * Plug-in ID: 'plainchar', name: 'Simple key evaluation for byte-based CPA: no transformation after correlation evaluation (e.g. AES first round)'<br>
+            </code>
+            
+            <h4>Evaluate correlation matrices from previous stan example</h4>
+            
+            <code>
+                $ ./correv -E maxcoef -K plainchar ugc.json<br>
+                SICAK CORRelations EValuation 1.0<br>
+                Evaluating CPA correlation matrices...<br>
+                100% done... &lt;1s elapsed.<br>                                                         
+                Obtained key (hex): '36d024461d84b8375fc0f9c04cbab6bb'<br>
+            </code>
+            <code>    
+                $ ./correv -E maxcoef -K aes128back ugc.json<br>
+                SICAK CORRelations EValuation 1.0<br>
+                Evaluating CPA correlation matrices...<br>
+                100% done... &lt;1s elapsed.<br>                                                         
+                Obtained key (hex): '00112233445566778899aabbccddeeff'<br>
+            </code>
+            
+            <a href="#top" class="toplink">back to top &uarr;</a>
+            <h2 id="visu">6. visu</h2>
+            
+            <p><strong>visu</strong> is a visualisation utility. It allows to plot power traces, correlation traces or t-values and show in graphical window or save in raster format (jpg, png) or vector format (svg).</p>
+            
+            <a href="#top" class="toplink">back to top &uarr;</a>
+            <h3 id="visuusage">Usage</h3>
+            
+            <p>
+                Brief usage is also printed when the program is run with <i>-h</i> option.
+            </p>
+            
+            <code>./visu [options] config series</code>
+            
+            <h3>Options</h3>
+            
+                <h4>-D, --display </h4>
+
+                    <p>Display the chart in a graphical window.</p>
+
+                <h4>-S, --save {filename} </h4>
+
+                    <p>Save the chart to file.</p>
+
+                    <p>The output image format is automatically selected by the filename extension (jpg, png, svg).</p>
+
+                <h4>-W, --width {positive integer}</h4>
+
+                    <p>Width of the saved chart.</p>
+
+                <h4>-H, --height {positive integer} </h4>
+
+                    <p>Height of the saved chart.</p>
+
+                <h4>-T, --title {string}</h4>
+
+                    <p>Chart title</p>
+
+                <h4>-t, --traces {filepath} </h4>
+
+                    <p>File containing -n traces, each of which containing -s samples (int16).</p>
+
+                <h4>-n, --traces-count {positive integer} </h4>
+
+                    <p>Number of power traces in -t file.</p>
+
+                <h4>-r, --traces-real-range {positive integer}</h4>
+
+                    <p>Maximum positive value of a power sample in mV, e.g. 2000 for range -2V to +2V.</p>
+
+                <h4>-a, --t-values {filepath} </h4>
+
+                    <p>File containing -s t-test values (double).</p>
+
+                <h4>-c, --correlations {filepath} </h4>
+
+                    <p>File containing -q correlation matrices, each of which -s wide and -k tall (double).</p>
+
+                <h4>-q, --correlations-sets-count {positive integer}</h4>
+
+                    <p>Number of correlation matrices. E.g. attacking AES-128 key, this value would be 16.</p>
+
+                <h4>-k, --correlations-candidates-count {positive integer}</h4>
+
+                    <p>Number of key candidates, i.e. rows of correlation matrix. E.g. attacking AES-128 key, this value would be 256.</p>
+
+                <h4>-s, --samples-per-trace {positive integer}</h4>
+
+                    <p>Number of samples per trace.</p>
+
+                <h4>-b, --samples-real-range {float number} </h4>
+
+                    <p>Time of a single power/correlation trace. Given sampling period T and -s samples, this value would be T*(s-1).</p>
+
+                <h4>-h, --help</h4>
+
+                    <p>Displays help.</p>
+
+                <h4>-v, --version </h4>
+
+                    <p>Displays version information.</p>
+
+            <h3>Arguments</h3>
+            
+                <h4>config</h4>
+                
+                    <p>JSON configuration file(s) with Options.</p>
+                    
+                    <p>The JSON configuration file may contain <strong>key:string</strong> pairs, where <strong>key</strong> is a long option name and <strong>string</strong> is the value.</p>
+                    
+                    <p>For example: { "samples-real-range":"3e-6" }</p>
+           
+                <h4>series</h4>
+
+                    <p>Time series to plot. For example:</p>
+
+                    <p>"t,25,blue" plots 26th power trace from traces file in blue</p>
+
+                    <p>"c,0,255,red" plots 255th correlation trace from the 1st correlation matrix in red</p>
+
+                    <p>"c,1,all,#bbbbbb" plots all correlation traces from 2nd correlation matrix in grey</p>
+
+                    <p>"v,pink" plots t-values from t-values file in pink</p>
+
+                    <p>Color is optional. When not set, color is selected automatically. Hex RGB codes or svg1.0 color names are allowed.</p>
+
+            <a href="#top" class="toplink">back to top &uarr;</a>
+            <h3 id="visuexamples">Examples</h3>
+            
+            <h4>Plot correlation traces</h4>
+            
+            <code>
+                $ ./visu -c cpa-ugc.16cor -q 16 -k 256 -s 2000 c,0,all,grey c,0,54 -S plot.png -W 600 -H 400<br>
+                SICAK VISUalisation 1.0<br>
+                File successfully saved.<br>
+            </code>
+                                    
+            <p>plot.png:</p>
+            
+            <p>
+                <img src="plot.png" alt="visu example plot">
+            </p>
+            
+            <a href="#top" class="toplink">back to top &uarr;</a>
+            <h2 id="chardevice">7. chardevice (meas) plug-ins</h2>
+            
+                <p>Every plug-in receives Device ID a configuration from <a href="#measdev">Character Device Configuration File</a> which may contain timeout, baudrate, parity and stopbits settings.</p>
+            
+                <h3 id="serialport">serialport</h3>
+                
+                    <p><strong>serialport</strong> is a plug-in providing access to the system's serial port. It takes advantage of all the parameters set: device id, baudrate, parity, stopbits. Flow control is disabled and no flow control (hardware, software, Xon) is supported.</p>
+                    
+                    <p>Following <strong>baudrate</strong> values are supported:</p>
+                    
+                    <ul>
+                        <li>110</li>
+                        <li>300</li>
+                        <li>600</li>
+                        <li>1200</li>
+                        <li>2400</li>
+                        <li>4800</li>
+                        <li>9600 (this is default value)</li>
+                        <li>19200</li>
+                        <li>38400</li>
+                        <li>57600</li>
+                        <li>115200</li>                        
+                    </ul>
+                    
+                    <p>Furthermore, on Windows following baudrates are available:</p>
+                    
+                    <ul>
+                        <li>128000</li>
+                        <li>256000</li>
+                    </ul>
+                    
+                    <p>Furthermore, on Linux, following baudrates are available:</p>
+                    
+                    <ul>
+                        <li>230400</li>
+                    </ul>
+                    
+                    <p>Following <strong>parity</strong> values are supported:</p>
+                    
+                    <ul>
+                        <li>0 (none parity) (this is default value)</li>
+                        <li>1 (odd parity)</li>
+                        <li>2 (even parity)</li>
+                    </ul>
+                    
+                    <p>Following <strong>stopbits</strong> values are supported:</p>
+                    
+                    <ul>
+                        <li>1 (this is default value)</li>
+                        <li>2</li>
+                    </ul>
+                    
+                    <p><strong>timeoutms</strong> is a value of timeout in milliseconds.</p>
+            
+            <a href="#top" class="toplink">back to top &uarr;</a>
+            <h2 id="oscilloscope">8. oscilloscope (meas) plug-ins</h2>
+            
+                <p>Every plug-in receives Device ID a configuration from <a href="#measosc">Oscilloscope Configuration File</a> which may contain channel, trigger and timing settings.</p>
+            
+                <p><i>Note: Oscilloscope plug-ins may require third-party software to link against and to run properly. Make sure all dependencies are installed on the system. <br>When all the dependencies are not met, the plug-in won't be found by any utility's --query.</i></p>
+            
+                <h3 id="keysight3000">keysight3000</h3>
+                
+                    <p><strong>keysight3000</strong> is a Keysight 3000 series oscilloscope (formerly Agilent) plug-in.</p>
+                    
+                    <p>On <strong>Windows</strong>, plug-in requires VISA library (e.g. Keysight IO Suite) to link against (which is why it is not included directly in the release bundle) and <strong>to run</strong>.</p><p>Use VISA address as Device ID (e.g. "USBInstrument1" or e.g. "TCPIP::128.121.240.130::INSTR")</p>
+                    
+                    <p>On <strong>Linux</strong>, plug-in takes advantage of the USBTMC kernel module. Make sure the module is properly loaded before use.</p><p>Use usbtmc device filepath as Device ID (e.g. "/dev/usbtmc0"). Make sure you have appropriate permissions to access this file.</p>
+                
+                    <p>The oscilloscope supports only 1 capture per run.</p>
+                
+                <h3 id="ps6000">ps6000</h3>
+                
+                    <p><strong>ps6000</strong> is a PicoScope 6000 series oscilloscope plug-in.</p>
+                    
+                    <p>On both <strong>Windows</strong> and <strong>Linux</strong>, the plug-in requires PicoScope Drivers/SDK to link against (which is why it is not included directly in the release bundle) and <strong>to run</strong>.</p>
+                    
+                    <p>Use oscilloscope serial number as Device ID. When Device ID is left blank, the plug-in opens the first found device on the system.</p>
+                    
+                    <p>On Linux, make sure you have permission to access the oscilloscope device (it should be placed somewhere in /dev/usb/...).</p>
+                    
+                    <p>This oscilloscope may support more than 1 capture per run (i.e. rapid block mode).</p>
+            
+            <a href="#top" class="toplink">back to top &uarr;</a>
+            <h2 id="measurement">9. measurement (meas) plug-ins</h2>
+            
+                <p>Users are encouraged to write their own measurement scenarios. In such cases, please let me (the author) know :-).</p>
+            
+                <h3 id="random128co">random128co</h3>
+                
+                    <p><strong>random128co</strong> is a measurement scenario primarily used for AES-128 implementations CPA attack.</p>
+                    
+                    <p>The scenario goes as follows:</p>
+                    
+                    <ul>
+                        <li>Send 0x01 to device (key command)</li>
+                        <li>Send default known key</li>
+                        <li>Repeat N times:
+                            <ul>
+                                <li>Send 0x02 to device (encrypt command)</li>
+                                <li>Send 16 bytes of random data</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    
+                    <p>while capturing power traces after every trigger.</p>
+                    
+                    <p>It produces following files:</p>
+                    
+                    <ul>
+                        <li>random-traces-ID.bin</li>
+                        <li>plaintext-ID.bin</li>
+                        <li>ciphertext-ID.bin</li>
+                        <li>ID.json</li>
+                    </ul>
+                
+                    <p>where ID is meas given parameter or default.</p>
+                
+                <h3 id="ttest128co">ttest128co</h3>
+                
+                    <p><strong>ttest128co</strong> is a measurement scenario primarily used for AES-128 implementations t-tests.</p>
+                    
+                    <p>The scenario goes as follows:</p>
+                    
+                    <ul>
+                        <li>Send 0x01 to device (key command)</li>
+                        <li>Send default known key</li>
+                        <li>Repeat N times:
+                            <ul>
+                                <li>Send 0x02 to device (encrypt command)</li>
+                                <li>Send randomly either: 16 bytes of random data, or 16 bytes of constant data</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    
+                    <p>while capturing power traces after every trigger.</p>
+                    
+                    <p>It produces following files:</p>
+                    
+                    <ul>
+                        <li>random-traces-ID.bin</li>
+                        <li>constant-traces-ID.bin</li>
+                        <li>plaintext-ID.bin</li>
+                        <li>ciphertext-ID.bin</li>
+                        <li>ID.json</li>
+                    </ul>
+                
+                    <p>where ID is meas given parameter or default.</p>
+            
+            <a href="#top" class="toplink">back to top &uarr;</a>
+            <h2 id="blockprocess">10. blockprocess (prep) plug-ins</h2>
+            
+                <h3 id="predictaes128back">predictaes128back</h3>       
+                
+                    <p><strong>predictaes128back</strong> is a block data processing plug-in module.</p>      
+                    
+                    <p>It processes M data blocks of data, each block 16 bytes long. I.e. AES-128 cipher text.</p>
+                    
+                    <p>It creates 16 power prediction sets from AES-128 cipher text, one for every byte of the cipher key.</p>
+                    
+                    <p>Each power prediction set contains 256 power predictions (for every possible byte value), for every measurement taken.</p>
+                    
+                    <p>I.e. overall it creates a file containing 16 matrices, each 256xM large, where M is number blocks / of measurements taken.</p>
+                    
+                    <p>The power predictions are based on the last round working register Hamming distance. This power model is applicable e.g. to FPGA implementations.</p>
+                    
+                    <p>It produces following files:</p>
+                    <ul>
+                        <li>aes128back-ID.16prd</li>
+                        <li>ID.json</li>
+                    </ul>
+                    <p>where ID is prep given parameter or default.</p>
+            
+                <h3 id="predictaes128front">predictaes128front</h3>
+                
+                    <p><strong>predictaes128front</strong> is a block data processing plug-in module.</p>
+                    
+                    <p>It processes M data blocks of data, each block 16 bytes long. I.e. AES-128 plain text.</p>
+                    
+                    <p>It creates 16 power prediction sets from AES-128 cipher text, one for every byte of the cipher key.</p>
+                    
+                    <p>Each power prediction set contains 256 power predictions (for every possible byte value), for every measurement taken.</p>
+                    
+                    <p>I.e. overall it creates a file containing 16 matrices, each 256xM large, where M is number blocks / of measurements taken.</p>
+                    
+                    <p>The power predictions are based on the first round S-box Hamming weight. This power model is applicable e.g. to MCU implementations.</p>
+                    
+                    <p>It produces following files:</p>
+                    <ul>
+                        <li>aes128front-ID.16prd</li>
+                        <li>ID.json</li>
+                    </ul>
+                    <p>where ID is prep given parameter or default.</p>
+            
+            <a href="#top" class="toplink">back to top &uarr;</a>
+            <h2 id="tracesprocess">11. tracesprocess (prep) plug-ins</h2>
+            
+                <p>There are currently no tracesprocess plug-in modules implemented.</p>
+            
+            <a href="#top" class="toplink">back to top &uarr;</a>
+            <h2 id="cpaengine">12. cpaengine (stan) plug-ins</h2>
+            
+                <p><strong>cpaengine</strong> is a computational plug-in module type for stan. Difference between various plug-in modules here is not only in functionality, but also in the implementation of the computation.</p>
+                
+                <h3 id="cpa">cpa</h3>
+                
+                <p><strong>cpa</strong> is a computational plug-in module for stan.</p>
+                
+                <p>It performs <strong>Univariate First-Order CPA</strong> "create, merge, finalize" context stan functions. The "create" function, which is by far the most time demanding, is accelerated on multi-core CPU using <strong>OpenMP</strong>.</p>
+                
+                <h3 id="oclcpa">oclcpa</h3>
+                
+                <p><strong>oclcpa</strong> is a computational plug-in module for stan.</p>
+                
+                <p>It performs <strong>Univariate First-Order CPA</strong> "create, merge, finalize" context stan functions. The "create" function, which is by far the most time demanding, is accelerated using <strong>OpenCL</strong> (e.g. nVidia GPUs, AMD/ATi GPUs, Intel GPUs, but theoretically also FPGA accelerators etc.).</p>
+                
+            
+            <a href="#top" class="toplink">back to top &uarr;</a>
+            <h2 id="ttestengine">13. ttestengine (stan) plug-ins</h2>
+            
+                <p><strong>ttestengine</strong> is a computational plug-in module type for stan. Difference between various plug-in modules here is not only in functionality, but also in the implementation of the computation.</p>
+                
+                <h3 id="ttest">ttest</h3>
+                
+                <p><strong>ttest</strong> is a computational plug-in module for stan.</p>
+                
+                <p>It performs <strong>Univariate First-Order Non-Specific Welch's t-test</strong> "create, merge, finalize" context stan functions.</p>
+            
+            <a href="#top" class="toplink">back to top &uarr;</a>
+            <h2 id="cpacorreval">14. cpacorreval (correv) plug-ins</h2>
+            
+                <h3 id="maxabscoef">maxabscoef</h3>
+                
+                    <p><strong>maxabscoef</strong> is a correlation matrix evaluation plug-in module for correv.</p>
+                    
+                    <p>It searches for maximum absolute value of correlation coefficient in the correlation matrices given.</p>
+                    
+                    <p>Its output is an array of selected key candidates, which is further processed by cpakeyeval module.</p>
+            
+                <h3 id="maxcoef">maxcoef</h3>
+                
+                    <p><strong>maxcoef</strong> is a correlation matrix evaluation plug-in module for correv.</p>
+                    
+                    <p>It searches for maximum value of correlation coefficient in the correlation matrices given.</p>
+                    
+                    <p>Its output is an array of selected key candidates, which is further processed by cpakeyeval module.</p>
+                    
+                <h3 id="maxedge">maxedge</h3>
+                
+                    <p><strong>maxedge</strong> is a correlation matrix evaluation plug-in module for correv.</p>
+                    
+                    <p>It searches for largest edge (i.e. the maximum absolute value of derivative of correlation traces) in the correlation traces in correlation matrices given.</p>
+                    
+                    <p>The edge detection is performed by convolving the correlation traces with the Gaussian first derivative kernel. This kernel takes two parameters:</p>
+                    
+                    <ul>
+                        <li><strong>d</strong>:{positive integer} diameter of the kernel,</li>
+                        <li><strong>sigma</strong>:{float} deviation of the Gaussian used.</li>
+                    </ul>
+                    
+                    <p>To set the parameters, use correv --param option. E.g. setting a diameter=23 and sigma=8.0:</p>
+                    
+                    <code>./correv -E maxedge --param="23;8.0"</code>
+                    
+                    <p>This kind of correlation matrix evaluation may be useful when working with power traces obtained from noisy environment. <a href="https://doi.org/10.1109/DSD.2018.00098">Find out more.</a></p>
+                    
+                    <p>Its output is an array of selected key candidates, which is further processed by cpakeyeval module.</p>
+                    
+                <h3 id="mincoef">mincoef</h3>
+                
+                    <p><strong>mincoef</strong> is a correlation matrix evaluation plug-in module for correv.</p>
+                    
+                    <p>It searches for minimum value of correlation coefficient in the correlation matrices given.</p>
+                    
+                    <p>Its output is an array of selected key candidates, which is further processed by cpakeyeval module.</p>                               
+                    
+            
+            <a href="#top" class="toplink">back to top &uarr;</a>
+            <h2 id="cpakeyeval">15. cpakeyeval (correv) plug-ins</h2>
+            
+                <h3 id="aes128back">aes128back</h3>
+                    
+                    <p><strong>aes128back</strong> is a keyguess evaluation plug-in module for correv. It processed cpacorreval module's output array.</p>
+                
+                    <p>It requires a 16-part keyguess.</p>
+                    
+                    <p>It constructs a cipher key by mapping every byte of the key to keyguess bytes and reverses the last round key.</p>
+                
+                <h3 id="plainchar">plainchar</h3>
+                
+                    <p><strong>plainchar</strong> is a keyguess evaluation plug-in module for correv. It processed cpacorreval module's output array.</p>
+                    
+                    <p>It constructs a cipher key simply by mapping every byte of the key to keyguess bytes. I.e. it does no transformation.</p>
+            
+            <a href="#top" class="toplink">back to top &uarr;</a>
+            <h2 id="tips">16. Tips</h2>
+            
+            <ul>
+                <li>Some utilities and many plug-ins produce JSON configuration files alongside their output. E.g. with measured traces, a JSON file is generated containing parameters such as <i>samples-per-trace</i> that can be useful while processing the traces in other utilities.</li>
+                <li>Every utility can process a JSON config file instead of direct command line parameters. Just use the long option name as a key with string value. You can also pass more than one JSON config file to the utility or combine them together. However, command line parameter has priority when set.</li>
+            </ul>
+            
+            <a href="#top" class="toplink">back to top &uarr;</a>
+            <h2 id="license">17. License</h2>
+            
+                <h3>Software license</h3>
+                
+                <p>SICAK - SIde-Channel Analysis toolKit<br>
+                Copyright (C) 2018 Petr Socha, FIT, CTU in Prague</p>
+
+                <p>This program is free software: you can redistribute it and/or modify<br>
+                it under the terms of the GNU General Public License as published by<br>
+                the Free Software Foundation, either version 3 of the License, or<br>
+                (at your option) any later version.</p>
+
+                <p>This program is distributed in the hope that it will be useful,<br>
+                but WITHOUT ANY WARRANTY; without even the implied warranty of<br>
+                MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the<br>
+                GNU General Public License for more details.</p>
+
+                <p>You should have received a copy of the GNU General Public License<br>
+                along with this program.  If not, see <a href="https://www.gnu.org/licenses/">https://www.gnu.org/licenses/</a>.</p>
+                
+                <h3>User's Guide license</h3>
+                
+                <p>To the extent possible under law, Petr Socha has waived all copyright<br>
+                and related or neighboring rights to "SICAK 1.0 User's Guide, ver. 1.0".<br>
+                I.e., this document is available under <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 license (public domain)</a>.</p>
+            
+            <a href="#top" class="toplink">back to top &uarr;</a>
+            <h2 id="contact">18. Contact</h2>
+            
+                <p>This project is a result of pursuing a master's degree at <a href="http://fit.cvut.cz">Faculty of Information Technology</a>,<br>
+                Czech Technical University in Prague.</p>
+
+                <p>Author: Petr Socha, petrsocha(at)petrsocha.cz, sochapet(at)fit.cvut.cz</p>
+
+                <p>Supervisor: Vojtěch Miškovský, miskovoj(at)fit.cvut.cz</p>
+            
+    </main>
+
+</body>
+</html>

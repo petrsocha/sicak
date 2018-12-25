@@ -1,0 +1,8 @@
+<map id="stan/include/stan.h" name="stan/include/stan.h">
+<area shape="rect" id="node4" href="$cpaengine_8h.html" title="CPA computation plugin interface for use e.g. in stan. " alt="" coords="277,80,369,107"/>
+<area shape="rect" id="node15" href="$ttestengine_8h.html" title="t&#45;test computation plugin interface for use e.g. in stan " alt="" coords="393,80,491,107"/>
+<area shape="rect" id="node6" href="$types__power_8hpp.html" title="This header file contains class templates of power traces and power consumption containers. " alt="" coords="458,155,578,181"/>
+<area shape="rect" id="node14" href="$types__stat_8hpp.html" title="This header file contains class templates of statistical computational contexts. " alt="" coords="325,155,433,181"/>
+<area shape="rect" id="node7" href="$types__basic_8hpp.html" title="This header file contains class templates of basic data containers. " alt="" coords="390,229,507,256"/>
+<area shape="rect" id="node11" href="$exceptions_8hpp.html" title="This header file contains exceptions. " alt="" coords="543,304,653,331"/>
+</map>

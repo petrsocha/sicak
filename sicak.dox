@@ -1,0 +1,107 @@
+/** \defgroup Sicak SICAK: Text-based utilities providing frontend for plug-in modules
+*/
+
+/** \defgroup SicakInterface SICAK plug-in interfaces
+*/ 
+
+/** \defgroup SicakData SICAK data types and manipulation functions
+*/ 
+
+/*! \mainpage Programmer's guide, ver. 1.0
+ *
+ * \section intro_sec Introduction
+ *
+ * At the moment, this software kit consists of following:
+ *
+ * * Text-based utilities, serving as frontend for plug-in modules
+ *   * MEAS: Measuring utility, loading CharDevice, Oscilloscope and Measurement scenario plug-ins
+ *   * PREP: Pre-processing utility, loading a BlockProcess or TracesProcess plug-in
+ *   * STAN: Statistical analysis utility, loading a CpaEngine or TTestEngine plug-in
+ *   * CORREV: Correlation matrix evaluation utility, loading CpaCorrEval and CpaKeyEval plug-ins
+ *   * VISU: Visualisation utility, generating plots from either power traces, correlation traces or t-values
+ * * Set of plug-ins, see Section Modules
+ *
+ * Currently supported platforms are Linux and Windows. 
+ *
+ * See User's guide for more information about the utilities.
+ *
+ * Some plug-in modules (e.g. Oscilloscope) may require third-party software (i.e. drivers, SDKs) to compile and/or function properly. This software may be proprietary and/or not in compliance with SICAK licence and therefore is not distributed alongside this toolkit.
+ *
+ *
+ * \section build_sec Building
+ *
+ * \subsection step1 Dependencies
+ *
+ * * C++ Standard Library
+ * * Qt5 framework is a dependency, namely Qt5Core, Qt5Widgets, Qt5Gui, Qt5Charts, Qt5Svg; and qmake for build
+ * * Some modules, e.g. Oscilloscope plug-ins, may require third-party software to compile/link/run properly (e.g. VISA library, PicoScope SDK,...)
+ * * Some modules, e.g. CpaEngine plug-ins, may require third-party software to compile/link/run properly (i.e. OpenCL implementation)
+ * 
+ * => before build, see config.pri file and set paths to the third party software to allow compilation of plug-in modules that depend on it
+ *
+ * \subsection step2 Build
+ *
+ * The project takes advantage of the qmake build system, provided by the Qt framework. 
+ *
+ * \subsubsection step21 Linux
+ * 
+ * To build project on Linux, simply run
+ * \code
+ *  $ qmake && make
+ * \endcode
+ *
+ * To move all the utilities and plug-ins into appropriate directory structure, run
+ * \code
+ *  $ make install
+ * \endcode
+ * and check the INSTALL directory.
+ *
+ * If you wish to deploy the application, check the Qt manual: <http://doc.qt.io/qt-5/linux-deployment.html>
+ *
+ * \subsubsection step22 Windows (MSVC)
+ *
+ * On Windows, use Qt developer console, e.g. Qt 5.11.2 64-bit for Desktop (MSVC 2017):
+ * * Run the Qt developer console
+ * * Run the MSVC configuration script (vsvarsall.bat)
+ * * Navigate to the project's root directory, i.e. directory which contains sicak.pro file
+ * * Run following commands
+ * \code
+ * qmake
+ * nmake
+ * \endcode
+ *
+ * To move all the utilities and plug-ins into appropriate directory structure, run
+ * \code
+ *  nmake install
+ * \endcode
+ * and check the INSTALL directory
+ *
+ * If you wish to deploy the application, check the windeployqt utility and Qt manual: <http://doc.qt.io/qt-5/windows-deployment.html>
+ *
+ * \section licence License
+ *
+ *  SICAK - SIde-Channel Analysis toolKit
+ *  Copyright (C) 2018 Petr Socha, FIT, CTU in Prague
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ *
+ * \section contact Contact
+ *
+ * This project is a result of pursuing a master's degree at Faculty of Information Technology, Czech Technical University in Prague.
+ *
+ * Author: Petr Socha, petrsocha(at)petrsocha.cz, sochapet(at)fit.cvut.cz
+ * 
+ * Supervisor: Vojtěch Miškovský, miskovoj(at)fit.cvut.cz
+ *
+ */

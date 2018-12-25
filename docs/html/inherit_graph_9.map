@@ -1,0 +1,31 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$classBlockProcess.html" title="Block data processing QT plugin interface. " alt="" coords="5,31,108,57"/>
+<area shape="rect" id="node2" href="$classPredictAES128Back.html" title="AES&#45;128 last round working register Hamming distance power predictions SICAK BlockProcess plugin..." alt="" coords="156,56,297,83"/>
+<area shape="rect" id="node3" href="$classPredictAES128Front.html" title="AES&#45;128 first round S&#45;box Hamming weight power predictions SICAK BlockProcess plugin. " alt="" coords="156,5,297,32"/>
+<area shape="rect" id="node4" href="$classCharDevice.html" title="Character device QT plugin interface. " alt="" coords="12,107,101,133"/>
+<area shape="rect" id="node5" href="$classSerialPort.html" title="Serial port interface (Win32/Posix) SICAK CharDevice plugin. " alt="" coords="187,107,266,133"/>
+<area shape="rect" id="node6" href="$classCpaCorrEval.html" title="CPA correlation matrix evaluation QT plugin interface. " alt="" coords="9,233,104,260"/>
+<area shape="rect" id="node7" href="$classMaxAbsCoef.html" title="CPA correlation matrix evaluation SICAK CpaCorrEval plugin, looking for maximum absolute value of coe..." alt="" coords="178,208,275,235"/>
+<area shape="rect" id="node8" href="$classMaxCoef.html" title="CPA correlation matrix evaluation SICAK CpaCorrEval plugin, looking for maximum value of coefficient..." alt="" coords="189,259,264,285"/>
+<area shape="rect" id="node9" href="$classMaxEdge.html" title="CPA correlation matrix evaluation SICAK CpaCorrEval plugin, looking for maximum edge, i.e. largest derivation of correlation trace, approximated by convolving with derivative of gaussian. " alt="" coords="188,309,265,336"/>
+<area shape="rect" id="node10" href="$classMinCoef.html" title="CPA correlation matrix evaluation SICAK CpaCorrEval plugin, looking for minimum value of coefficient..." alt="" coords="191,157,262,184"/>
+<area shape="rect" id="node11" href="$classCpaEngine.html" title="CPA computation engine QT plugin interface. " alt="" coords="14,385,99,412"/>
+<area shape="rect" id="node12" href="$classLocalCPA.html" title="CPA context computation SICAK CpaEngine plugin. " alt="" coords="187,411,267,437"/>
+<area shape="rect" id="node13" href="$classOclCPA.html" title="CPA context computation SICAK CpaEngine plugin, OpenCL implementation. " alt="" coords="192,360,261,387"/>
+<area shape="rect" id="node14" href="$classCpaKeyEval.html" title="CPA keyguess evaluation QT plugin interface. " alt="" coords="9,740,104,767"/>
+<area shape="rect" id="node15" href="$classAes128Back.html" title="CPA keyguess evaluation SICAK CpaKeyEval plugin, reverses the AES&#45;128 last round key to the cipher ke..." alt="" coords="179,765,275,792"/>
+<area shape="rect" id="node16" href="$classSimpleChar.html" title="CPA keyguess evaluation SICAK CpaKeyEval plugin, simply creates cipher key from byte&#45;based CPA keygue..." alt="" coords="182,715,271,741"/>
+<area shape="rect" id="node17" href="$classMeasurement.html" title="Measurement scenario QT plugin interface. " alt="" coords="6,841,107,868"/>
+<area shape="rect" id="node18" href="$classRandom128CO.html" title="CPA Measurement scenario plugin: sends key command (0x01), followed by the cipher key..." alt="" coords="171,867,282,893"/>
+<area shape="rect" id="node19" href="$classTTest128CO.html" title="CPA Measurement scenario plugin: sends key command (0x01), followed by the cipher key..." alt="" coords="179,816,275,843"/>
+<area shape="rect" id="node20" href="$classOscilloscope.html" title="Oscilloscope QT plugin interface. " alt="" coords="8,943,105,969"/>
+<area shape="rect" id="node21" href="$classKeysight3000.html" title="Oscilloscope plugin for Keysight 3000 series oscilloscope, using ScpiDevice for communication. " alt="" coords="176,968,277,995"/>
+<area shape="rect" id="node22" href="$classPs6000.html" title="Oscilloscope plugin for PicoScope 6000, using official driver for communication. " alt="" coords="193,917,260,944"/>
+<area shape="rect" id="node24" href="$classCorrEv.html" title="Class providing text&#45;based UI front&#45;end to CpaCorrEval and CpaKeyEval plug&#45;in modules. " alt="" coords="195,613,258,640"/>
+<area shape="rect" id="node25" href="$classLocalTTest.html" title="t&#45;test context computation SICAK TTestEngine plugin " alt="" coords="183,1019,270,1045"/>
+<area shape="rect" id="node26" href="$classMeas.html" title="Class providing text&#45;based UI front&#45;end to Measurement, Oscilloscope and CharDevice plug&#45;in modules..." alt="" coords="199,664,254,691"/>
+<area shape="rect" id="node27" href="$classPrep.html" title="Class providing text&#45;based UI front&#45;end to BlockProcess and TracesProcess plug&#45;in modules..." alt="" coords="202,461,251,488"/>
+<area shape="rect" id="node28" href="$classStan.html" title="Class providing text&#45;based UI front&#45;end to CpaEngine and TTestEngine plug&#45;in modules. " alt="" coords="202,512,251,539"/>
+<area shape="rect" id="node29" href="$classVisu.html" title="Class providing text&#45;based UI allowing to plot power traces, correlation traces or t&#45;value traces..." alt="" coords="203,563,251,589"/>
+<area shape="rect" id="node30" href="$classTTestEngine.html" title="t&#45;test computation engine QT plugin interface " alt="" coords="9,1019,105,1045"/>
+</map>

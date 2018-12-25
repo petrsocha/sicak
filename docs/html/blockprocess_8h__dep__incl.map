@@ -1,0 +1,10 @@
+<map id="include/blockprocess.h" name="include/blockprocess.h">
+<area shape="rect" id="node2" href="$predictaes128back_8h.html" title="SICAK block data processing plugin: power predictions for AES&#45;128 based on ciphertext and last round ..." alt="" coords="21,80,279,121"/>
+<area shape="rect" id="node4" href="$predictaes128front_8h.html" title="SICAK block data processing plugin: power predictions for AES&#45;128 based on plain text and first round..." alt="" coords="311,80,565,121"/>
+<area shape="rect" id="node6" href="$prep_8h.html" title="SICAK PREProcessing text&#45;based UI. " alt="" coords="589,87,721,114"/>
+<area shape="rect" id="node8" href="$visu_8h.html" title="SICAK VISUalisation text&#45;based UI. " alt="" coords="746,87,877,114"/>
+<area shape="rect" id="node3" href="$predictaes128back_8cpp.html" title="SICAK block data processing plugin: power predictions for AES&#45;128 based on ciphertext and last round ..." alt="" coords="5,169,279,211"/>
+<area shape="rect" id="node5" href="$predictaes128front_8cpp.html" title="SICAK block data processing plugin: power predictions for AES&#45;128 based on plain text and first round..." alt="" coords="303,169,573,211"/>
+<area shape="rect" id="node7" href="$prep_8cpp.html" title="SICAK PREProcessing text&#45;based UI. " alt="" coords="597,177,719,203"/>
+<area shape="rect" id="node9" href="$visu_8cpp.html" title="SICAK VISUalisation text&#45;based UI. " alt="" coords="751,177,872,203"/>
+</map>

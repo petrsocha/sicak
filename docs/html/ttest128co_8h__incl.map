@@ -1,0 +1,8 @@
+<map id="plugins/measurement/ttest128co/ttest128co.h" name="plugins/measurement/ttest128co/ttest128co.h">
+<area shape="rect" id="node5" href="$measurement_8h.html" title="Measurement scenario plugin interface for use e.g. in meas. " alt="" coords="197,95,309,121"/>
+<area shape="rect" id="node12" href="$exceptions_8hpp.html" title="This header file contains exceptions. " alt="" coords="341,393,452,420"/>
+<area shape="rect" id="node6" href="$oscilloscope_8h.html" title="Oscilloscope plugin interface for use e.g. in meas. " alt="" coords="32,169,137,196"/>
+<area shape="rect" id="node15" href="$chardevice_8h.html" title="Character device plugin interface for use e.g. in meas. " alt="" coords="213,169,309,196"/>
+<area shape="rect" id="node7" href="$types__power_8hpp.html" title="This header file contains class templates of power traces and power consumption containers. " alt="" coords="19,244,139,271"/>
+<area shape="rect" id="node8" href="$types__basic_8hpp.html" title="This header file contains class templates of basic data containers. " alt="" coords="177,319,294,345"/>
+</map>

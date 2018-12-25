@@ -1,0 +1,5 @@
+<map id="plugins/oscilloscope/common/scpidevice.h" name="plugins/oscilloscope/common/scpidevice.h">
+<area shape="rect" id="node2" href="$scpidevice_8cpp.html" title="Class providing SCPI device interface, either using USBTMC Linux Module, or using (and requiring) VIS..." alt="" coords="5,95,172,136"/>
+<area shape="rect" id="node3" href="$keysight3000_8h.html" title="SICAK oscilloscope plugin: Keysight 3000 series (formerly agilent), using SCPIDevice. " alt="" coords="197,95,391,136"/>
+<area shape="rect" id="node4" href="$keysight3000_8cpp.html" title="SICAK oscilloscope plugin: Keysight 3000 series (formerly agilent), using SCPIDevice, which may require VISA library. " alt="" coords="189,184,399,225"/>
+</map>

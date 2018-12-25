@@ -1,0 +1,7 @@
+<map id="prep/include/prep.h" name="prep/include/prep.h">
+<area shape="rect" id="node4" href="$blockprocess_8h.html" title="Block processing plugin interface for use e.g. in prep. " alt="" coords="277,80,388,107"/>
+<area shape="rect" id="node14" href="$tracesprocess_8h.html" title="Traces processing plugin interface for use e.g. in prep. " alt="" coords="413,80,527,107"/>
+<area shape="rect" id="node6" href="$types__power_8hpp.html" title="This header file contains class templates of power traces and power consumption containers. " alt="" coords="405,155,525,181"/>
+<area shape="rect" id="node7" href="$types__basic_8hpp.html" title="This header file contains class templates of basic data containers. " alt="" coords="406,229,523,256"/>
+<area shape="rect" id="node11" href="$exceptions_8hpp.html" title="This header file contains exceptions. " alt="" coords="559,304,669,331"/>
+</map>

@@ -1,0 +1,26 @@
+/** \defgroup CharDevice SICAK MEASurement plug-ins: Character device
+*/
+
+/** \defgroup Measurement SICAK MEASurement plug-ins: Measurement scenario
+*/
+
+/** \defgroup Oscilloscope SICAK MEASurement plug-ins: Oscilloscope device
+*/
+
+/** \defgroup BlockProcess SICAK PREProcessing plug-ins: Block data processing
+*/
+
+/** \defgroup TracesProcess SICAK PREProcessing plug-ins: Power traces processing
+*/
+
+/** \defgroup CpaEngine SICAK STatistical ANalysis plug-ins: CPA computational engine
+*/
+
+/** \defgroup TTestEngine SICAK STatistical ANalysis plug-ins: t-test computational engine
+*/
+
+/** \defgroup CpaCorrEval SICAK CORRelation EValuation plug-ins: CPA correlation matrix evaluation
+*/
+
+/** \defgroup CpaKeyEval SICAK CORRelation EValuation plug-ins:CPA keyguess evaluation
+*/

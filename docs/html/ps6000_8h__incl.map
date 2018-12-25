@@ -1,0 +1,6 @@
+<map id="plugins/oscilloscope/ps6000/ps6000.h" name="plugins/oscilloscope/ps6000/ps6000.h">
+<area shape="rect" id="node6" href="$oscilloscope_8h.html" title="Oscilloscope plugin interface for use e.g. in meas. " alt="" coords="399,95,504,121"/>
+<area shape="rect" id="node13" href="$exceptions_8hpp.html" title="This header file contains exceptions. " alt="" coords="500,319,611,345"/>
+<area shape="rect" id="node8" href="$types__power_8hpp.html" title="This header file contains class templates of power traces and power consumption containers. " alt="" coords="391,169,511,196"/>
+<area shape="rect" id="node9" href="$types__basic_8hpp.html" title="This header file contains class templates of basic data containers. " alt="" coords="390,244,507,271"/>
+</map>

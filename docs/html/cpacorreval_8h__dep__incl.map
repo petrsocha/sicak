@@ -1,0 +1,12 @@
+<map id="include/cpacorreval.h" name="include/cpacorreval.h">
+<area shape="rect" id="node2" href="$correv_8h.html" title="SICAK CORRelations EValuation text&#45;based UI. " alt="" coords="9,87,163,114"/>
+<area shape="rect" id="node4" href="$maxabscoef_8h.html" title="SICAK CPA correlation matrix evaluation plugin: maximum absolute coefficient. " alt="" coords="189,80,372,121"/>
+<area shape="rect" id="node6" href="$maxcoef_8h.html" title="SICAK CPA correlation matrix evaluation plugin: maximum coefficient. " alt="" coords="403,80,545,121"/>
+<area shape="rect" id="node8" href="$maxedge_8h.html" title="SICAK CPA correlation matrix evaluation plugin: maximum edge. " alt="" coords="575,80,722,121"/>
+<area shape="rect" id="node10" href="$mincoef_8h.html" title="SICAK CPA correlation matrix evaluation plugin: minimum coefficient. " alt="" coords="757,80,892,121"/>
+<area shape="rect" id="node3" href="$correv_8cpp.html" title="SICAK CORRelations EValuation text&#45;based UI. " alt="" coords="5,177,151,203"/>
+<area shape="rect" id="node5" href="$maxabscoef_8cpp.html" title="SICAK CPA correlation matrix evaluation plugin: maximum absolute coefficient. " alt="" coords="175,169,373,211"/>
+<area shape="rect" id="node7" href="$maxcoef_8cpp.html" title="SICAK CPA correlation matrix evaluation plugin: maximum coefficient. " alt="" coords="397,169,551,211"/>
+<area shape="rect" id="node9" href="$maxedge_8cpp.html" title="SICAK CPA correlation matrix evaluation plugin: maximum edge. " alt="" coords="576,169,737,211"/>
+<area shape="rect" id="node11" href="$mincoef_8cpp.html" title="SICAK CPA correlation matrix evaluation plugin: minimum coefficient. " alt="" coords="762,169,909,211"/>
+</map>

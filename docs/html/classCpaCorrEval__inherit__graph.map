@@ -1,0 +1,6 @@
+<map id="CpaCorrEval" name="CpaCorrEval">
+<area shape="rect" id="node2" href="$classMaxAbsCoef.html" title="CPA correlation matrix evaluation SICAK CpaCorrEval plugin, looking for maximum absolute value of coe..." alt="" coords="5,226,165,391"/>
+<area shape="rect" id="node3" href="$classMaxCoef.html" title="CPA correlation matrix evaluation SICAK CpaCorrEval plugin, looking for maximum value of coefficient..." alt="" coords="189,226,349,391"/>
+<area shape="rect" id="node4" href="$classMaxEdge.html" title="CPA correlation matrix evaluation SICAK CpaCorrEval plugin, looking for maximum edge, i.e. largest derivation of correlation trace, approximated by convolving with derivative of gaussian. " alt="" coords="374,204,570,413"/>
+<area shape="rect" id="node5" href="$classMinCoef.html" title="CPA correlation matrix evaluation SICAK CpaCorrEval plugin, looking for minimum value of coefficient..." alt="" coords="595,226,755,391"/>
+</map>

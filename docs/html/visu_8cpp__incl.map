@@ -1,0 +1,12 @@
+<map id="visu/src/visu.cpp" name="visu/src/visu.cpp">
+<area shape="rect" id="node10" href="$configloader_8hpp.html" title="This header file contains configuration loader and parser used by the sicak utilities. " alt="" coords="406,80,523,107"/>
+<area shape="rect" id="node13" href="$global__calls_8hpp.html" title="This header file contains global routines. " alt="" coords="1515,155,1630,181"/>
+<area shape="rect" id="node16" href="$filehandling_8hpp.html" title="This header file contains function templates for loading/storing defined types. " alt="" coords="1334,155,1446,181"/>
+<area shape="rect" id="node27" href="$visu_8h.html" title="SICAK VISUalisation text&#45;based UI. " alt="" coords="700,80,757,107"/>
+<area shape="rect" id="node19" href="$types__basic_8hpp.html" title="This header file contains class templates of basic data containers. " alt="" coords="1206,304,1323,331"/>
+<area shape="rect" id="node23" href="$exceptions_8hpp.html" title="This header file contains exceptions. " alt="" coords="1351,379,1461,405"/>
+<area shape="rect" id="node25" href="$types__power_8hpp.html" title="This header file contains class templates of power traces and power consumption containers. " alt="" coords="1017,229,1137,256"/>
+<area shape="rect" id="node26" href="$types__stat_8hpp.html" title="This header file contains class templates of statistical computational contexts. " alt="" coords="1303,229,1411,256"/>
+<area shape="rect" id="node29" href="$blockprocess_8h.html" title="Block processing plugin interface for use e.g. in prep. " alt="" coords="889,155,1000,181"/>
+<area shape="rect" id="node31" href="$tracesprocess_8h.html" title="Traces processing plugin interface for use e.g. in prep. " alt="" coords="1025,155,1139,181"/>
+</map>

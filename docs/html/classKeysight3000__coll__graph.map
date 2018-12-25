@@ -1,0 +1,4 @@
+<map id="Keysight3000" name="Keysight3000">
+<area shape="rect" id="node3" href="$classOscilloscope.html" title="Oscilloscope QT plugin interface. " alt="" coords="101,5,237,288"/>
+<area shape="rect" id="node4" href="$classScpiDevice.html" title="SCPI device interface, using either USBTMC Linux module or VISA library. " alt="" coords="261,27,455,266"/>
+</map>

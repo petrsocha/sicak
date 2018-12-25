@@ -1,0 +1,7 @@
+<map id="MaxEdge" name="MaxEdge">
+<area shape="rect" id="node3" href="$classCpaCorrEval.html" title="CPA correlation matrix evaluation QT plugin interface. " alt="" coords="101,642,261,793"/>
+<area shape="rect" id="node4" href="$classVector.html" title="{Vector\&lt; double \&gt;\n|# m_data\l# m_length\l# m_capacity\l|+ Vector()\l+ Vector()\l+ Vector()\l+ Vector()\l+ operator=()\l+ ~Vector()\l+ length()\l+ size()\l+ init()\l+ init()\l+ fill()\l+ data()\l+ data()\l+ operator()()\l+ operator()()\l}" alt="" coords="285,561,407,873"/>
+<area shape="rect" id="node5" href="$classVectorType.html" title="{VectorType\&lt; double \&gt;\n||+ ~VectorType()\l+ init()\l+ init()\l+ operator()()\l+ operator()()\l# VectorType()\l}" alt="" coords="271,361,421,512"/>
+<area shape="rect" id="node6" href="$classArrayType.html" title="{ArrayType\&lt; double \&gt;\n||+ ~ArrayType()\l+ length()\l+ size()\l+ fill()\l+ data()\l+ data()\l# ArrayType()\l}" alt="" coords="274,147,418,312"/>
+<area shape="rect" id="node7" href="$classDataType.html" title="A base abstract class, representing all the data types. " alt="" coords="293,5,399,97"/>
+</map>

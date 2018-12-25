@@ -1,0 +1,8 @@
+<map id="plugins/oscilloscope/keysight3000/keysight3000.cpp" name="plugins/oscilloscope/keysight3000/keysight3000.cpp">
+<area shape="rect" id="node2" href="$keysight3000_8h.html" title="SICAK oscilloscope plugin: Keysight 3000 series (formerly agilent), using SCPIDevice. " alt="" coords="223,95,333,121"/>
+<area shape="rect" id="node7" href="$oscilloscope_8h.html" title="Oscilloscope plugin interface for use e.g. in meas. " alt="" coords="332,169,437,196"/>
+<area shape="rect" id="node14" href="$exceptions_8hpp.html" title="This header file contains exceptions. " alt="" coords="517,393,628,420"/>
+<area shape="rect" id="node16" href="$scpidevice_8h.html" title="Class providing SCPI device interface, either using USBTMC Linux Module, or using VISA libraries..." alt="" coords="639,319,733,345"/>
+<area shape="rect" id="node9" href="$types__power_8hpp.html" title="This header file contains class templates of power traces and power consumption containers. " alt="" coords="369,244,489,271"/>
+<area shape="rect" id="node10" href="$types__basic_8hpp.html" title="This header file contains class templates of basic data containers. " alt="" coords="370,319,487,345"/>
+</map>

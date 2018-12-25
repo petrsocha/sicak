@@ -1,0 +1,4 @@
+<map id="Measurement" name="Measurement">
+<area shape="rect" id="node2" href="$classRandom128CO.html" title="CPA Measurement scenario plugin: sends key command (0x01), followed by the cipher key..." alt="" coords="5,204,144,369"/>
+<area shape="rect" id="node3" href="$classTTest128CO.html" title="CPA Measurement scenario plugin: sends key command (0x01), followed by the cipher key..." alt="" coords="168,204,299,369"/>
+</map>

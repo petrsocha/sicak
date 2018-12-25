@@ -1,0 +1,7 @@
+<map id="include/measurement.h" name="include/measurement.h">
+<area shape="rect" id="node3" href="$oscilloscope_8h.html" title="Oscilloscope plugin interface for use e.g. in meas. " alt="" coords="47,80,153,107"/>
+<area shape="rect" id="node12" href="$chardevice_8h.html" title="Character device plugin interface for use e.g. in meas. " alt="" coords="228,80,324,107"/>
+<area shape="rect" id="node4" href="$types__power_8hpp.html" title="This header file contains class templates of power traces and power consumption containers. " alt="" coords="28,155,148,181"/>
+<area shape="rect" id="node5" href="$types__basic_8hpp.html" title="This header file contains class templates of basic data containers. " alt="" coords="123,229,240,256"/>
+<area shape="rect" id="node9" href="$exceptions_8hpp.html" title="This header file contains exceptions. " alt="" coords="275,304,386,331"/>
+</map>

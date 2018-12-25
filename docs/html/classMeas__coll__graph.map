@@ -1,0 +1,5 @@
+<map id="Meas" name="Meas">
+<area shape="rect" id="node3" href="$classCharDevice.html" title="Character device QT plugin interface. " alt="" coords="101,20,231,273"/>
+<area shape="rect" id="node4" href="$classOscilloscope.html" title="Oscilloscope QT plugin interface. " alt="" coords="255,5,391,288"/>
+<area shape="rect" id="node5" href="$classMeasurement.html" title="Measurement scenario QT plugin interface. " alt="" coords="415,71,546,222"/>
+</map>

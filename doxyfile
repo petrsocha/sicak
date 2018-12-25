@@ -1,0 +1,10 @@
+PROJECT_NAME = "SIde-Channel Analysis toolKit (SICAK)"
+PROJECT_BRIEF = "Software toolkit for side-channel analysis"
+INPUT = ./correv ./include ./ meas ./plugins ./prep ./stan ./visu
+RECURSIVE = YES
+GENERATE_LATEX = NO
+HAVE_DOT = YES
+UML_LOOK = YES
+EXTRACT_PRIVATE = YES
+EXTRACT_LOCAL_METHODS = YES
+OUTPUT_DIRECTORY = ./docs

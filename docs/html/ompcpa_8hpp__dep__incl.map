@@ -1,0 +1,6 @@
+<map id="plugins/cpaengine/common/ompcpa.hpp" name="plugins/cpaengine/common/ompcpa.hpp">
+<area shape="rect" id="node2" href="$localcpa_8h.html" title="SICAK CPA computation engine plugin, local cpu. " alt="" coords="5,95,184,136"/>
+<area shape="rect" id="node4" href="$oclcpa_8h.html" title="SICAK CPA computation engine plugin, OpenCL. " alt="" coords="208,95,376,136"/>
+<area shape="rect" id="node3" href="$localcpa_8cpp.html" title="SICAK CPA computation engine plugin, local cpu. " alt="" coords="5,184,184,225"/>
+<area shape="rect" id="node5" href="$oclcpa_8cpp.html" title="SICAK CPA computation engine plugin, OpenCL. " alt="" coords="208,184,376,225"/>
+</map>
