@@ -412,6 +412,7 @@ bool Visu::createChart(){
         }                
         
         m_axisYtraces->setRange(min, max);
+        m_axisYtraces->applyNiceNumbers();
         
         closeFile(tracesFile);
     
@@ -463,6 +464,7 @@ bool Visu::createChart(){
         }
         
         m_axisYcorrs->setRange(min, max);
+        m_axisYcorrs->applyNiceNumbers();
     
         closeFile(corrsFile);
     
@@ -504,6 +506,8 @@ bool Visu::createChart(){
         m_chart->addSeries(series);
         series->attachAxis(m_axisX);
         series->attachAxis(m_axisYtvals);
+        
+        m_axisYtvals->applyNiceNumbers();
         
         closeFile(tValsFile);
     }        
