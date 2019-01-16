@@ -749,7 +749,7 @@ bool Meas::initConfigChardevice(){
         }
         
         if(docObj.contains("timeoutms")){
-            stopBits = docObj.value("timeoutms").toInt();
+            timeoutms = docObj.value("timeoutms").toInt();
         }
          
     } else if(m_chardeviceConfig.size()){
