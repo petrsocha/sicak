@@ -1,2 +1,3 @@
 TEMPLATE    = subdirs
-SUBDIRS     += serialport
+SUBDIRS     += serialport \
+               smartcard
