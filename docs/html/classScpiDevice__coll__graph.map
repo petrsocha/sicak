@@ -1,2 +1,3 @@
 <map id="ScpiDevice" name="ScpiDevice">
+<area shape="rect" id="node1" title="SCPI device interface, using either USBTMC Linux module or VISA library." alt="" coords="5,5,199,244"/>
 </map>

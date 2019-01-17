@@ -1,4 +1,5 @@
 <map id="plugins/ttestengine/common/ompttest.hpp" name="plugins/ttestengine/common/ompttest.hpp">
-<area shape="rect" id="node2" href="$localttest_8h.html" title="SICAK t&#45;test computation engine plugin, local cpu. " alt="" coords="13,95,159,136"/>
-<area shape="rect" id="node3" href="$localttest_8cpp.html" title="SICAK t&#45;test computation engine plugin, local cpu. " alt="" coords="5,184,167,225"/>
+<area shape="rect" id="node1" title="Implementation of t&#45;test statistical algorithms as function templates for various SICAK plugins." alt="" coords="8,5,164,47"/>
+<area shape="rect" id="node2" href="$localttest_8h.html" title="SICAK t&#45;test computation engine plugin, local cpu." alt="" coords="13,95,159,136"/>
+<area shape="rect" id="node3" href="$localttest_8cpp.html" title="SICAK t&#45;test computation engine plugin, local cpu." alt="" coords="5,184,167,225"/>
 </map>

@@ -1,4 +1,5 @@
 <map id="ComputationalContext&lt; T &gt;" name="ComputationalContext&lt; T &gt;">
-<area shape="rect" id="node2" href="$classStructuredType.html" title="An abstract class, representing all the structured data types. " alt="" coords="27,145,166,237"/>
-<area shape="rect" id="node3" href="$classDataType.html" title="A base abstract class, representing all the data types. " alt="" coords="43,5,150,97"/>
+<area shape="rect" id="node1" title="An abstract class, representing all the computational contexts." alt="" coords="5,285,188,392"/>
+<area shape="rect" id="node2" href="$classStructuredType.html" title="An abstract class, representing all the structured data types." alt="" coords="27,145,166,237"/>
+<area shape="rect" id="node3" href="$classDataType.html" title="A base abstract class, representing all the data types." alt="" coords="43,5,150,97"/>
 </map>

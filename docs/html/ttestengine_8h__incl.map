@@ -1,6 +1,13 @@
 <map id="include/ttestengine.h" name="include/ttestengine.h">
-<area shape="rect" id="node3" href="$types__power_8hpp.html" title="This header file contains class templates of power traces and power consumption containers. " alt="" coords="96,80,216,107"/>
-<area shape="rect" id="node11" href="$types__stat_8hpp.html" title="This header file contains class templates of statistical computational contexts. " alt="" coords="241,80,349,107"/>
-<area shape="rect" id="node4" href="$types__basic_8hpp.html" title="This header file contains class templates of basic data containers. " alt="" coords="167,155,284,181"/>
-<area shape="rect" id="node8" href="$exceptions_8hpp.html" title="This header file contains exceptions. " alt="" coords="319,229,430,256"/>
+<area shape="rect" id="node1" title="t&#45;test computation plugin interface for use e.g. in stan" alt="" coords="85,5,227,32"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,80,72,107"/>
+<area shape="rect" id="node3" href="$types__power_8hpp.html" title="This header file contains class templates of power traces and power consumption containers." alt="" coords="96,80,216,107"/>
+<area shape="rect" id="node11" href="$types__stat_8hpp.html" title="This header file contains class templates of statistical computational contexts." alt="" coords="241,80,349,107"/>
+<area shape="rect" id="node4" href="$types__basic_8hpp.html" title="This header file contains class templates of basic data containers." alt="" coords="167,155,284,181"/>
+<area shape="rect" id="node5" title=" " alt="" coords="49,229,124,256"/>
+<area shape="rect" id="node6" title=" " alt="" coords="148,229,217,256"/>
+<area shape="rect" id="node7" title=" " alt="" coords="241,229,295,256"/>
+<area shape="rect" id="node8" href="$exceptions_8hpp.html" title="This header file contains exceptions." alt="" coords="319,229,430,256"/>
+<area shape="rect" id="node9" title=" " alt="" coords="290,304,369,331"/>
+<area shape="rect" id="node10" title=" " alt="" coords="393,304,447,331"/>
 </map>

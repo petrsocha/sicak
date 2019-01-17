@@ -1,3 +1,5 @@
 <map id="LocalCPA" name="LocalCPA">
-<area shape="rect" id="node3" href="$classCpaEngine.html" title="CPA computation engine QT plugin interface. " alt="" coords="100,5,235,215"/>
+<area shape="rect" id="node1" title="CPA context computation SICAK CpaEngine plugin." alt="" coords="36,263,171,487"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,71,76,149"/>
+<area shape="rect" id="node3" href="$classCpaEngine.html" title="CPA computation engine QT plugin interface." alt="" coords="100,5,235,215"/>
 </map>

@@ -1,22 +1,25 @@
 <map id="include/types_stat.hpp" name="include/types_stat.hpp">
-<area shape="rect" id="node2" href="$cpaengine_8h.html" title="CPA computation plugin interface for use e.g. in stan. " alt="" coords="209,87,347,114"/>
-<area shape="rect" id="node8" href="$filehandling_8hpp.html" title="This header file contains function templates for loading/storing defined types. " alt="" coords="1135,87,1293,114"/>
-<area shape="rect" id="node16" href="$ttestengine_8h.html" title="t&#45;test computation plugin interface for use e.g. in stan " alt="" coords="564,87,707,114"/>
-<area shape="rect" id="node19" href="$ompcpa_8hpp.html" title="Implementation of CPA statistical algorithms as function templates for various SICAK plugins..." alt="" coords="5,80,185,121"/>
-<area shape="rect" id="node20" href="$oclcpaengine_8hpp.html" title="OpenCL implementation of CPA statistical algorithms as function templates. " alt="" coords="371,80,539,121"/>
-<area shape="rect" id="node21" href="$ompttest_8hpp.html" title="Implementation of t&#45;test statistical algorithms as function templates for various SICAK plugins..." alt="" coords="731,80,887,121"/>
-<area shape="rect" id="node3" href="$localcpa_8h.html" title="SICAK CPA computation engine plugin, local cpu. " alt="" coords="6,169,185,211"/>
-<area shape="rect" id="node5" href="$oclcpa_8h.html" title="SICAK CPA computation engine plugin, OpenCL. " alt="" coords="209,169,377,211"/>
-<area shape="rect" id="node7" href="$stan_8h.html" title="SICAK STatistical ANalysis text&#45;based UI. " alt="" coords="404,177,536,203"/>
-<area shape="rect" id="node4" href="$localcpa_8cpp.html" title="SICAK CPA computation engine plugin, local cpu. " alt="" coords="6,259,185,300"/>
-<area shape="rect" id="node6" href="$oclcpa_8cpp.html" title="SICAK CPA computation engine plugin, OpenCL. " alt="" coords="209,259,377,300"/>
-<area shape="rect" id="node9" href="$correv_8cpp.html" title="SICAK CORRelations EValuation text&#45;based UI. " alt="" coords="1025,177,1171,203"/>
-<area shape="rect" id="node10" href="$predictaes128back_8cpp.html" title="SICAK block data processing plugin: power predictions for AES&#45;128 based on ciphertext and last round ..." alt="" coords="1195,169,1468,211"/>
-<area shape="rect" id="node11" href="$predictaes128front_8cpp.html" title="SICAK block data processing plugin: power predictions for AES&#45;128 based on plain text and first round..." alt="" coords="1493,169,1762,211"/>
-<area shape="rect" id="node12" href="$random128co_8cpp.html" title="SICAK CPA measurement scenario plugin: sends key command (0x01), followed by the cipher key..." alt="" coords="1786,169,1997,211"/>
-<area shape="rect" id="node13" href="$ttest128co_8cpp.html" title="SICAK CPA measurement scenario plugin: sends key command (0x01), followed by the cipher key..." alt="" coords="2021,169,2199,211"/>
-<area shape="rect" id="node14" href="$prep_8cpp.html" title="SICAK PREProcessing text&#45;based UI. " alt="" coords="733,177,855,203"/>
-<area shape="rect" id="node15" href="$visu_8cpp.html" title="SICAK VISUalisation text&#45;based UI. " alt="" coords="880,177,1001,203"/>
-<area shape="rect" id="node17" href="$localttest_8h.html" title="SICAK t&#45;test computation engine plugin, local cpu. " alt="" coords="562,169,709,211"/>
-<area shape="rect" id="node18" href="$localttest_8cpp.html" title="SICAK t&#45;test computation engine plugin, local cpu. " alt="" coords="555,259,716,300"/>
+<area shape="rect" id="node1" title="This header file contains class templates of statistical computational contexts." alt="" coords="468,5,621,32"/>
+<area shape="rect" id="node2" href="$cpaengine_8h.html" title="CPA computation plugin interface for use e.g. in stan." alt="" coords="209,87,347,114"/>
+<area shape="rect" id="node8" href="$filehandling_8hpp.html" title="This header file contains function templates for loading/storing defined types." alt="" coords="1558,87,1715,114"/>
+<area shape="rect" id="node18" href="$ttestengine_8h.html" title="t&#45;test computation plugin interface for use e.g. in stan" alt="" coords="564,87,707,114"/>
+<area shape="rect" id="node21" href="$ompcpa_8hpp.html" title="Implementation of CPA statistical algorithms as function templates for various SICAK plugins." alt="" coords="5,80,185,121"/>
+<area shape="rect" id="node22" href="$oclcpaengine_8hpp.html" title="OpenCL implementation of CPA statistical algorithms as function templates." alt="" coords="371,80,539,121"/>
+<area shape="rect" id="node23" href="$ompttest_8hpp.html" title="Implementation of t&#45;test statistical algorithms as function templates for various SICAK plugins." alt="" coords="731,80,887,121"/>
+<area shape="rect" id="node3" href="$localcpa_8h.html" title="SICAK CPA computation engine plugin, local cpu." alt="" coords="6,169,185,211"/>
+<area shape="rect" id="node5" href="$oclcpa_8h.html" title="SICAK CPA computation engine plugin, OpenCL." alt="" coords="209,169,377,211"/>
+<area shape="rect" id="node7" href="$stan_8h.html" title="SICAK STatistical ANalysis text&#45;based UI." alt="" coords="404,177,536,203"/>
+<area shape="rect" id="node4" href="$localcpa_8cpp.html" title="SICAK CPA computation engine plugin, local cpu." alt="" coords="6,259,185,300"/>
+<area shape="rect" id="node6" href="$oclcpa_8cpp.html" title="SICAK CPA computation engine plugin, OpenCL." alt="" coords="209,259,377,300"/>
+<area shape="rect" id="node9" href="$correv_8cpp.html" title="SICAK CORRelations EValuation text&#45;based UI." alt="" coords="1956,177,2101,203"/>
+<area shape="rect" id="node10" href="$predictaes128back_8cpp.html" title="SICAK block data processing plugin: power predictions for AES&#45;128 based on ciphertext and last round ..." alt="" coords="2125,169,2399,211"/>
+<area shape="rect" id="node11" href="$predictaes128front_8cpp.html" title="SICAK block data processing plugin: power predictions for AES&#45;128 based on plain text and first round..." alt="" coords="2423,169,2693,211"/>
+<area shape="rect" id="node12" href="$random128apdu_8cpp.html" title="SICAK CPA Measurement scenario plugin: sends N times a command APDU: CLA=0x80, INS=0x60,..." alt="" coords="733,169,972,211"/>
+<area shape="rect" id="node13" href="$random128co_8cpp.html" title="SICAK CPA measurement scenario plugin: sends key command (0x01), followed by the cipher key,..." alt="" coords="997,169,1207,211"/>
+<area shape="rect" id="node14" href="$ttest128apdu_8cpp.html" title="SICAK CPA measurement scenario plugin: sends key command (0x01), followed by the cipher key,..." alt="" coords="1231,169,1437,211"/>
+<area shape="rect" id="node15" href="$ttest128co_8cpp.html" title="SICAK CPA measurement scenario plugin: sends key command (0x01), followed by the cipher key,..." alt="" coords="1461,169,1639,211"/>
+<area shape="rect" id="node16" href="$prep_8cpp.html" title="SICAK PREProcessing text&#45;based UI." alt="" coords="1663,177,1786,203"/>
+<area shape="rect" id="node17" href="$visu_8cpp.html" title="SICAK VISUalisation text&#45;based UI." alt="" coords="1811,177,1932,203"/>
+<area shape="rect" id="node19" href="$localttest_8h.html" title="SICAK t&#45;test computation engine plugin, local cpu." alt="" coords="562,169,709,211"/>
+<area shape="rect" id="node20" href="$localttest_8cpp.html" title="SICAK t&#45;test computation engine plugin, local cpu." alt="" coords="555,259,716,300"/>
 </map>

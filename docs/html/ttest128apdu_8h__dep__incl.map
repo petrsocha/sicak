@@ -1,0 +1,4 @@
+<map id="plugins/measurement/ttest128apdu/ttest128apdu.h" name="plugins/measurement/ttest128apdu/ttest128apdu.h">
+<area shape="rect" id="node1" title="CPA Measurement scenario plugin: sends N times a command APDU: CLA=0x80, INS=0x60,..." alt="" coords="13,5,203,47"/>
+<area shape="rect" id="node2" href="$ttest128apdu_8cpp.html" title="SICAK CPA measurement scenario plugin: sends key command (0x01), followed by the cipher key,..." alt="" coords="5,95,211,136"/>
+</map>

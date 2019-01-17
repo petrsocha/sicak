@@ -1,6 +1,7 @@
 <map id="PowerTraces&lt; T &gt;" name="PowerTraces&lt; T &gt;">
-<area shape="rect" id="node2" href="$classMatrix.html" title="A class representing a matrix, stored in the machine&#39;s free space. " alt="" coords="28,587,127,840"/>
-<area shape="rect" id="node3" href="$classMatrixType.html" title="An abstract class, representing all the matrix&#45;like data types. " alt="" coords="18,359,137,539"/>
-<area shape="rect" id="node4" href="$classArrayType.html" title="An abstract class, representing all the array&#45;like data types. " alt="" coords="20,145,135,311"/>
-<area shape="rect" id="node5" href="$classDataType.html" title="A base abstract class, representing all the data types. " alt="" coords="24,5,131,97"/>
+<area shape="rect" id="node1" title="A class representing a Matrix with &#39;noOfTraces&#39; power traces, with &#39;samplesPerTrace&#39; samples per powe..." alt="" coords="5,888,149,1112"/>
+<area shape="rect" id="node2" href="$classMatrix.html" title="A class representing a matrix, stored in the machine&#39;s free space." alt="" coords="28,587,127,840"/>
+<area shape="rect" id="node3" href="$classMatrixType.html" title="An abstract class, representing all the matrix&#45;like data types." alt="" coords="18,359,137,539"/>
+<area shape="rect" id="node4" href="$classArrayType.html" title="An abstract class, representing all the array&#45;like data types." alt="" coords="20,145,135,311"/>
+<area shape="rect" id="node5" href="$classDataType.html" title="A base abstract class, representing all the data types." alt="" coords="24,5,131,97"/>
 </map>

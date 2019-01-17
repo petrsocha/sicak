@@ -1,5 +1,12 @@
 <map id="include/oscilloscope.h" name="include/oscilloscope.h">
-<area shape="rect" id="node3" href="$types__power_8hpp.html" title="This header file contains class templates of power traces and power consumption containers. " alt="" coords="121,80,241,107"/>
-<area shape="rect" id="node4" href="$types__basic_8hpp.html" title="This header file contains class templates of basic data containers. " alt="" coords="123,155,240,181"/>
-<area shape="rect" id="node8" href="$exceptions_8hpp.html" title="This header file contains exceptions. " alt="" coords="275,229,386,256"/>
+<area shape="rect" id="node1" title="Oscilloscope plugin interface for use e.g. in meas." alt="" coords="47,5,198,32"/>
+<area shape="rect" id="node2" title=" " alt="" coords="31,80,97,107"/>
+<area shape="rect" id="node3" href="$types__power_8hpp.html" title="This header file contains class templates of power traces and power consumption containers." alt="" coords="121,80,241,107"/>
+<area shape="rect" id="node4" href="$types__basic_8hpp.html" title="This header file contains class templates of basic data containers." alt="" coords="123,155,240,181"/>
+<area shape="rect" id="node5" title=" " alt="" coords="5,229,80,256"/>
+<area shape="rect" id="node6" title=" " alt="" coords="104,229,173,256"/>
+<area shape="rect" id="node7" title=" " alt="" coords="197,229,251,256"/>
+<area shape="rect" id="node8" href="$exceptions_8hpp.html" title="This header file contains exceptions." alt="" coords="275,229,386,256"/>
+<area shape="rect" id="node9" title=" " alt="" coords="246,304,325,331"/>
+<area shape="rect" id="node10" title=" " alt="" coords="349,304,403,331"/>
 </map>

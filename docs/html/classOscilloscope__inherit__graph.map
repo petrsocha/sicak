@@ -1,4 +1,5 @@
 <map id="Oscilloscope" name="Oscilloscope">
-<area shape="rect" id="node2" href="$classKeysight3000.html" title="Oscilloscope plugin for Keysight 3000 series oscilloscope, using ScpiDevice for communication. " alt="" coords="5,351,136,619"/>
-<area shape="rect" id="node3" href="$classPs6000.html" title="Oscilloscope plugin for PicoScope 6000, using official driver for communication. " alt="" coords="161,336,327,633"/>
+<area shape="rect" id="node1" title="Oscilloscope QT plugin interface." alt="" coords="89,5,225,288"/>
+<area shape="rect" id="node2" href="$classKeysight3000.html" title="Oscilloscope plugin for Keysight 3000 series oscilloscope, using ScpiDevice for communication." alt="" coords="5,351,136,619"/>
+<area shape="rect" id="node3" href="$classPs6000.html" title="Oscilloscope plugin for PicoScope 6000, using official driver for communication." alt="" coords="161,336,327,633"/>
 </map>

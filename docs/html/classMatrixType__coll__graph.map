@@ -1,4 +1,5 @@
 <map id="MatrixType&lt; T &gt;" name="MatrixType&lt; T &gt;">
-<area shape="rect" id="node2" href="$classArrayType.html" title="An abstract class, representing all the array&#45;like data types. " alt="" coords="7,145,122,311"/>
-<area shape="rect" id="node3" href="$classDataType.html" title="A base abstract class, representing all the data types. " alt="" coords="11,5,118,97"/>
+<area shape="rect" id="node1" title="An abstract class, representing all the matrix&#45;like data types." alt="" coords="5,359,124,539"/>
+<area shape="rect" id="node2" href="$classArrayType.html" title="An abstract class, representing all the array&#45;like data types." alt="" coords="7,145,122,311"/>
+<area shape="rect" id="node3" href="$classDataType.html" title="A base abstract class, representing all the data types." alt="" coords="11,5,118,97"/>
 </map>

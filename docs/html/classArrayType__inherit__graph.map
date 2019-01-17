@@ -1,9 +1,10 @@
 <map id="ArrayType&lt; T &gt;" name="ArrayType&lt; T &gt;">
-<area shape="rect" id="node3" href="$classMatrixType.html" title="An abstract class, representing all the matrix&#45;like data types. " alt="" coords="110,359,229,539"/>
-<area shape="rect" id="node7" href="$classVectorType.html" title="An abstract class, representing all the vector&#45;like data types. " alt="" coords="253,373,374,524"/>
-<area shape="rect" id="node2" href="$classDataType.html" title="A base abstract class, representing all the data types. " alt="" coords="188,5,295,97"/>
-<area shape="rect" id="node4" href="$classMatrix.html" title="A class representing a matrix, stored in the machine&#39;s free space. " alt="" coords="120,616,219,869"/>
+<area shape="rect" id="node1" title="An abstract class, representing all the array&#45;like data types." alt="" coords="184,145,299,311"/>
+<area shape="rect" id="node3" href="$classMatrixType.html" title="An abstract class, representing all the matrix&#45;like data types." alt="" coords="110,359,229,539"/>
+<area shape="rect" id="node7" href="$classVectorType.html" title="An abstract class, representing all the vector&#45;like data types." alt="" coords="253,373,374,524"/>
+<area shape="rect" id="node2" href="$classDataType.html" title="A base abstract class, representing all the data types." alt="" coords="188,5,295,97"/>
+<area shape="rect" id="node4" href="$classMatrix.html" title="A class representing a matrix, stored in the machine&#39;s free space." alt="" coords="120,616,219,869"/>
 <area shape="rect" id="node5" href="$classPowerPredictions.html" title="A class representing a Matrix with &#39;noOfTraces&#39; power predictions, with &#39;noOfCandidates&#39; key candidat..." alt="" coords="5,947,160,1171"/>
 <area shape="rect" id="node6" href="$classPowerTraces.html" title="A class representing a Matrix with &#39;noOfTraces&#39; power traces, with &#39;samplesPerTrace&#39; samples per powe..." alt="" coords="184,947,328,1171"/>
-<area shape="rect" id="node8" href="$classVector.html" title="A class representing a vector, stored in the machine&#39;s free space. " alt="" coords="263,587,363,899"/>
+<area shape="rect" id="node8" href="$classVector.html" title="A class representing a vector, stored in the machine&#39;s free space." alt="" coords="263,587,363,899"/>
 </map>

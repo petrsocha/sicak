@@ -1,3 +1,4 @@
 <map id="plugins/oscilloscope/keysight3000/keysight3000.h" name="plugins/oscilloscope/keysight3000/keysight3000.h">
-<area shape="rect" id="node2" href="$keysight3000_8cpp.html" title="SICAK oscilloscope plugin: Keysight 3000 series (formerly agilent), using SCPIDevice, which may require VISA library. " alt="" coords="5,95,215,136"/>
+<area shape="rect" id="node1" title="SICAK oscilloscope plugin: Keysight 3000 series (formerly agilent), using SCPIDevice." alt="" coords="13,5,207,47"/>
+<area shape="rect" id="node2" href="$keysight3000_8cpp.html" title="SICAK oscilloscope plugin: Keysight 3000 series (formerly agilent), using SCPIDevice,..." alt="" coords="5,95,215,136"/>
 </map>

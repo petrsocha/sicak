@@ -1,3 +1,5 @@
 <map id="PredictAES128Back" name="PredictAES128Back">
-<area shape="rect" id="node3" href="$classBlockProcess.html" title="Block data processing QT plugin interface. " alt="" coords="100,5,248,156"/>
+<area shape="rect" id="node1" title="AES&#45;128 last round working register Hamming distance power predictions SICAK BlockProcess plugin." alt="" coords="23,204,192,369"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,42,76,119"/>
+<area shape="rect" id="node3" href="$classBlockProcess.html" title="Block data processing QT plugin interface." alt="" coords="100,5,248,156"/>
 </map>

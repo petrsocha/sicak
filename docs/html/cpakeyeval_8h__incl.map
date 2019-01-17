@@ -1,4 +1,11 @@
 <map id="include/cpakeyeval.h" name="include/cpakeyeval.h">
-<area shape="rect" id="node3" href="$types__basic_8hpp.html" title="This header file contains class templates of basic data containers. " alt="" coords="123,80,240,107"/>
-<area shape="rect" id="node7" href="$exceptions_8hpp.html" title="This header file contains exceptions. " alt="" coords="275,155,386,181"/>
+<area shape="rect" id="node1" title="Keyguess evaluation plugin interface for use e.g. in correv." alt="" coords="51,5,195,32"/>
+<area shape="rect" id="node2" title=" " alt="" coords="32,80,99,107"/>
+<area shape="rect" id="node3" href="$types__basic_8hpp.html" title="This header file contains class templates of basic data containers." alt="" coords="123,80,240,107"/>
+<area shape="rect" id="node4" title=" " alt="" coords="5,155,80,181"/>
+<area shape="rect" id="node5" title=" " alt="" coords="104,155,173,181"/>
+<area shape="rect" id="node6" title=" " alt="" coords="197,155,251,181"/>
+<area shape="rect" id="node7" href="$exceptions_8hpp.html" title="This header file contains exceptions." alt="" coords="275,155,386,181"/>
+<area shape="rect" id="node8" title=" " alt="" coords="246,229,325,256"/>
+<area shape="rect" id="node9" title=" " alt="" coords="349,229,403,256"/>
 </map>

@@ -1,10 +1,22 @@
 <map id="plugins/cpaengine/oclcpa/oclcpa.h" name="plugins/cpaengine/oclcpa/oclcpa.h">
-<area shape="rect" id="node4" href="$cpaengine_8h.html" title="CPA computation plugin interface for use e.g. in stan. " alt="" coords="226,95,318,121"/>
-<area shape="rect" id="node11" href="$exceptions_8hpp.html" title="This header file contains exceptions. " alt="" coords="378,319,489,345"/>
-<area shape="rect" id="node15" href="$ompcpa_8hpp.html" title="Implementation of CPA statistical algorithms as function templates for various SICAK plugins..." alt="" coords="504,95,597,121"/>
-<area shape="rect" id="node18" href="$oclcpaengine_8hpp.html" title="OpenCL implementation of CPA statistical algorithms as function templates. " alt="" coords="343,95,465,121"/>
-<area shape="rect" id="node6" href="$types__power_8hpp.html" title="This header file contains class templates of power traces and power consumption containers. " alt="" coords="229,169,349,196"/>
-<area shape="rect" id="node14" href="$types__stat_8hpp.html" title="This header file contains class templates of statistical computational contexts. " alt="" coords="97,169,205,196"/>
-<area shape="rect" id="node7" href="$types__basic_8hpp.html" title="This header file contains class templates of basic data containers. " alt="" coords="145,244,263,271"/>
-<area shape="rect" id="node19" href="$oclengine_8hpp.html" title="OpenCL base class template for SICAK plugins. " alt="" coords="425,169,527,196"/>
+<area shape="rect" id="node1" title="SICAK CPA computation engine plugin, OpenCL." alt="" coords="320,5,488,47"/>
+<area shape="rect" id="node2" title=" " alt="" coords="34,95,105,121"/>
+<area shape="rect" id="node3" title=" " alt="" coords="129,95,201,121"/>
+<area shape="rect" id="node4" href="$cpaengine_8h.html" title="CPA computation plugin interface for use e.g. in stan." alt="" coords="226,95,318,121"/>
+<area shape="rect" id="node11" href="$exceptions_8hpp.html" title="This header file contains exceptions." alt="" coords="378,319,489,345"/>
+<area shape="rect" id="node15" href="$ompcpa_8hpp.html" title="Implementation of CPA statistical algorithms as function templates for various SICAK plugins." alt="" coords="504,95,597,121"/>
+<area shape="rect" id="node18" href="$oclcpaengine_8hpp.html" title="OpenCL implementation of CPA statistical algorithms as function templates." alt="" coords="343,95,465,121"/>
+<area shape="rect" id="node20" title=" " alt="" coords="475,244,538,271"/>
+<area shape="rect" id="node5" title=" " alt="" coords="5,169,72,196"/>
+<area shape="rect" id="node6" href="$types__power_8hpp.html" title="This header file contains class templates of power traces and power consumption containers." alt="" coords="229,169,349,196"/>
+<area shape="rect" id="node14" href="$types__stat_8hpp.html" title="This header file contains class templates of statistical computational contexts." alt="" coords="97,169,205,196"/>
+<area shape="rect" id="node7" href="$types__basic_8hpp.html" title="This header file contains class templates of basic data containers." alt="" coords="145,244,263,271"/>
+<area shape="rect" id="node8" title=" " alt="" coords="131,319,205,345"/>
+<area shape="rect" id="node9" title=" " alt="" coords="229,319,299,345"/>
+<area shape="rect" id="node10" title=" " alt="" coords="53,319,107,345"/>
+<area shape="rect" id="node12" title=" " alt="" coords="394,393,473,420"/>
+<area shape="rect" id="node13" title=" " alt="" coords="313,393,367,420"/>
+<area shape="rect" id="node16" title=" " alt="" coords="603,169,661,196"/>
+<area shape="rect" id="node17" title=" " alt="" coords="685,169,744,196"/>
+<area shape="rect" id="node19" href="$oclengine_8hpp.html" title="OpenCL base class template for SICAK plugins." alt="" coords="425,169,527,196"/>
 </map>

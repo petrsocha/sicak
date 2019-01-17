@@ -1,3 +1,5 @@
 <map id="TTest128CO" name="TTest128CO">
-<area shape="rect" id="node3" href="$classMeasurement.html" title="Measurement scenario QT plugin interface. " alt="" coords="101,5,231,156"/>
+<area shape="rect" id="node1" title="CPA Measurement scenario plugin: sends key command (0x01), followed by the cipher key,..." alt="" coords="38,204,169,369"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,42,76,119"/>
+<area shape="rect" id="node3" href="$classMeasurement.html" title="Measurement scenario QT plugin interface." alt="" coords="101,5,231,156"/>
 </map>

@@ -1,4 +1,5 @@
 <map id="plugins/cpaengine/oclcpa/oclcpaengine.hpp" name="plugins/cpaengine/oclcpa/oclcpaengine.hpp">
-<area shape="rect" id="node2" href="$oclcpa_8h.html" title="SICAK CPA computation engine plugin, OpenCL. " alt="" coords="5,95,173,136"/>
-<area shape="rect" id="node3" href="$oclcpa_8cpp.html" title="SICAK CPA computation engine plugin, OpenCL. " alt="" coords="5,184,173,225"/>
+<area shape="rect" id="node1" title="OpenCL implementation of CPA statistical algorithms as function templates." alt="" coords="5,5,173,47"/>
+<area shape="rect" id="node2" href="$oclcpa_8h.html" title="SICAK CPA computation engine plugin, OpenCL." alt="" coords="5,95,173,136"/>
+<area shape="rect" id="node3" href="$oclcpa_8cpp.html" title="SICAK CPA computation engine plugin, OpenCL." alt="" coords="5,184,173,225"/>
 </map>

@@ -1,0 +1,5 @@
+<map id="Random128APDU" name="Random128APDU">
+<area shape="rect" id="node1" title="CPA Measurement scenario plugin: sends N times a command APDU: CLA=0x80, INS=0x60,..." alt="" coords="26,204,181,369"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,42,76,119"/>
+<area shape="rect" id="node3" href="$classMeasurement.html" title="Measurement scenario QT plugin interface." alt="" coords="101,5,231,156"/>
+</map>

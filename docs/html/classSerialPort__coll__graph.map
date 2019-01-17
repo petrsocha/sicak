@@ -1,3 +1,5 @@
 <map id="SerialPort" name="SerialPort">
-<area shape="rect" id="node3" href="$classCharDevice.html" title="Character device QT plugin interface. " alt="" coords="101,5,231,259"/>
+<area shape="rect" id="node1" title="Serial port interface (Win32/Posix) SICAK CharDevice plugin." alt="" coords="38,307,169,589"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,93,76,171"/>
+<area shape="rect" id="node3" href="$classCharDevice.html" title="Character device QT plugin interface." alt="" coords="101,5,231,259"/>
 </map>

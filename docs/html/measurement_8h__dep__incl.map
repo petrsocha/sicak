@@ -1,8 +1,13 @@
 <map id="include/measurement.h" name="include/measurement.h">
-<area shape="rect" id="node2" href="$meas_8h.html" title="SICAK MEASurement text&#45;based UI. " alt="" coords="5,87,152,114"/>
-<area shape="rect" id="node3" href="$meas_8cpp.html" title="SICAK MEASurement text&#45;based UI. " alt="" coords="34,177,171,203"/>
-<area shape="rect" id="node4" href="$random128co_8h.html" title="SICAK CPA measurement scenario plugin: sends key command (0x01), followed by the cipher key..." alt="" coords="227,80,424,121"/>
-<area shape="rect" id="node6" href="$ttest128co_8h.html" title="SICAK CPA measurement scenario plugin: sends key command (0x01), followed by the cipher key..." alt="" coords="455,80,617,121"/>
-<area shape="rect" id="node5" href="$random128co_8cpp.html" title="SICAK CPA measurement scenario plugin: sends key command (0x01), followed by the cipher key..." alt="" coords="216,169,427,211"/>
-<area shape="rect" id="node7" href="$ttest128co_8cpp.html" title="SICAK CPA measurement scenario plugin: sends key command (0x01), followed by the cipher key..." alt="" coords="451,169,629,211"/>
+<area shape="rect" id="node1" title="Measurement scenario plugin interface for use e.g. in meas." alt="" coords="377,5,535,32"/>
+<area shape="rect" id="node2" href="$meas_8h.html" title="SICAK MEASurement text&#45;based UI." alt="" coords="5,87,152,114"/>
+<area shape="rect" id="node3" href="$meas_8cpp.html" title="SICAK MEASurement text&#45;based UI." alt="" coords="27,177,165,203"/>
+<area shape="rect" id="node4" href="$random128apdu_8h.html" title="CPA Measurement scenario plugin: sends N times a command APDU: CLA=0x80, INS=0x60,..." alt="" coords="226,80,451,121"/>
+<area shape="rect" id="node6" href="$random128co_8h.html" title="SICAK CPA measurement scenario plugin: sends key command (0x01), followed by the cipher key,..." alt="" coords="476,80,673,121"/>
+<area shape="rect" id="node8" href="$ttest128apdu_8h.html" title="CPA Measurement scenario plugin: sends N times a command APDU: CLA=0x80, INS=0x60,..." alt="" coords="705,80,895,121"/>
+<area shape="rect" id="node10" href="$ttest128co_8h.html" title="SICAK CPA measurement scenario plugin: sends key command (0x01), followed by the cipher key,..." alt="" coords="931,80,1093,121"/>
+<area shape="rect" id="node5" href="$random128apdu_8cpp.html" title="SICAK CPA Measurement scenario plugin: sends N times a command APDU: CLA=0x80, INS=0x60,..." alt="" coords="202,169,441,211"/>
+<area shape="rect" id="node7" href="$random128co_8cpp.html" title="SICAK CPA measurement scenario plugin: sends key command (0x01), followed by the cipher key,..." alt="" coords="465,169,676,211"/>
+<area shape="rect" id="node9" href="$ttest128apdu_8cpp.html" title="SICAK CPA measurement scenario plugin: sends key command (0x01), followed by the cipher key,..." alt="" coords="700,169,905,211"/>
+<area shape="rect" id="node11" href="$ttest128co_8cpp.html" title="SICAK CPA measurement scenario plugin: sends key command (0x01), followed by the cipher key,..." alt="" coords="930,169,1107,211"/>
 </map>

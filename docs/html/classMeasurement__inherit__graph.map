@@ -1,4 +1,7 @@
 <map id="Measurement" name="Measurement">
-<area shape="rect" id="node2" href="$classRandom128CO.html" title="CPA Measurement scenario plugin: sends key command (0x01), followed by the cipher key..." alt="" coords="5,204,144,369"/>
-<area shape="rect" id="node3" href="$classTTest128CO.html" title="CPA Measurement scenario plugin: sends key command (0x01), followed by the cipher key..." alt="" coords="168,204,299,369"/>
+<area shape="rect" id="node1" title="Measurement scenario QT plugin interface." alt="" coords="269,5,400,156"/>
+<area shape="rect" id="node2" href="$classRandom128APDU.html" title="CPA Measurement scenario plugin: sends N times a command APDU: CLA=0x80, INS=0x60,..." alt="" coords="5,204,160,369"/>
+<area shape="rect" id="node3" href="$classRandom128CO.html" title="CPA Measurement scenario plugin: sends key command (0x01), followed by the cipher key,..." alt="" coords="184,204,323,369"/>
+<area shape="rect" id="node4" href="$classTTest128APDU.html" title="CPA Measurement scenario plugin: sends N times a command APDU: CLA=0x80, INS=0x60,..." alt="" coords="347,204,485,369"/>
+<area shape="rect" id="node5" href="$classTTest128CO.html" title="CPA Measurement scenario plugin: sends key command (0x01), followed by the cipher key,..." alt="" coords="509,204,640,369"/>
 </map>

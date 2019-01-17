@@ -1,3 +1,4 @@
 <map id="plugins/measurement/random128co/random128co.h" name="plugins/measurement/random128co/random128co.h">
-<area shape="rect" id="node2" href="$random128co_8cpp.html" title="SICAK CPA measurement scenario plugin: sends key command (0x01), followed by the cipher key..." alt="" coords="5,95,216,136"/>
+<area shape="rect" id="node1" title="SICAK CPA measurement scenario plugin: sends key command (0x01), followed by the cipher key,..." alt="" coords="12,5,209,47"/>
+<area shape="rect" id="node2" href="$random128co_8cpp.html" title="SICAK CPA measurement scenario plugin: sends key command (0x01), followed by the cipher key,..." alt="" coords="5,95,216,136"/>
 </map>

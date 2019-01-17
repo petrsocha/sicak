@@ -1,3 +1,4 @@
 <map id="plugins/blockprocess/predictaes128front/predictaes128front.h" name="plugins/blockprocess/predictaes128front/predictaes128front.h">
+<area shape="rect" id="node1" title="SICAK block data processing plugin: power predictions for AES&#45;128 based on plain text and first round..." alt="" coords="13,5,267,47"/>
 <area shape="rect" id="node2" href="$predictaes128front_8cpp.html" title="SICAK block data processing plugin: power predictions for AES&#45;128 based on plain text and first round..." alt="" coords="5,95,275,136"/>
 </map>

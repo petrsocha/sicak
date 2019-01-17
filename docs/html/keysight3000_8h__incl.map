@@ -1,7 +1,20 @@
 <map id="plugins/oscilloscope/keysight3000/keysight3000.h" name="plugins/oscilloscope/keysight3000/keysight3000.h">
-<area shape="rect" id="node6" href="$oscilloscope_8h.html" title="Oscilloscope plugin interface for use e.g. in meas. " alt="" coords="332,95,437,121"/>
-<area shape="rect" id="node13" href="$exceptions_8hpp.html" title="This header file contains exceptions. " alt="" coords="517,319,628,345"/>
-<area shape="rect" id="node15" href="$scpidevice_8h.html" title="Class providing SCPI device interface, either using USBTMC Linux Module, or using VISA libraries..." alt="" coords="639,244,733,271"/>
-<area shape="rect" id="node8" href="$types__power_8hpp.html" title="This header file contains class templates of power traces and power consumption containers. " alt="" coords="369,169,489,196"/>
-<area shape="rect" id="node9" href="$types__basic_8hpp.html" title="This header file contains class templates of basic data containers. " alt="" coords="370,244,487,271"/>
+<area shape="rect" id="node1" title="SICAK oscilloscope plugin: Keysight 3000 series (formerly agilent), using SCPIDevice." alt="" coords="181,5,375,47"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,95,76,121"/>
+<area shape="rect" id="node3" title=" " alt="" coords="101,95,173,121"/>
+<area shape="rect" id="node4" title=" " alt="" coords="500,393,555,420"/>
+<area shape="rect" id="node5" title=" " alt="" coords="248,95,308,121"/>
+<area shape="rect" id="node6" href="$oscilloscope_8h.html" title="Oscilloscope plugin interface for use e.g. in meas." alt="" coords="332,95,437,121"/>
+<area shape="rect" id="node13" href="$exceptions_8hpp.html" title="This header file contains exceptions." alt="" coords="517,319,628,345"/>
+<area shape="rect" id="node15" href="$scpidevice_8h.html" title="Class providing SCPI device interface, either using USBTMC Linux Module, or using VISA libraries." alt="" coords="639,244,733,271"/>
+<area shape="rect" id="node7" title=" " alt="" coords="278,169,345,196"/>
+<area shape="rect" id="node8" href="$types__power_8hpp.html" title="This header file contains class templates of power traces and power consumption containers." alt="" coords="369,169,489,196"/>
+<area shape="rect" id="node9" href="$types__basic_8hpp.html" title="This header file contains class templates of basic data containers." alt="" coords="370,244,487,271"/>
+<area shape="rect" id="node10" title=" " alt="" coords="247,319,322,345"/>
+<area shape="rect" id="node11" title=" " alt="" coords="423,319,493,345"/>
+<area shape="rect" id="node12" title=" " alt="" coords="346,319,399,345"/>
+<area shape="rect" id="node14" title=" " alt="" coords="579,393,657,420"/>
+<area shape="rect" id="node16" title=" " alt="" coords="878,319,939,345"/>
+<area shape="rect" id="node17" title=" " alt="" coords="652,319,720,345"/>
+<area shape="rect" id="node18" title=" " alt="" coords="745,319,803,345"/>
 </map>

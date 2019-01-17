@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
 
-  <title>SICAK User Guide, ver. 1.0</title>
+  <title>SICAK User Guide, ver. 1.0.1</title>
   <meta name="author" content="Petr Socha">
-  <meta name="description" content="SICAK 1.0 User Guide, ver. 1.0">
+  <meta name="description" content="SICAK 1.0.1 User Guide, ver. 1.0">
   
   <style>
     body {
@@ -65,8 +65,8 @@
 <body id="top">
 
     <main>
-        <h1>SICAK: SIde-Channel Analysis toolKit 1.0</h1>
-        <h1>User's Guide, ver. 1.0</h1>
+        <h1>SICAK: SIde-Channel Analysis toolKit 1.0.1</h1>
+        <h1>User's Guide, ver. 1.0.1</h1>
         
         <h2>Contents</h2>
             <ol>
@@ -76,9 +76,9 @@
                 <li><a href="#stan">stan</a> (<a href="#stanusage">Usage</a>, <a href="#stanexamples">Examples</a>) </li>
                 <li><a href="#correv">correv</a> (<a href="#correvusage">Usage</a>, <a href="#correvexamples">Examples</a>) </li>
                 <li><a href="#visu">visu</a> (<a href="#visuusage">Usage</a>, <a href="#visuexamples">Examples</a>) </li>
-                <li><a href="#chardevice">chardevice (meas) plug-ins</a> (<a href="#serialport">serialport</a>)</li>
+                <li><a href="#chardevice">chardevice (meas) plug-ins</a> (<a href="#serialport">serialport</a>, <a href="#smartcard">smartcard</a>)</li>
                 <li><a href="#oscilloscope">oscilloscope (meas) plug-ins</a> (<a href="#keysight3000">keysight3000</a>, <a href="#ps6000">ps6000</a>)</li>
-                <li><a href="#measurement">measurement (meas) plug-ins</a> (<a href="#random128co">random128co</a>, <a href="#ttest128co">ttest128co</a>)</li>
+                <li><a href="#measurement">measurement (meas) plug-ins</a> (<a href="#random128co">random128co</a>, <a href="#ttest128co">ttest128co</a>, <a href="#random128apdu">random128apdu</a>, <a href="#ttest128apdu">ttest128apdu</a>)</li>
                 <li><a href="#blockprocess">blockprocess (prep) plug-ins</a> (<a href="#predictaes128back">predictaes128back</a>, <a href="#predictaes128front">predictaes128front</a>)</li>
                 <li><a href="#tracesprocess">tracesprocess (prep) plug-ins</a></li>
                 <li><a href="#cpaengine">cpaengine (stan) plug-ins</a> (<a href="#cpa">cpa</a>, <a href="#oclcpa">oclcpa</a>)</li>
@@ -1170,6 +1170,18 @@
                     </ul>
                     
                     <p><strong>timeoutms</strong> is a value of timeout in milliseconds.</p>
+                    
+                <h3 id="smartcard">smartcard</h3>
+                
+                    <p><strong>smartcard</strong> is a plug-in providing communication with a SmartCard reader using Win32 API. This plug-in does currently not operate under any other platform.</p>
+                    
+                    <p>It is opened using a Device ID, which is a number of SmartCard reader as displayed when queried.</p>
+                    
+                    <p>Only a valid APDU message must be send using the send() function. Given the nature of the SmartCard command-response communication, the send() function blocks until the response is received back from the card. The receive() function then returns data received during the last send() call. These are not processed in any way (i.e. they usually contain response trailer).</p>
+                    
+                    <p>The T=1 block protocol is used.</p>
+                    
+                    <p>Baudrate, parity, stopbits and timeout parameters are ignored. The timeout is 5 seconds.</p>
             
             <a href="#top" class="toplink">back to top &uarr;</a>
             <h2 id="oscilloscope">8. oscilloscope (meas) plug-ins</h2>
@@ -1265,6 +1277,29 @@
                     </ul>
                 
                     <p>where ID is meas given parameter or default.</p>
+                    
+                <h3 id="random128apdu">random128apdu</h3>
+                <h3 id="ttest128apdu">ttest128apdu</h3>
+                
+                <p>Both random128apdu and ttest128apdu work similar as random128co and ttest128co.</p>
+                
+                <p>First difference is that prior to the encryption, the cipher key is not being set in this scenario.</p>
+                
+                <p>Second, the data are send and received using APDU format as described in ISO/IEC 7816-4:2005 with fields set as follows:</p>
+                
+                <ul>
+                    <li>CLA = 0x80</li>
+                    <li>INS = 0x60</li>
+                    <li>P1 = 0x00</li>
+                    <li>P2 = 0x00</li>
+                    <li>Lc = 0x10 (length of the following block)</li>
+                    <li>{16 bytes long data block}</li>
+                    <li>Le = 0x10 (maximum length of the response block)</li>
+                </ul>
+            
+                <p>Besides this, the scenarios work identical and produce same output files.</p>
+                
+                <p>These scenarios are compatible with devices requesting APDU format, such as those provided by the <a href="#smartcard">smartcard plug-in</a>.</p>
             
             <a href="#top" class="toplink">back to top &uarr;</a>
             <h2 id="blockprocess">10. blockprocess (prep) plug-ins</h2>

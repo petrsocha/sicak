@@ -1,4 +1,6 @@
 <map id="Exception" name="Exception">
-<area shape="rect" id="node3" href="$classInvalidInputException.html" title="An exception caused by bad settings of input parameters or arguments. " alt="" coords="5,285,172,377"/>
-<area shape="rect" id="node4" href="$classRuntimeException.html" title="An exception which cannot be directly influenced by the user, or predicted beforehand. " alt="" coords="196,285,344,377"/>
+<area shape="rect" id="node1" title="A base exception." alt="" coords="129,131,229,237"/>
+<area shape="rect" id="node3" href="$classInvalidInputException.html" title="An exception caused by bad settings of input parameters or arguments." alt="" coords="5,285,172,377"/>
+<area shape="rect" id="node4" href="$classRuntimeException.html" title="An exception which cannot be directly influenced by the user, or predicted beforehand." alt="" coords="196,285,344,377"/>
+<area shape="rect" id="node2" title=" " alt="" coords="127,5,231,83"/>
 </map>

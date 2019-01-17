@@ -1,7 +1,16 @@
 <map id="prep/include/prep.h" name="prep/include/prep.h">
-<area shape="rect" id="node4" href="$blockprocess_8h.html" title="Block processing plugin interface for use e.g. in prep. " alt="" coords="277,80,388,107"/>
-<area shape="rect" id="node14" href="$tracesprocess_8h.html" title="Traces processing plugin interface for use e.g. in prep. " alt="" coords="413,80,527,107"/>
-<area shape="rect" id="node6" href="$types__power_8hpp.html" title="This header file contains class templates of power traces and power consumption containers. " alt="" coords="405,155,525,181"/>
-<area shape="rect" id="node7" href="$types__basic_8hpp.html" title="This header file contains class templates of basic data containers. " alt="" coords="406,229,523,256"/>
-<area shape="rect" id="node11" href="$exceptions_8hpp.html" title="This header file contains exceptions. " alt="" coords="559,304,669,331"/>
+<area shape="rect" id="node1" title="SICAK PREProcessing text&#45;based UI." alt="" coords="188,5,320,32"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,80,76,107"/>
+<area shape="rect" id="node3" title=" " alt="" coords="100,80,253,107"/>
+<area shape="rect" id="node4" href="$blockprocess_8h.html" title="Block processing plugin interface for use e.g. in prep." alt="" coords="277,80,388,107"/>
+<area shape="rect" id="node14" href="$tracesprocess_8h.html" title="Traces processing plugin interface for use e.g. in prep." alt="" coords="413,80,527,107"/>
+<area shape="rect" id="node5" title=" " alt="" coords="309,155,375,181"/>
+<area shape="rect" id="node6" href="$types__power_8hpp.html" title="This header file contains class templates of power traces and power consumption containers." alt="" coords="405,155,525,181"/>
+<area shape="rect" id="node7" href="$types__basic_8hpp.html" title="This header file contains class templates of basic data containers." alt="" coords="406,229,523,256"/>
+<area shape="rect" id="node8" title=" " alt="" coords="289,304,363,331"/>
+<area shape="rect" id="node9" title=" " alt="" coords="387,304,457,331"/>
+<area shape="rect" id="node10" title=" " alt="" coords="481,304,534,331"/>
+<area shape="rect" id="node11" href="$exceptions_8hpp.html" title="This header file contains exceptions." alt="" coords="559,304,669,331"/>
+<area shape="rect" id="node12" title=" " alt="" coords="529,379,608,405"/>
+<area shape="rect" id="node13" title=" " alt="" coords="632,379,687,405"/>
 </map>

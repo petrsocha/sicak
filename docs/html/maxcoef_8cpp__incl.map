@@ -1,6 +1,15 @@
 <map id="plugins/cpacorreval/maxcoef/maxcoef.cpp" name="plugins/cpacorreval/maxcoef/maxcoef.cpp">
-<area shape="rect" id="node2" href="$maxcoef_8h.html" title="SICAK CPA correlation matrix evaluation plugin: maximum coefficient. " alt="" coords="150,95,233,121"/>
-<area shape="rect" id="node5" href="$cpacorreval_8h.html" title="Correlation matrix evaluation plugin interface for use e.g. in correv. " alt="" coords="197,169,297,196"/>
-<area shape="rect" id="node11" href="$exceptions_8hpp.html" title="This header file contains exceptions. " alt="" coords="299,319,409,345"/>
-<area shape="rect" id="node7" href="$types__basic_8hpp.html" title="This header file contains class templates of basic data containers. " alt="" coords="189,244,306,271"/>
+<area shape="rect" id="node1" title="SICAK CPA correlation matrix evaluation plugin: maximum coefficient." alt="" coords="114,5,269,47"/>
+<area shape="rect" id="node2" href="$maxcoef_8h.html" title="SICAK CPA correlation matrix evaluation plugin: maximum coefficient." alt="" coords="150,95,233,121"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,169,76,196"/>
+<area shape="rect" id="node4" title=" " alt="" coords="101,169,173,196"/>
+<area shape="rect" id="node5" href="$cpacorreval_8h.html" title="Correlation matrix evaluation plugin interface for use e.g. in correv." alt="" coords="197,169,297,196"/>
+<area shape="rect" id="node11" href="$exceptions_8hpp.html" title="This header file contains exceptions." alt="" coords="299,319,409,345"/>
+<area shape="rect" id="node6" title=" " alt="" coords="98,244,165,271"/>
+<area shape="rect" id="node7" href="$types__basic_8hpp.html" title="This header file contains class templates of basic data containers." alt="" coords="189,244,306,271"/>
+<area shape="rect" id="node8" title=" " alt="" coords="29,319,103,345"/>
+<area shape="rect" id="node9" title=" " alt="" coords="127,319,197,345"/>
+<area shape="rect" id="node10" title=" " alt="" coords="221,319,274,345"/>
+<area shape="rect" id="node12" title=" " alt="" coords="269,393,348,420"/>
+<area shape="rect" id="node13" title=" " alt="" coords="372,393,427,420"/>
 </map>

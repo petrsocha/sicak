@@ -1,3 +1,5 @@
 <map id="RuntimeException" name="RuntimeException">
-<area shape="rect" id="node2" href="$classException.html" title="A base exception. " alt="" coords="29,131,129,237"/>
+<area shape="rect" id="node1" title="An exception which cannot be directly influenced by the user, or predicted beforehand." alt="" coords="5,285,153,377"/>
+<area shape="rect" id="node2" href="$classException.html" title="A base exception." alt="" coords="29,131,129,237"/>
+<area shape="rect" id="node3" title=" " alt="" coords="27,5,131,83"/>
 </map>

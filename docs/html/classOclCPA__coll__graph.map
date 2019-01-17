@@ -1,5 +1,7 @@
 <map id="OclCPA" name="OclCPA">
-<area shape="rect" id="node3" href="$classCpaEngine.html" title="CPA computation engine QT plugin interface. " alt="" coords="100,484,235,693"/>
-<area shape="rect" id="node4" href="$classOclCpaEngine.html" title="{OclCpaEngine\&lt; double,\l int16_t, uint8_t \&gt;\n|# m_samplesPerTrace\l# m_noOfCandidates\l# m_noOfTraces\l# m_compiled\l# m_predictions_mem\l# m_traces_mem\l# m_predsAvg_mem\l# m_predsMSum_mem\l# m_tracesAvg_mem\l# m_tracesMSum_mem\l# m_predsTracesCSum_mem\l# m_program\l# m_kernel_computeTracesAvgMSum\l# m_kernel_computePredsAvgMSum\l# m_kernel_computeCSum\l# m_programCode\l|+ OclCpaEngine()\l+ ~OclCpaEngine()\l+ buildProgram()\l+ loadPredictionsToDevice()\l+ loadTracesToDevice()\l+ compute()\l}" alt="" coords="259,396,503,781"/>
-<area shape="rect" id="node5" href="$classOclEngine.html" title="{OclEngine\&lt; double \&gt;\n|# m_platform\l# m_device\l# m_context\l# m_command_queue\l# m_platforms\l# m_devices\l|+ OclEngine()\l+ ~OclEngine()\l+ getTypeName()\l+ getTypeName()\l+ getTypeName()\l+ getTypeName()\l+ getTypeName()\l+ getTypeName()\l+ getTypeName()\l+ getTypeName()\l+ getTypeName()\l+ getTypeName()\l+ queryDevices()\l+ trimWS()\l}" alt="" coords="305,5,456,347"/>
+<area shape="rect" id="node1" title="CPA context computation SICAK CpaEngine plugin, OpenCL implementation." alt="" coords="100,844,235,1083"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,550,76,627"/>
+<area shape="rect" id="node3" href="$classCpaEngine.html" title="CPA computation engine QT plugin interface." alt="" coords="100,484,235,693"/>
+<area shape="rect" id="node4" href="$classOclCpaEngine.html" title=" " alt="" coords="259,396,503,781"/>
+<area shape="rect" id="node5" href="$classOclEngine.html" title=" " alt="" coords="305,5,456,347"/>
 </map>

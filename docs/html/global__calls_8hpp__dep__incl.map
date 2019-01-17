@@ -1,9 +1,12 @@
 <map id="include/global_calls.hpp" name="include/global_calls.hpp">
-<area shape="rect" id="node2" href="$correv_8cpp.html" title="SICAK CORRelations EValuation text&#45;based UI. " alt="" coords="5,87,151,114"/>
+<area shape="rect" id="node1" title="This header file contains global routines." alt="" coords="1055,5,1215,32"/>
+<area shape="rect" id="node2" href="$correv_8cpp.html" title="SICAK CORRelations EValuation text&#45;based UI." alt="" coords="5,87,151,114"/>
 <area shape="rect" id="node3" href="$predictaes128back_8cpp.html" title="SICAK block data processing plugin: power predictions for AES&#45;128 based on ciphertext and last round ..." alt="" coords="175,80,448,121"/>
 <area shape="rect" id="node4" href="$predictaes128front_8cpp.html" title="SICAK block data processing plugin: power predictions for AES&#45;128 based on plain text and first round..." alt="" coords="473,80,742,121"/>
-<area shape="rect" id="node5" href="$random128co_8cpp.html" title="SICAK CPA measurement scenario plugin: sends key command (0x01), followed by the cipher key..." alt="" coords="766,80,977,121"/>
-<area shape="rect" id="node6" href="$ttest128co_8cpp.html" title="SICAK CPA measurement scenario plugin: sends key command (0x01), followed by the cipher key..." alt="" coords="1001,80,1179,121"/>
-<area shape="rect" id="node7" href="$prep_8cpp.html" title="SICAK PREProcessing text&#45;based UI. " alt="" coords="1203,87,1326,114"/>
-<area shape="rect" id="node8" href="$visu_8cpp.html" title="SICAK VISUalisation text&#45;based UI. " alt="" coords="1351,87,1472,114"/>
+<area shape="rect" id="node5" href="$random128apdu_8cpp.html" title="SICAK CPA Measurement scenario plugin: sends N times a command APDU: CLA=0x80, INS=0x60,..." alt="" coords="767,80,1005,121"/>
+<area shape="rect" id="node6" href="$random128co_8cpp.html" title="SICAK CPA measurement scenario plugin: sends key command (0x01), followed by the cipher key,..." alt="" coords="1030,80,1241,121"/>
+<area shape="rect" id="node7" href="$ttest128apdu_8cpp.html" title="SICAK CPA measurement scenario plugin: sends key command (0x01), followed by the cipher key,..." alt="" coords="1265,80,1470,121"/>
+<area shape="rect" id="node8" href="$ttest128co_8cpp.html" title="SICAK CPA measurement scenario plugin: sends key command (0x01), followed by the cipher key,..." alt="" coords="1495,80,1672,121"/>
+<area shape="rect" id="node9" href="$prep_8cpp.html" title="SICAK PREProcessing text&#45;based UI." alt="" coords="1697,87,1819,114"/>
+<area shape="rect" id="node10" href="$visu_8cpp.html" title="SICAK VISUalisation text&#45;based UI." alt="" coords="1844,87,1965,114"/>
 </map>

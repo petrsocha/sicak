@@ -1,5 +1,30 @@
 var searchData=
 [
-  ['noofcandidates',['noOfCandidates',['../classPowerPredictions.html#a19a4bc2b7e04dfafad3032c300537cdd',1,'PowerPredictions']]],
-  ['nooftraces',['noOfTraces',['../classPowerTraces.html#a9af1ec559b7c116e52a45f0500445b64',1,'PowerTraces::noOfTraces()'],['../classPowerPredictions.html#a106f6b06087762b8a6fa2f3b6b018aef',1,'PowerPredictions::noOfTraces()']]]
+  ['m_5fcols',['m_cols',['../classMatrix.html#ae524541fb7aa6cabe0d2448c3693101c',1,'Matrix']]],
+  ['m_5fdata',['m_data',['../classVector.html#ae14e357be7d5b72a54664705d7ce8285',1,'Vector']]],
+  ['m_5flength',['m_length',['../classVector.html#aeab42467d1b71ed4df9ae724148e3058',1,'Vector']]],
+  ['m_5fmsg',['m_msg',['../classException.html#ab0ee5d9e75c7d18418cb64c7d49868bb',1,'Exception']]],
+  ['m_5frows',['m_rows',['../classMatrix.html#af0286c1cf8d9c7a06fdd43ab6223e46a',1,'Matrix']]],
+  ['m_5fvector',['m_vector',['../classMatrix.html#a8c2d0add22ac705c1b484df2765f7a90',1,'Matrix']]],
+  ['matrix',['Matrix',['../classMatrix.html',1,'Matrix&lt; T &gt;'],['../classMatrix.html#a9d567e3a121b1be0c3f9c461cab524fe',1,'Matrix::Matrix()'],['../classMatrix.html#a88e8557f38b6a79384b4d42ddad65d15',1,'Matrix::Matrix(size_t cols, size_t rows)'],['../classMatrix.html#add8ee2b5bc78706d1b0b9398440f16be',1,'Matrix::Matrix(size_t cols, size_t rows, T initVal)'],['../classMatrix.html#a534f07d0e3ec3c9c62f3742c4efc6eed',1,'Matrix::Matrix(Matrix &amp;&amp;other)']]],
+  ['matrixtype',['MatrixType',['../classMatrixType.html',1,'MatrixType&lt; T &gt;'],['../classMatrixType.html#a6a2e8995eb1a13109ad3d416d62a093a',1,'MatrixType::MatrixType()']]],
+  ['maxabscoef',['MaxAbsCoef',['../classMaxAbsCoef.html',1,'']]],
+  ['maxabscoef_2ecpp',['maxabscoef.cpp',['../maxabscoef_8cpp.html',1,'']]],
+  ['maxabscoef_2eh',['maxabscoef.h',['../maxabscoef_8h.html',1,'']]],
+  ['maxcoef',['MaxCoef',['../classMaxCoef.html',1,'']]],
+  ['maxcoef_2ecpp',['maxcoef.cpp',['../maxcoef_8cpp.html',1,'']]],
+  ['maxcoef_2eh',['maxcoef.h',['../maxcoef_8h.html',1,'']]],
+  ['maxedge',['MaxEdge',['../classMaxEdge.html',1,'']]],
+  ['maxedge_2ecpp',['maxedge.cpp',['../maxedge_8cpp.html',1,'']]],
+  ['maxedge_2eh',['maxedge.h',['../maxedge_8h.html',1,'']]],
+  ['meas',['Meas',['../classMeas.html',1,'']]],
+  ['meas_2ecpp',['meas.cpp',['../meas_8cpp.html',1,'']]],
+  ['meas_2eh',['meas.h',['../meas_8h.html',1,'']]],
+  ['measurement',['Measurement',['../classMeasurement.html',1,'']]],
+  ['measurement_2eh',['measurement.h',['../measurement_8h.html',1,'']]],
+  ['mergecontexts',['mergeContexts',['../classCpaEngine.html#a695b8bf3e27157bde9aa2f3985048b80',1,'CpaEngine::mergeContexts()'],['../classTTestEngine.html#afa1dfd84bbe4748a691470bfe0b84fe4',1,'TTestEngine::mergeContexts()'],['../classLocalCPA.html#a941cf53adeb656255ca8591dfdc4c9c6',1,'LocalCPA::mergeContexts()'],['../classOclCPA.html#a929e5c4d06f3f815f4e78e2eb6d0fbb6',1,'OclCPA::mergeContexts()'],['../classLocalTTest.html#aba1bd8f18d37d6b482af9f3b8829b938',1,'LocalTTest::mergeContexts()']]],
+  ['mincoef',['MinCoef',['../classMinCoef.html',1,'']]],
+  ['mincoef_2ecpp',['mincoef.cpp',['../mincoef_8cpp.html',1,'']]],
+  ['mincoef_2eh',['mincoef.h',['../mincoef_8h.html',1,'']]],
+  ['morder',['mOrder',['../classUnivariateContext.html#aa205248da291a6c8ea6c0db839bc2925',1,'UnivariateContext']]]
 ];

@@ -1,5 +1,17 @@
 <map id="plugins/chardevice/serialport/serialport.h" name="plugins/chardevice/serialport/serialport.h">
-<area shape="rect" id="node4" href="$chardevice_8h.html" title="Character device plugin interface for use e.g. in meas. " alt="" coords="197,95,293,121"/>
-<area shape="rect" id="node10" href="$exceptions_8hpp.html" title="This header file contains exceptions. " alt="" coords="285,244,396,271"/>
-<area shape="rect" id="node6" href="$types__basic_8hpp.html" title="This header file contains class templates of basic data containers. " alt="" coords="175,169,293,196"/>
+<area shape="rect" id="node1" title="SICAK character device plugin: serial port." alt="" coords="257,5,403,47"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,95,76,121"/>
+<area shape="rect" id="node3" title=" " alt="" coords="101,95,173,121"/>
+<area shape="rect" id="node4" href="$chardevice_8h.html" title="Character device plugin interface for use e.g. in meas." alt="" coords="197,95,293,121"/>
+<area shape="rect" id="node10" href="$exceptions_8hpp.html" title="This header file contains exceptions." alt="" coords="285,244,396,271"/>
+<area shape="rect" id="node13" title=" " alt="" coords="368,95,444,121"/>
+<area shape="rect" id="node14" title=" " alt="" coords="468,95,536,121"/>
+<area shape="rect" id="node15" title=" " alt="" coords="561,95,619,121"/>
+<area shape="rect" id="node5" title=" " alt="" coords="85,169,151,196"/>
+<area shape="rect" id="node6" href="$types__basic_8hpp.html" title="This header file contains class templates of basic data containers." alt="" coords="175,169,293,196"/>
+<area shape="rect" id="node7" title=" " alt="" coords="15,244,90,271"/>
+<area shape="rect" id="node8" title=" " alt="" coords="114,244,183,271"/>
+<area shape="rect" id="node9" title=" " alt="" coords="207,244,261,271"/>
+<area shape="rect" id="node11" title=" " alt="" coords="256,319,335,345"/>
+<area shape="rect" id="node12" title=" " alt="" coords="359,319,413,345"/>
 </map>

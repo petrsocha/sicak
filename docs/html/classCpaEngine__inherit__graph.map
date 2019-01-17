@@ -1,4 +1,5 @@
 <map id="CpaEngine" name="CpaEngine">
-<area shape="rect" id="node2" href="$classLocalCPA.html" title="CPA context computation SICAK CpaEngine plugin. " alt="" coords="5,277,140,501"/>
-<area shape="rect" id="node3" href="$classOclCPA.html" title="CPA context computation SICAK CpaEngine plugin, OpenCL implementation. " alt="" coords="164,263,299,516"/>
+<area shape="rect" id="node1" title="CPA computation engine QT plugin interface." alt="" coords="84,5,219,215"/>
+<area shape="rect" id="node2" href="$classLocalCPA.html" title="CPA context computation SICAK CpaEngine plugin." alt="" coords="5,277,140,501"/>
+<area shape="rect" id="node3" href="$classOclCPA.html" title="CPA context computation SICAK CpaEngine plugin, OpenCL implementation." alt="" coords="164,263,299,516"/>
 </map>

@@ -1,0 +1,4 @@
+<map id="plugins/measurement/random128apdu/random128apdu.h" name="plugins/measurement/random128apdu/random128apdu.h">
+<area shape="rect" id="node1" title="CPA Measurement scenario plugin: sends N times a command APDU: CLA=0x80, INS=0x60,..." alt="" coords="12,5,237,47"/>
+<area shape="rect" id="node2" href="$random128apdu_8cpp.html" title="SICAK CPA Measurement scenario plugin: sends N times a command APDU: CLA=0x80, INS=0x60,..." alt="" coords="5,95,244,136"/>
+</map>
