@@ -47,7 +47,7 @@
 * \class SmartCard
 * \ingroup CharDevice
 *
-* \brief Serial port interface (Win32/Posix) SICAK CharDevice plugin
+* \brief SmartCard Win32 SICAK CharDevice plugin
 *
 */
 class SmartCard : public QObject, CharDevice {
