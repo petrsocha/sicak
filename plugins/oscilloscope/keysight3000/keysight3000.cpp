@@ -28,7 +28,7 @@
 
 #include "keysight3000.h"
 
-Keysight3000::Keysight3000(): m_samples(0), m_triggered(false), m_opened(false) {            
+Keysight3000::Keysight3000(): m_samples(0), m_triggered(true), m_opened(false) {        // keysight 3000 series oscilloscope is by default triggered    
     
 }
 
@@ -355,8 +355,33 @@ void Keysight3000::stop() {
 }
 
 size_t Keysight3000::getCurrentSetup(size_t & samples, size_t & captures) {
-    samples = m_samples;
-    captures = 1;
+       
+    // do a dummy measurement to obtain a number of samples per trace
+    std::string response;
+    m_handle.sendString(":WAVeform:POINts:MODE RAW");
+    m_handle.sendString(":WAVeform:FORMat WORD");
+    m_handle.sendString(":WAVeform:UNSigned 0");                
+    m_handle.sendString(":WAVeform:BYTeorder LSBFirst");
+    m_handle.queryString(":STOP;*OPC?", response);        
+    m_handle.sendString(":SINGle;:TRIGger:FORCe"); // do a dummy single measurement to obtain the number of samples      
+    int respInt;
+    do {
+        m_handle.queryString(":OPERegister:CONDition?", response);
+        respInt = atoi(response.c_str()) & (1 << 3);
+    } while (respInt);
+    
+    m_handle.queryString(":WAVeform:POINts?", response);                      
+    
+    captures = 1; // only support one capture at a time
+    m_samples = atoi(response.c_str());
+    if(!m_samples) throw RuntimeException("Invalid oscilloscope answer (number of sample points)", m_samples);
+    samples = m_samples;    
+    
+    m_handle.queryString(":STOP;*OPC?", response);
+    
+    int ret = m_handle.checkForInstrumentErrors(response);
+    if(ret) throw RuntimeException("Error retrieving the oscilloscope setup", ret);
+        
     return m_samples;
 }
 
