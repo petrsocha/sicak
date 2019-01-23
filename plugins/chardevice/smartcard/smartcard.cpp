@@ -70,11 +70,12 @@ void SmartCard::init(const char * filename, int baudrate, int parity, int stopBi
     }
 
     size_t currId = 0;
+    LPSTR mszReadersTmp = mszReaders;
 
-    while (*mszReaders != 0 && currId != id) {
+    while (*mszReadersTmp != 0 && currId != id) {
 
         // skip to next reader
-        mszReaders += strlen(mszReaders) + 1;
+        mszReadersTmp += strlen(mszReadersTmp) + 1;
         currId++;
 
     }
@@ -84,7 +85,7 @@ void SmartCard::init(const char * filename, int baudrate, int parity, int stopBi
         throw InvalidInputException("Failed to find the specified card reader.");
     }
 
-    ret = SCardConnectA(m_context, mszReaders, SCARD_SHARE_EXCLUSIVE, SCARD_PROTOCOL_T1, &m_card, &protocol);
+    ret = SCardConnectA(m_context, mszReadersTmp, SCARD_SHARE_EXCLUSIVE, SCARD_PROTOCOL_T1, &m_card, &protocol);
 
     if (ret != SCARD_S_SUCCESS) {
         SCardReleaseContext(m_context);
@@ -184,18 +185,19 @@ QString SmartCard::queryDevices() {
     if (ret == SCARD_S_SUCCESS) {
 
         size_t id = 0;
-
+        LPSTR mszReadersTmp = mszReaders;
+        
         // mszReaders is a Multi-$tring, e.g. "abc\0def\0\0"
-        while (*mszReaders != 0) {
+        while (*mszReadersTmp != 0) {
 
             retDevices += "    * Device ID: '";
             retDevices += QString::number(id);
             retDevices += "': '";
-            retDevices += mszReaders;
+            retDevices += mszReadersTmp;
             retDevices += "'\n";
 
             // move to the next string
-            mszReaders += strlen(mszReaders) + 1;
+            mszReadersTmp += strlen(mszReadersTmp) + 1;
             id++;
 
         }
