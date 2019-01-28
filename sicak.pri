@@ -4,6 +4,8 @@
 
 INCLUDEPATH    += $$PWD/include
 
+CONFIG += c++11
+
 unix {
 
   QMAKE_CXXFLAGS -= -fstack-protector-strong
