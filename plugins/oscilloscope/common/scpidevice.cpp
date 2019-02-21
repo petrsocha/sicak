@@ -1,6 +1,6 @@
 /*
 *  SICAK - SIde-Channel Analysis toolKit
-*  Copyright (C) 2018 Petr Socha, FIT, CTU in Prague
+*  Copyright (C) 2018-2019 Petr Socha, FIT, CTU in Prague
 *
 *  This program is free software: you can redistribute it and/or modify
 *  it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
 *
 *
 * \author Petr Socha
-* \version 1.0
+* \version 1.1
 */
 
 #include "scpidevice.h"
@@ -63,6 +63,13 @@ void ScpiDevice::init(const char * filename){
         throw RuntimeException("Failed to set VISA device timeout", ret);
     }
 
+    ret = viClear(m_instrument);
+    if (ret < VI_SUCCESS) {
+        viClose(m_instrument);
+        viClose(m_defaultRM);
+        throw RuntimeException("Failed to send the Device Clear VISA command.", ret);
+    }
+    
     #else
 
     m_osHandle = open(filename, O_RDWR);                
@@ -108,10 +115,14 @@ size_t ScpiDevice::sendString(const std::string & data){
     #ifdef _WIN32
 
     ViUInt32 retCount;
-
-    // Send the newline-terminated string
-    ViStatus ret = viBufWrite(m_instrument, (unsigned char *)buffer.c_str(), buffer.length(), &retCount);
-    if(ret < VI_SUCCESS) throw RuntimeException("Could not write the data to the VISA device", ret);        
+    char visaBuffer[512];
+    for(int i = 0; i < buffer.length(); i++){
+        visaBuffer[i] = buffer[i];
+    }
+    
+    // Send the newline-terminated string    
+    ViStatus ret = viWrite(m_instrument, (ViBuf)visaBuffer, (ViUInt32)buffer.length(), &retCount);
+    if(ret < VI_SUCCESS) throw RuntimeException("Could not write the data to the VISA device", ret);                   
 
     #else
         
@@ -140,13 +151,13 @@ size_t ScpiDevice::receiveString(std::string & data){
     #ifdef _WIN32
 
     ViStatus ret;
-    ViUInt64 maxBufLen = MAXSCPIRECVBUF;
+    ViUInt32 retCount = 0;
 
     // Read a string (%t is a string terminated by EOM (usbtmc end of message)) from the oscilloscope
-    ret = viScanf(m_instrument, "%#t\n", &maxBufLen, buffer);
-    if(ret < VI_SUCCESS) throw RuntimeException("Could not read the data from the usbtmc device", ret);
+    ret = viRead (m_instrument, (ViPBuf)buffer, MAXSCPIRECVBUF, &retCount);
+    if(ret < VI_SUCCESS) throw RuntimeException("Could not read the string from the VISA device", ret);
 
-    size_t receivedBytes = maxBufLen;
+    size_t receivedBytes = retCount;
 
     #else	        
 
@@ -182,7 +193,7 @@ size_t ScpiDevice::receiveString(std::string & data){
 
 size_t ScpiDevice::queryString(const std::string & query, std::string & response){
        
-    if(!sendString(query)) return 0;
+    if(!sendString(query)) throw RuntimeException("Failed to send the string request");
     return receiveString(response);        
     
 }
@@ -219,7 +230,7 @@ size_t ScpiDevice::sendIEEEBlock(const std::string & command, const char * data,
     ViUInt32 retCount;
 
     // Send the message
-    ViStatus ret = viBufWrite(m_instrument, (unsigned char *)buffer.get(), messageLen, &retCount);
+    ViStatus ret = viWrite(m_instrument, (unsigned char *)buffer.get(), messageLen, &retCount);
     if (ret < VI_SUCCESS) throw RuntimeException("Could not write the data to the VISA device", ret);        
 
     #else	        
@@ -238,46 +249,68 @@ size_t ScpiDevice::sendIEEEBlock(const std::string & command, const char * data,
 size_t ScpiDevice::receiveIEEEBlock(char * data, size_t len){
     
     if(!m_opened) throw RuntimeException("The device needs to be properly opened first");
+        
+    // 1) Alloc vars and read the first part of the 
+    // 2) Read the first part of the IEEE 488 data block header, i.e. "#n", where n is a Natural number
     
-    #ifdef _WIN32
-    
-    ViUInt32 maxBufLen = len;
-
-    ViStatus ret = viScanf(m_instrument, "%#b\n", &maxBufLen, data);
-    if(ret < VI_SUCCESS) throw RuntimeException("Could not read the data from the VISA device", ret);
-
-    return maxBufLen;
-
-    #else	
-
-    char buffer[16];
-            
-    ssize_t ret;  
+    char buffer[16];              
     size_t receivedBytes = 0;
     
-    // Read the first part of the IEEE 488 data block header, i.e. "#n", where n is a Natural number
+    #ifdef _WIN32
+        
+    ViStatus ret;
+    ViUInt32 retCount = 0;    
+    
+    ret = viRead (m_instrument, (ViPBuf)buffer, 2, &retCount);
+    if(ret < VI_SUCCESS) throw RuntimeException("Could not read the first part of ieee header from the VISA device", ret);  
+    if(retCount < 2){
+        ret = viRead (m_instrument, (ViPBuf)buffer+1, 1, &retCount);
+        if(ret < VI_SUCCESS) throw RuntimeException("Could not read the first part of ieee header from the VISA device", ret);  
+        if(retCount < 1) throw RuntimeException("Could not read the whole first part of ieee header from the VISA device", ret);  
+    }    
+
+    #else	
+            
+    ssize_t ret;
+    
     ret = read(m_osHandle, buffer, 2);
     if(ret < 0) throw RuntimeException("Could not read the data from the usbtmc device", ret);  
-    if(ret == 0) return 0; // timeout
+    if(ret == 0) throw RuntimeException("Oscilloscope read timeout"); // timeout
     if(ret < 2){
         ret = read(m_osHandle, buffer+1, 1);
         if(ret < 0) throw RuntimeException("Could not read the data from the usbtmc device", ret);  
-        if(ret == 0) return 0; // timeout
+        if(ret == 0) throw RuntimeException("Oscilloscope read timeout"); // timeout
     }
     
-    // Parse the header
+    #endif        
+    
+    // 3) Parse the first part of the header
+    
     if(buffer[0] != '#' || buffer[1] < 48 || buffer[1] > 57) throw RuntimeException("Error parsing the IEEE 488 data block header");
     size_t noOfDigitsHeader = buffer[1] - 48;
     
     if(noOfDigitsHeader == 0) throw RuntimeException("Arbitrary length data block aren't supported");
+    if(noOfDigitsHeader > 9) throw RuntimeException("Invalid IEEE 488 data block header");
+        
     
-    // Read the number of bytes to be transferred
+    // 4) Read the second part of the header
+    
     while(receivedBytes != noOfDigitsHeader){
+        
+        #ifdef _WIN32
+        
+        ret = viRead (m_instrument, (ViPBuf)buffer+receivedBytes, noOfDigitsHeader-receivedBytes, &retCount);    
+        if(ret < VI_SUCCESS) throw RuntimeException("Could not read the data length from the usbtmc device", ret);  
+        receivedBytes += retCount;
+        
+        #else
         
         ret = read(m_osHandle, buffer+receivedBytes, noOfDigitsHeader-receivedBytes);
         if(ret < 0) throw RuntimeException("Could not read the data from the usbtmc device", ret);  
-        if(ret == 0) return 0; // timeout
+        if(ret == 0) throw RuntimeException("Oscilloscope read timeout"); // timeout
         receivedBytes += ret;
+        
+        #endif
         
     }
     
@@ -286,16 +319,39 @@ size_t ScpiDevice::receiveIEEEBlock(char * data, size_t len){
     
     if(receivedBytes != noOfDigitsHeader || bytesExpected <= 0) throw RuntimeException("Error reading the IEEE 488 data block header");
     
-    // Read the announced amount of bytes from the device
+    // 5) Read the announced amount of binary data from the device
+    
     receivedBytes = 0;
     if(bytesExpected > len) throw RuntimeException("Local recv buffer overflow");
+    
+    #ifdef _WIN32
+    
+    retCount = 1; // start the loop
+    
+    while(receivedBytes != bytesExpected && retCount > 0){
+        
+        ret = viRead (m_instrument, (ViPBuf)data + receivedBytes, bytesExpected - receivedBytes, &retCount);                
+        if(ret < VI_SUCCESS) throw RuntimeException("Could not read the data from the usbtmc device", ret);  
+        receivedBytes += retCount;        
+        
+    }
+    
+    if(receivedBytes != bytesExpected) throw RuntimeException("Failed to receive the whole IEEE 488 data block");
+    
+    // If everything went down smooth, we should read a newline char now
+    ret = viRead (m_instrument, (ViPBuf)buffer, 1, &retCount);
+    if(ret < VI_SUCCESS) throw RuntimeException("Could not read the data from the usbtmc device", ret);  
+    if(buffer[0] != '\n') throw RuntimeException("Something went wrong while receiving the IEEE 488 data block: expected newline", buffer[0]);    
+    
+    #else
+    
     ret = 1; // start the loop
     
     while(receivedBytes != bytesExpected && ret > 0){
         
         ret = read(m_osHandle, data + receivedBytes, bytesExpected - receivedBytes);
         if(ret < 0) throw RuntimeException("Could not read the data from the usbtmc device", ret);  
-        if(ret == 0) return 0;
+        if(ret == 0) throw RuntimeException("Oscilloscope read timeout");
         receivedBytes += ret;
         
     }
@@ -305,18 +361,18 @@ size_t ScpiDevice::receiveIEEEBlock(char * data, size_t len){
     // If everything went down smooth, we should read a newline char now
     ret = read(m_osHandle, buffer, 1);
     if(ret < 0) throw RuntimeException("Could not read the data from the usbtmc device", ret);  
-    if(ret == 0) return 0;
-    if(buffer[0] != '\n') throw RuntimeException("Something went wrong while receiving the IEEE 488 data block");
+    if(ret == 0) throw RuntimeException("Oscilloscope read timeout");
+    if(buffer[0] != '\n') throw RuntimeException("Something went wrong while receiving the IEEE 488 data block: expected newline", buffer[0]);    
+    
+    #endif
     
     return receivedBytes;
     
-    #endif	
-
 }
 
 size_t ScpiDevice::queryIEEEBlock(const std::string & query, char * response, size_t responseLen){
         
-    if(!sendString(query)) return 0;
+    if(!sendString(query)) throw RuntimeException("Failed to send the string request");
     return receiveIEEEBlock(response, responseLen);
     
 }
