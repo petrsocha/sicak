@@ -1318,8 +1318,8 @@
                 <h4>Parameters</h4>                    
                         <ul>
                             <li><strong>ch=N</strong> oscilloscope channel from which to download the power traces, N is a natural number (default is ch=1)</li>
-                            <li><strong>cla=H</strong> oscilloscope channel from which to download the power traces, H is a HEX-coded number (default is cla=80)</li>
-                            <li><strong>ins=H</strong> oscilloscope channel from which to download the power traces, H is a HEX-coded number (default is ins=60)</li>
+                            <li><strong>cla=H</strong> CLA field of created APDUs, H is a HEX-coded number (default is cla=80)</li>
+                            <li><strong>ins=H</strong> INS field of created APDUs, H is a HEX-coded number (default is ins=60)</li>
                         </ul>
                 
                 <p>These APDU scenarios are compatible with devices requesting APDU format, such as those provided by the <a href="#smartcard">smartcard plug-in</a>. Example of a typical usage: (use -Q to find out the number of the smartcard reader, when needed)</p>
