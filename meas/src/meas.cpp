@@ -751,12 +751,17 @@ bool Meas::initConfigChardevice(){
         if(docObj.contains("timeoutms")){
             timeoutms = docObj.value("timeoutms").toInt();
         }
+        
+        cout << "    * Using following settings:\n";
+        cout << "        * Baudrate: '" << baudrate << "'\n";
+        cout << "        * Parity: '" << ( (!parity) ? "no parity" : ( (parity%2) ? "even" : "odd" ) ) << "'\n";
+        cout << "        * Stop bits: '" << ( (stopBits == 2) ? "two" : "one" ) << "'\n";
          
     } else if(m_chardeviceConfig.size()){
         cerr << "Failed to open specified character device configuration file.\n";
         return false;
     } else {
-        cout << "* No character device configuration file found.\n";
+        cout << "* No character device configuration file found, using default settings.\n";
     }
     
     cout.flush();
@@ -772,10 +777,6 @@ bool Meas::initConfigChardevice(){
     }
     
     cout << "* Character device successfully opened: '" << m_chardeviceDevice << "'\n";
-    cout << "    * Using following settings:\n";
-    cout << "        * Baudrate: '" << baudrate << "'\n";
-    cout << "        * Parity: '" << ( (!parity) ? "no parity" : ( (parity%2) ? "even" : "odd" ) ) << "'\n";
-    cout << "        * Stop bits: '" << ( (stopBits == 2) ? "two" : "one" ) << "'\n";
     cout.flush();
     
     try {
@@ -815,7 +816,7 @@ void Meas::run(){
         m_measurement->init(ba.data());
         
     } catch (std::exception & e){
-        cerr << "Failed to initialize the measurement scenario module plug-in.\n";
+        cerr << "Failed to initialize the measurement scenario module plug-in: " << e.what() << "\n";
         emit finished();
         return;
     }
