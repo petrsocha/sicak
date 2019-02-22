@@ -1,6 +1,6 @@
 /*
 *  SICAK - SIde-Channel Analysis toolKit
-*  Copyright (C) 2018 Petr Socha, FIT, CTU in Prague
+*  Copyright (C) 2018-2019 Petr Socha, FIT, CTU in Prague
 *
 *  This program is free software: you can redistribute it and/or modify
 *  it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
 *
 *
 * \author Petr Socha
-* \version 1.0
+* \version 1.1
 */
 
 #ifndef PS6000_H
@@ -79,6 +79,7 @@ protected:
     uint32_t m_preTriggerSamples;
     uint32_t m_postTriggerSamples;
     uint32_t m_timebase;
+    float m_timebaseInterval;
     uint32_t m_captures;
     bool m_opened;
     

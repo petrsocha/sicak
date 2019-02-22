@@ -1,6 +1,6 @@
 /*
 *  SICAK - SIde-Channel Analysis toolKit
-*  Copyright (C) 2018 Petr Socha, FIT, CTU in Prague
+*  Copyright (C) 2018-2019 Petr Socha, FIT, CTU in Prague
 *
 *  This program is free software: you can redistribute it and/or modify
 *  it under the terms of the GNU General Public License as published by
@@ -23,12 +23,27 @@
 *
 *
 * \author Petr Socha
-* \version 1.0
+* \version 1.1
 */
 
 #include "ps6000.h"
 
-Ps6000::Ps6000(): m_preTriggerSamples(0), m_postTriggerSamples(0), m_timebase(0), m_captures(1), m_opened(false) {                       
+// multi-platform Sleep(ms)
+#ifdef _WIN32
+
+#include <windows.h>
+
+#else	
+
+#include <unistd.h>
+
+int Sleep(int ms){
+    return usleep(ms * 1000);
+}
+
+#endif
+
+Ps6000::Ps6000(): m_preTriggerSamples(0), m_postTriggerSamples(0), m_timebase(0), m_timebaseInterval(0), m_captures(1), m_opened(false) {                       
         
 }
 
@@ -262,6 +277,7 @@ void Ps6000::setTiming(float & preTriggerRange, float & postTriggerRange, size_t
     
     m_captures = captures;
     m_timebase = realTimebase;
+    m_timebaseInterval = realTimebaseInterval;
     m_preTriggerSamples = ceil(preTriggerRange / realTimebaseInterval);
     m_postTriggerSamples = ceil(postTriggerRange / realTimebaseInterval);
     samples = m_preTriggerSamples + m_postTriggerSamples;
@@ -277,7 +293,8 @@ void Ps6000::run() {
     PICO_STATUS status = ps6000RunBlock(m_handle, m_preTriggerSamples, m_postTriggerSamples, m_timebase, 0, NULL, 0, NULL, NULL);
     if(status) throw RuntimeException("Failed running the oscilloscope", status);
     
-    // sleep 50ms ?
+    Sleep(100); // wait for oscilloscope to get armed
+    Sleep((int)((float)m_preTriggerSamples * m_timebaseInterval * 1000.0)); // wait for the preTriggerRange time, only after that the trigger can be detected
     
 }
 
@@ -304,6 +321,7 @@ size_t Ps6000::getValues(int channel, int16_t * buffer, size_t len, size_t & sam
     
     int16_t ready = 0;
     while (!ready) {
+        Sleep(50);
         ps6000IsReady(m_handle, &ready);
     }
     
@@ -372,55 +390,4 @@ size_t Ps6000::getValues(int channel, PowerTraces<int16_t> & traces) {
     
     return (*this).getValues(channel, traces.data(), traces.size(), samples, captures);
     
-    /*
-    // wait for the aquisition to complete
-    int16_t ready = 0;
-    while (!ready) {
-        ps6000IsReady(m_handle, &ready);
-    }
-        
-    traces.init(m_preTriggerSamples + m_postTriggerSamples, m_captures); //< alloc memory for aquisition
-    
-    PS6000_CHANNEL tbsChannel;
-    switch(channel){
-        case 2: tbsChannel = PS6000_CHANNEL_B; break;
-        case 3: tbsChannel = PS6000_CHANNEL_C; break;
-        case 4: tbsChannel = PS6000_CHANNEL_D; break;
-        default: tbsChannel = PS6000_CHANNEL_A; break;
-    }
-    
-    uint32_t samplesTotal = (m_preTriggerSamples + m_postTriggerSamples) * m_captures;
-    
-    if(m_captures > 1){
-        
-        PICO_STATUS status;
-        int16_t over = 0;            
-        
-        for (uint32_t i = 0; i < m_captures; i++) {                
-            status = ps6000SetDataBufferBulk(m_handle, tbsChannel, &(traces(0, i)), traces.samplesPerTrace(), i, PS6000_RATIO_MODE_NONE);
-            if (status) throw RuntimeException("Failed to set up receiving buffer", status);
-        }        
-        
-        status = ps6000GetValuesBulk(m_handle, &samplesTotal, 0, m_captures - 1, 0, PS6000_RATIO_MODE_NONE, &over);          
-        if (status) throw RuntimeException("Failed to receive the data", status);                    
-        // TODO assert samplesTotal == traces.length() ??? podle manualu ne, ale podle vojty ano
-        
-        return samplesTotal;            
-        
-    } else {
-        
-        PICO_STATUS status = ps6000SetDataBuffer(m_handle, tbsChannel, traces.data(), traces.samplesPerTrace(), PS6000_RATIO_MODE_NONE);
-        if (status) throw RuntimeException("Failed to set up receiving buffer", status);
-        
-        int16_t over = 0;
-        
-        status = ps6000GetValues(m_handle, 0, &samplesTotal, 1, PS6000_RATIO_MODE_NONE, 0, &over);
-        if (status || samplesTotal != (m_preTriggerSamples + m_postTriggerSamples)) throw RuntimeException("Failed to receive the data");        
-        
-        return samplesTotal;
-        
-    }
-    
-    return 0;
-    */        
 }

@@ -1,6 +1,6 @@
 /*
 *  SICAK - SIde-Channel Analysis toolKit
-*  Copyright (C) 2018 Petr Socha, FIT, CTU in Prague
+*  Copyright (C) 2018-2019 Petr Socha, FIT, CTU in Prague
 *
 *  This program is free software: you can redistribute it and/or modify
 *  it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
 *
 *
 * \author Petr Socha
-* \version 1.0
+* \version 1.1
 */
 
 #ifndef KEYSIGHT3000_H
@@ -81,6 +81,8 @@ protected:
     size_t m_samples;
     bool m_triggered;
     bool m_opened;        
+    
+    size_t dummyMeasurement();
     
 };
 

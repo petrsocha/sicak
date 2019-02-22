@@ -1,6 +1,6 @@
 /*
 *  SICAK - SIde-Channel Analysis toolKit
-*  Copyright (C) 2018 Petr Socha, FIT, CTU in Prague
+*  Copyright (C) 2018-2019 Petr Socha, FIT, CTU in Prague
 *
 *  This program is free software: you can redistribute it and/or modify
 *  it under the terms of the GNU General Public License as published by
@@ -23,10 +23,25 @@
 *
 *
 * \author Petr Socha
-* \version 1.0
+* \version 1.1
 */
 
 #include "keysight3000.h"
+
+// multi-platform Sleep(ms)
+#ifdef _WIN32
+
+#include <windows.h>
+
+#else	
+
+#include <unistd.h>
+
+int Sleep(int ms){
+    return usleep(ms * 1000);
+}
+
+#endif
 
 Keysight3000::Keysight3000(): m_samples(0), m_triggered(true), m_opened(false) {        // keysight 3000 series oscilloscope is by default triggered    
     
@@ -56,7 +71,6 @@ void Keysight3000::init(const char * filename) {
     
     std::string response;        
     m_handle.checkForInstrumentErrors(response); // clear all pending errors on the device
-    m_handle.checkForInstrumentErrors(response);
     
     m_opened = true;
     
@@ -301,43 +315,38 @@ void Keysight3000::setTiming(float & preTriggerRange, float & postTriggerRange, 
     if(ret) throw RuntimeException("Error setting the timebase", ret);
     
     // TODO read parameters back
-            
-    m_handle.sendString(":WAVeform:POINts:MODE RAW");
-    m_handle.sendString(":WAVeform:FORMat WORD");
-    m_handle.sendString(":WAVeform:UNSigned 0");                
-    m_handle.sendString(":WAVeform:BYTeorder LSBFirst");
-    m_handle.queryString(":STOP;*OPC?", response);        
-    m_handle.sendString(":SINGle;:TRIGger:FORCe"); // do a dummy single measurement to obtain the number of samples      
-    int respInt;
-    do {
-        m_handle.queryString(":OPERegister:CONDition?", response);
-        respInt = atoi(response.c_str()) & (1 << 3);
-    } while (respInt);
-    
-    m_handle.queryString(":WAVeform:POINts?", response);                      
     
     captures = 1; // only support one capture at a time
-    m_samples = atoi(response.c_str());
+    m_samples = dummyMeasurement();
     samples = m_samples;
-    
-    m_handle.queryString(":STOP;*OPC?", response);
-    
-    ret = m_handle.checkForInstrumentErrors(response);
-    if(ret) throw RuntimeException("Error setting the timebase", ret);
     
 }
 
 void Keysight3000::run() {
     
-    if(!m_opened) throw RuntimeException("The oscilloscope needs to be properly initialized first");
+    if(!m_opened) throw RuntimeException("The oscilloscope needs to be properly initialized first");        
     
     std::string response;
     m_handle.queryString(":STOP;*OPC?", response); 
     
-    if(m_triggered){
-        m_handle.sendString(":SINGle");
-    } else {
-        m_handle.sendString(":SINGle;:TRIGger:FORCe");
+    int ret = m_handle.checkForInstrumentErrors(response);
+    if(ret) throw RuntimeException("Error before run", ret);
+    
+    Sleep(100);
+    
+    m_handle.sendString(":SINGle");
+        
+    // wait until armed
+    int respInt;
+    do {
+        Sleep(100);
+        m_handle.queryString(":AER?", response);
+        respInt = atoi(response.c_str());
+    } while (!respInt);
+        
+    // if the trigger is unset, force the oscilloscope to acquire data right now
+    if(!m_triggered){
+        m_handle.sendString(":TRIGger:FORCe");
     }
     
 }
@@ -350,39 +359,19 @@ void Keysight3000::stop() {
     m_handle.queryString(":STOP;*OPC?", response);
     
     int ret = m_handle.checkForInstrumentErrors(response);
-    if(ret) throw RuntimeException("Error setting the timebase", ret);
+    if(ret) throw RuntimeException("Error stopping the oscilloscope", ret);
     
 }
 
 size_t Keysight3000::getCurrentSetup(size_t & samples, size_t & captures) {
        
-    // do a dummy measurement to obtain a number of samples per trace
-    std::string response;
-    m_handle.sendString(":WAVeform:POINts:MODE RAW");
-    m_handle.sendString(":WAVeform:FORMat WORD");
-    m_handle.sendString(":WAVeform:UNSigned 0");                
-    m_handle.sendString(":WAVeform:BYTeorder LSBFirst");
-    m_handle.queryString(":STOP;*OPC?", response);        
-    m_handle.sendString(":SINGle;:TRIGger:FORCe"); // do a dummy single measurement to obtain the number of samples      
-    int respInt;
-    do {
-        m_handle.queryString(":OPERegister:CONDition?", response);
-        respInt = atoi(response.c_str()) & (1 << 3);
-    } while (respInt);
-    
-    m_handle.queryString(":WAVeform:POINts?", response);                      
-    
+    // do a dummy measurement to obtain a number of samples per trace                            
     captures = 1; // only support one capture at a time
-    m_samples = atoi(response.c_str());
-    if(!m_samples) throw RuntimeException("Invalid oscilloscope answer (number of sample points)", m_samples);
-    samples = m_samples;    
-    
-    m_handle.queryString(":STOP;*OPC?", response);
-    
-    int ret = m_handle.checkForInstrumentErrors(response);
-    if(ret) throw RuntimeException("Error retrieving the oscilloscope setup", ret);
+    m_samples = dummyMeasurement();
+    samples = m_samples;        
         
     return m_samples;
+    
 }
 
 size_t Keysight3000::getValues(int channel, int16_t * buffer, size_t len, size_t & samples, size_t & captures) {
@@ -396,6 +385,7 @@ size_t Keysight3000::getValues(int channel, int16_t * buffer, size_t len, size_t
     // wait for the aquisition to complete
     int respInt;
     do {
+        Sleep(100);
         m_handle.queryString(":OPERegister:CONDition?", response);
         respInt = atoi(response.c_str()) & (1 << 3);
     } while (respInt);
@@ -405,7 +395,7 @@ size_t Keysight3000::getValues(int channel, int16_t * buffer, size_t len, size_t
     m_handle.sendString(command);
     
     int ret = m_handle.checkForInstrumentErrors(response);
-    if(ret) throw Exception("Error reading the data");
+    if(ret) throw Exception("Error setting the source channel", ret);
     
     m_handle.queryString(":WAVeform:POINts?", response); 
     samples = atoi(response.c_str());
@@ -413,38 +403,72 @@ size_t Keysight3000::getValues(int channel, int16_t * buffer, size_t len, size_t
     
     if(samples * captures > len) throw Exception("Receiving buffer too small");
     
-    return m_handle.queryIEEEBlock(":WAVeform:DATA?", reinterpret_cast<char *>(buffer), len*2) / 2;
+    Sleep(100);
+    
+    size_t recvRet = m_handle.queryIEEEBlock(":WAVeform:DATA?", reinterpret_cast<char *>(buffer), len*2) / 2;
+    
+    if(recvRet != samples) throw RuntimeException("Failed to download the power trace from oscilloscope: not enough samples");
+
+    Sleep(100);
+    
+    ret = m_handle.queryString("*OPC?", response); // makes sure that everything got downloaded, otherwise causes -410 error
+    
+    ret = m_handle.checkForInstrumentErrors(response);
+    if(ret) throw Exception("Error while downloading data", ret);
+    
+    return recvRet; 
     
 }
 
 size_t Keysight3000::getValues(int channel, PowerTraces<int16_t> & traces) {
     
     if(!m_opened) throw RuntimeException("The oscilloscope needs to be properly initialized first");
-    if(channel < 1 || channel > 4) throw InvalidInputException("Invalid channel");
+    
+    if(channel < 1 || channel > 4) throw InvalidInputException("Invalid channel");        
+    
+    traces.init(m_samples, 1); //< alloc memory for aquisition
+    
+    size_t samples, captures;
+    
+    return (*this).getValues(channel, traces.data(), traces.size(), samples, captures);
+} 
+
+size_t Keysight3000::dummyMeasurement() {
     
     std::string response;
-    std::string command;
+    m_handle.sendString(":ACQuire:COMPlete 100");
+    m_handle.sendString(":ACQuire:TYPE NORMal");
+    m_handle.sendString(":WAVeform:POINts:MODE RAW");
+    m_handle.sendString(":WAVeform:FORMat WORD");
+    m_handle.sendString(":WAVeform:UNSigned 0");                
+    m_handle.sendString(":WAVeform:BYTeorder LSBFirst");
+    m_handle.queryString(":STOP;*OPC?", response);        
     
-    // wait for the aquisition to complete
+    Sleep(100);
+    
+    m_handle.sendString(":SINGle");
     int respInt;
     do {
+        Sleep(100);
+        m_handle.queryString(":AER?", response);
+        respInt = atoi(response.c_str());
+    } while (!respInt);
+    
+    m_handle.sendString(":TRIGger:FORCe");  
+    
+    do {
+        Sleep(100);
         m_handle.queryString(":OPERegister:CONDition?", response);
         respInt = atoi(response.c_str()) & (1 << 3);
     } while (respInt);
     
-    command = ":WAVeform:SOURce CHANnel";
-    command += std::to_string(channel);
-    m_handle.sendString(command);
+    m_handle.queryString(":WAVeform:POINts?", response);                      
+    
+    size_t samples = atoi(response.c_str());
     
     int ret = m_handle.checkForInstrumentErrors(response);
-    if(ret) throw RuntimeException("Error reading the data", ret);
-    
-    m_handle.queryString(":WAVeform:POINts?", response); 
-    int samples = atoi(response.c_str());
-    int captures = 1;
+    if(ret) throw RuntimeException("Error doing a dummy measurement", ret);
         
-    traces.init(samples, captures); //< alloc memory        
+    return samples;
     
-    return m_handle.queryIEEEBlock(":WAVeform:DATA?", reinterpret_cast<char *>(traces.data()), traces.size()) / 2;
-    
-} 
+}
