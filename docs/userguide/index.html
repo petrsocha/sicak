@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
 
-  <title>SICAK User Guide, ver. 1.0.1</title>
+  <title>SICAK 1.1 User Guide</title>
   <meta name="author" content="Petr Socha">
-  <meta name="description" content="SICAK 1.0.1 User Guide, ver. 1.0">
+  <meta name="description" content="SICAK 1.1 User Guide">
   
   <style>
     body {
@@ -65,8 +65,8 @@
 <body id="top">
 
     <main>
-        <h1>SICAK: SIde-Channel Analysis toolKit 1.0.1</h1>
-        <h1>User's Guide, ver. 1.0.1</h1>
+        <h1>SICAK: SIde-Channel Analysis toolKit 1.1</h1>
+        <h1>User's Guide</h1>
         
         <h2>Contents</h2>
             <ol>
@@ -1216,6 +1216,12 @@
             <h2 id="measurement">9. measurement (meas) plug-ins</h2>
             
                 <p>Users are encouraged to write their own measurement scenarios. In such cases, please let me (the author) know :-).</p>
+                
+                <p>Measurement scenarios obtain the configuration string given using meas's --param option. The configuration string has the following format: "key1=val1;key2=val2...".</p>
+                
+                <p>For example, to launch a measurement downloading power traces from channel 2, use: <strong>--param="ch=2"</strong></p>
+                
+                <p>Accepted parameters are scenario specific. See below.</p>
             
                 <h3 id="random128co">random128co</h3>
                 
@@ -1246,6 +1252,11 @@
                     </ul>
                 
                     <p>where ID is meas given parameter or default.</p>
+                    
+                    <h4>Parameters</h4>                    
+                        <ul>
+                            <li><strong>ch=N</strong> oscilloscope channel from which to download the power traces, N is a natural number (default is ch=1)</li>
+                        </ul>
                 
                 <h3 id="ttest128co">ttest128co</h3>
                 
@@ -1278,6 +1289,11 @@
                 
                     <p>where ID is meas given parameter or default.</p>
                     
+                    <h4>Parameters</h4>                    
+                        <ul>
+                            <li><strong>ch=N</strong> oscilloscope channel from which to download the power traces, N is a natural number (default is ch=1)</li>
+                        </ul>
+                    
                 <h3 id="random128apdu">random128apdu</h3>
                 <h3 id="ttest128apdu">ttest128apdu</h3>
                 
@@ -1288,8 +1304,8 @@
                 <p>Second, the data are send and received using APDU format as described in ISO/IEC 7816-4:2005 with fields set as follows:</p>
                 
                 <ul>
-                    <li>CLA = 0x80</li>
-                    <li>INS = 0x60</li>
+                    <li>CLA = 0x80 or set by user</li>
+                    <li>INS = 0x60 or set by user</li>
                     <li>P1 = 0x00</li>
                     <li>P2 = 0x00</li>
                     <li>Lc = 0x10 (length of the following block)</li>
@@ -1299,7 +1315,18 @@
             
                 <p>Besides this, the scenarios work identical and produce same output files.</p>
                 
-                <p>These scenarios are compatible with devices requesting APDU format, such as those provided by the <a href="#smartcard">smartcard plug-in</a>.</p>
+                <h4>Parameters</h4>                    
+                        <ul>
+                            <li><strong>ch=N</strong> oscilloscope channel from which to download the power traces, N is a natural number (default is ch=1)</li>
+                            <li><strong>cla=H</strong> oscilloscope channel from which to download the power traces, H is a HEX-coded number (default is cla=80)</li>
+                            <li><strong>ins=H</strong> oscilloscope channel from which to download the power traces, H is a HEX-coded number (default is ins=60)</li>
+                        </ul>
+                
+                <p>These APDU scenarios are compatible with devices requesting APDU format, such as those provided by the <a href="#smartcard">smartcard plug-in</a>. Example of a typical usage: (use -Q to find out the number of the smartcard reader, when needed)</p>
+                
+                <code>
+                ./meas -M random128apdu -O keysight3000 -R USBInstrument1 -C smartcard -n 100 --param="ch=2;cla=80;ins=60"
+                </code>
             
             <a href="#top" class="toplink">back to top &uarr;</a>
             <h2 id="blockprocess">10. blockprocess (prep) plug-ins</h2>
