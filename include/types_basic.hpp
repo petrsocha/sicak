@@ -1,6 +1,6 @@
 /*
 *  SICAK - SIde-Channel Analysis toolKit
-*  Copyright (C) 2018 Petr Socha, FIT, CTU in Prague
+*  Copyright (C) 2018-2019 Petr Socha, FIT, CTU in Prague
 *
 *  This program is free software: you can redistribute it and/or modify
 *  it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
 *
 *
 * \author Petr Socha
-* \version 1.0
+* \version 1.1
 */
 
 #ifndef TYPES_BASIC_HPP
@@ -146,6 +146,9 @@ public:
         /// Initializes the matrix with a specified number of cols and rows and fills it with 'val'
         virtual void   init(size_t cols, size_t rows, T initVal) = 0;
 
+        /// Vertically shrinks the matrix, with remaining elements and addressing left intact
+        virtual void   shrinkRows(size_t rows) = 0;
+        
         /// Accesses an element in the matrix. Doesn't check for bounds.
         virtual         T & operator()       (size_t col, size_t row) = 0;
         /// Accesses an element in the matrix. Doesn't check for bounds.
@@ -257,6 +260,7 @@ public:
                     m_capacity = length;
                     
                 } catch (std::bad_alloc & e) {
+                    (void)e; // supress MSVC warnings about an unused local variable
                     throw RuntimeException("Memory allocation failed"); 
                 }
                 
@@ -338,6 +342,13 @@ public:
                 m_vector.init(cols * rows, initVal);
                 m_cols = cols;
                 m_rows = rows;
+        }
+        
+        virtual void   shrinkRows(size_t rows) {
+                if(rows > m_rows) throw RuntimeException("Cannot shrink Matrix to a larger size!");
+                m_vector.init(m_cols * rows); // (rows <= m_rows) -> (Vector::m_capacity >= m_cols * rows) -> no memory reallocation happens, only upper bound is lowered
+                m_rows = rows;                
+                // Matrix now appears "less tall"... enlargening it back to the previous size would actually give back the original matrix, but we cant guarantee that generally
         }
 
         virtual T *    data() { return m_vector.data(); }

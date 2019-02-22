@@ -149,39 +149,58 @@ void Random128CO::run(const char * measurementId, size_t measurements, Oscillosc
     // We run the oscilloscope runs times
     for(size_t run = 0; run < runs; run++){
         
-        oscilloscope->run(); //< Start capturing capturesPerRun captures
+        try { // try to perform a measurement run
         
-        // Send capturesPerRun blocks to cipher
-        for(size_t capture = 0; capture < capturesPerRun; capture++){                     
+            oscilloscope->run(); //< Start capturing capturesPerRun captures
             
-            size_t measurement = run * capturesPerRun + capture; //< Number of current measurement
-            
-            // Generate random plaintext
-            for(int byte = 0; byte < 16; byte++){
+            // Send capturesPerRun blocks to cipher
+            for(size_t capture = 0; capture < capturesPerRun; capture++){                     
                 
-                plaintext(byte, measurement) = (uint8_t) byteUnif(prng);
-                          
+                size_t measurement = run * capturesPerRun + capture; //< Number of current measurement
+                
+                // Generate random plaintext
+                for(int byte = 0; byte < 16; byte++){
+                    
+                    plaintext(byte, measurement) = (uint8_t) byteUnif(prng);
+                            
+                }
+                
+                // Send plaintext
+                charDevice->send(command); //< Send the encryption command
+                charDevice->send( &( plaintext(0, measurement) ), 16); //< Send 16 bytes of plaintext //TODO MatrixRowPtr
+                
+                // Receive ciphertext
+                charDevice->receive( &( ciphertext(0, measurement) ), 16); //< Receive 16 bytes of ciphertext //TODO MatrixRowPtr
+                
+                CoutProgress::get().update(measurement);
+                
             }
             
-            // Send plaintext
-            charDevice->send(command); //< Send the encryption command
-            charDevice->send( &( plaintext(0, measurement) ), 16); //< Send 16 bytes of plaintext //TODO MatrixRowPtr
+            size_t measuredSamples;
+            size_t measuredCaptures;
             
-            // Receive ciphertext
-            charDevice->receive( &( ciphertext(0, measurement) ), 16); //< Receive 16 bytes of ciphertext //TODO MatrixRowPtr
+            // Download the sampled data from oscilloscope
+            oscilloscope->getValues(m_channel, &( measuredTraces(0, run * capturesPerRun) ), capturesPerRun * samplesPerTrace, measuredSamples, measuredCaptures);
             
-            CoutProgress::get().update(measurement);
+            if(measuredSamples != samplesPerTrace || measuredCaptures != capturesPerRun){
+                throw RuntimeException("Measurement went wrong: samples*captures mismatch");
+            }
+        
+        } catch (std::exception & e){ // an oscilloscope run or communication with the target failed            
             
-        }
-        
-        size_t measuredSamples;
-        size_t measuredCaptures;
-        
-        // Download the sampled data from oscilloscope
-        oscilloscope->getValues(m_channel, &( measuredTraces(0, run * capturesPerRun) ), capturesPerRun * samplesPerTrace, measuredSamples, measuredCaptures);
-        
-        if(measuredSamples != samplesPerTrace || measuredCaptures != capturesPerRun){
-            throw RuntimeException("Measurement went wrong: samples*captures mismatch");
+            cout << QString("\n[!] An error has occured during the %1. oscilloscope run: %2\n").arg(run+1).arg(e.what());                                    
+            cout << QString("[!] Before an error, %1 power traces were measured and will be saved.\n").arg(run * capturesPerRun);
+            cout.flush();
+            
+            measurements = run * capturesPerRun; // update the number of succesfully performed measurements                             
+            
+            // Shrink the containers to fit the data actually measured
+            measuredTraces.shrinkRows(measurements);
+            plaintext.shrinkRows(measurements);
+            ciphertext.shrinkRows(measurements);
+            
+            break; // break the measurement
+            
         }
         
     }

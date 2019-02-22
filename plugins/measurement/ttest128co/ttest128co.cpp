@@ -162,54 +162,70 @@ void TTest128CO::run(const char * measurementId, size_t measurements, Oscillosco
     // We run the oscilloscope runs times
     for(size_t run = 0; run < runs; run++){
         
-        oscilloscope->run(); //< Start capturing capturesPerRun captures
-        
-        // Send capturesPerRun blocks to cipher
-        for(size_t capture = 0; capture < capturesPerRun; capture++){                     
+        try { // try to perform a measurement run
             
-            size_t measurement = run * capturesPerRun + capture; //< Number of current measurement
+            oscilloscope->run(); //< Start capturing capturesPerRun captures
             
-            isTraceConstant(measurement) = (uint8_t) bitUnif(prng) % 2; //< Decide whatever next measurement will be random or constant                        
-            
-            if(isTraceConstant(measurement)){
-              
-                // Use constant plaintext
-                for(int byte = 0; byte < 16; byte++){
+            // Send capturesPerRun blocks to cipher
+            for(size_t capture = 0; capture < capturesPerRun; capture++){                     
+                
+                size_t measurement = run * capturesPerRun + capture; //< Number of current measurement
+                
+                isTraceConstant(measurement) = (uint8_t) bitUnif(prng) % 2; //< Decide whatever next measurement will be random or constant                        
+                
+                if(isTraceConstant(measurement)){
+                
+                    // Use constant plaintext
+                    for(int byte = 0; byte < 16; byte++){
+                        
+                        plaintext(byte, measurement) = constPlaintext[byte];
+                                
+                    }   
                     
-                    plaintext(byte, measurement) = constPlaintext[byte];
-                            
-                }   
-                
-            } else {
-                
-                // Generate random plaintext
-                for(int byte = 0; byte < 16; byte++){
+                } else {
                     
-                    plaintext(byte, measurement) = (uint8_t) byteUnif(prng);
-                            
-                }                                
+                    // Generate random plaintext
+                    for(int byte = 0; byte < 16; byte++){
+                        
+                        plaintext(byte, measurement) = (uint8_t) byteUnif(prng);
+                                
+                    }                                
+                    
+                }                                                
                 
-            }                                                
+                // Send plaintext
+                charDevice->send(command); //< Send the encryption command
+                charDevice->send( &( plaintext(0, measurement) ), 16); //< Send 16 bytes of plaintext //TODO MatrixRowPtr
+                
+                // Receive ciphertext
+                charDevice->receive( &( ciphertext(0, measurement) ), 16); //< Receive 16 bytes of ciphertext //TODO MatrixRowPtr
+                
+                CoutProgress::get().update(measurement);
+                
+            }
             
-            // Send plaintext
-            charDevice->send(command); //< Send the encryption command
-            charDevice->send( &( plaintext(0, measurement) ), 16); //< Send 16 bytes of plaintext //TODO MatrixRowPtr
+            size_t measuredSamples;
+            size_t measuredCaptures;
             
-            // Receive ciphertext
-            charDevice->receive( &( ciphertext(0, measurement) ), 16); //< Receive 16 bytes of ciphertext //TODO MatrixRowPtr
+            // Download the sampled data from oscilloscope
+            oscilloscope->getValues(m_channel, &( measuredTraces(0, run * capturesPerRun) ), capturesPerRun * samplesPerTrace, measuredSamples, measuredCaptures);
             
-            CoutProgress::get().update(measurement);
-            
-        }
+            if(measuredSamples != samplesPerTrace || measuredCaptures != capturesPerRun){
+                throw RuntimeException("Measurement went wrong: samples*captures mismatch");
+            }
         
-        size_t measuredSamples;
-        size_t measuredCaptures;
-        
-        // Download the sampled data from oscilloscope
-        oscilloscope->getValues(m_channel, &( measuredTraces(0, run * capturesPerRun) ), capturesPerRun * samplesPerTrace, measuredSamples, measuredCaptures);
-        
-        if(measuredSamples != samplesPerTrace || measuredCaptures != capturesPerRun){
-            throw RuntimeException("Measurement went wrong: samples*captures mismatch");
+        } catch (std::exception & e){ // an oscilloscope run or communication with the target failed            
+            
+            cout << QString("\n[!] An error has occured during the %1. oscilloscope run: %2\n").arg(run+1).arg(e.what());                                    
+            cout << QString("[!] Before an error, %1 power traces were measured and will be saved.\n").arg(run * capturesPerRun);
+            cout.flush();
+            
+            measurements = run * capturesPerRun; // update the number of succesfully performed measurements                             
+            
+            // No need to shrink the containers here, since every single measurement is written to file separately
+            
+            break; // break the measurement
+            
         }
         
     }
