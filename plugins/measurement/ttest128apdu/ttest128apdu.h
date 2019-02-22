@@ -23,7 +23,7 @@
 *
 *
 * \author Petr Socha
-* \version 1.0
+* \version 1.1
 */
 
 #ifndef TTEST128APDU_H
@@ -62,7 +62,10 @@ public:
     
     virtual void run(const char * measurementId, size_t measurements, Oscilloscope * oscilloscope, CharDevice * charDevice) override;
     
-    
+protected:
+    int m_channel;
+    uint8_t m_cla;
+    uint8_t m_ins;    
     
 };
 

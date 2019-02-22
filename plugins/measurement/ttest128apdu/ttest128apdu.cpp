@@ -23,7 +23,7 @@
 *
 *
 * \author Petr Socha
-* \version 1.0
+* \version 1.1
 */
 
 #include <QString>
@@ -36,7 +36,7 @@
 #include "filehandling.hpp"
 #include "global_calls.hpp"
 
-TTest128APDU::TTest128APDU(){
+TTest128APDU::TTest128APDU(): m_channel(1), m_cla(0x80), m_ins(0x60) {
     
 }
 
@@ -53,7 +53,44 @@ QString TTest128APDU::getPluginInfo() {
 }
 
 void TTest128APDU::init(const char * param){
-    Q_UNUSED(param)
+    
+    QStringList params = QString(param).split(";");
+    QString paramVal;
+    
+    for (int i = 0; i < params.size(); ++i){ // iterate thru all parameters
+        
+         if(params.at(i).startsWith("ch=")){
+             
+             paramVal = params.at(i);
+             paramVal.remove(0,3);
+             
+             m_channel = paramVal.toInt();
+             if(m_channel < 0) throw RuntimeException("Invalid measurement channel param");                          
+             
+         } else if(params.at(i).startsWith("cla=")){
+             
+             paramVal = params.at(i);
+             paramVal.remove(0,4);
+             
+             bool ok;
+             m_cla = paramVal.toInt(&ok, 16);
+             
+             if(!ok) throw RuntimeException("Failed parsing hex CLA param");
+             
+         } else if(params.at(i).startsWith("ins=")){
+             
+             paramVal = params.at(i);
+             paramVal.remove(0,4);
+             
+             bool ok;
+             m_ins = paramVal.toInt(&ok, 16);
+             
+             if(!ok) throw RuntimeException("Failed parsing hex INS param");
+             
+         }
+         
+    }
+    
 }
 
 void TTest128APDU::deInit(){
@@ -78,6 +115,14 @@ void TTest128APDU::run(const char * measurementId, size_t measurements, Oscillos
         throw InvalidInputException("Oscilloscope and measurement parameter mismatch: number of measurements must be divisible by the number of oscilloscope captures without remainder");
     }        
     
+    // Print intro info
+    QTextStream cout(stdout);
+    
+    cout << QString("Downloading power traces from channel %1\nUsing APDU with CLA=0x%2 and INS=0x%3\n").arg(m_channel).arg(m_cla, 2, 16, QChar('0')).arg(m_ins, 2, 16, QChar('0'));
+    
+    cout.flush();
+    
+    // Begin progress bar
     CoutProgress::get().start(measurements);
         
     // Alloc space
@@ -118,8 +163,8 @@ void TTest128APDU::run(const char * measurementId, size_t measurements, Oscillos
     std::fstream ciphertextFile = openOutFile(ba.data());
     
     // Prepare the command APDU
-    commandAPDU(0) = 0x80; // CLA
-    commandAPDU(1) = 0x60; // INS
+    commandAPDU(0) = m_cla; // CLA
+    commandAPDU(1) = m_ins; // INS
     commandAPDU(2) = 0x00; // P1
     commandAPDU(3) = 0x00; // P2
     commandAPDU(4) = 0x10; // Lc
@@ -197,7 +242,7 @@ void TTest128APDU::run(const char * measurementId, size_t measurements, Oscillos
         size_t measuredCaptures;
         
         // Download the sampled data from oscilloscope
-        oscilloscope->getValues(1, &( measuredTraces(0, run * capturesPerRun) ), capturesPerRun * samplesPerTrace, measuredSamples, measuredCaptures);
+        oscilloscope->getValues(m_channel, &( measuredTraces(0, run * capturesPerRun) ), capturesPerRun * samplesPerTrace, measuredSamples, measuredCaptures);
         
         if(measuredSamples != samplesPerTrace || measuredCaptures != capturesPerRun){
             throw RuntimeException("Measurement went wrong: samples*captures mismatch");
@@ -252,7 +297,6 @@ void TTest128APDU::run(const char * measurementId, size_t measurements, Oscillos
         tracesDocFile.write(tracesDoc.toJson());
     }
     
-    QTextStream cout(stdout);
     cout << QString("Measured %1 power traces in total, %8 samples per trace,\n%2 random data based power traces were saved to '%3',\n%4 constant data based power traces were saved to '%5'.\nRandom plaintext blocks were saved to '%6', related ciphertext blocks were saved to '%7'.\n").arg(measurements).arg(randomTracesN).arg(randTracesFilename).arg(constTracesN).arg(constTracesFilename).arg(plaintextFilename).arg(ciphertextFilename).arg(samplesPerTrace);
     
 }

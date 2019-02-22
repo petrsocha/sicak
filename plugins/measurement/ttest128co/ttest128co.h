@@ -62,7 +62,8 @@ public:
     
     virtual void run(const char * measurementId, size_t measurements, Oscilloscope * oscilloscope, CharDevice * charDevice) override;
     
-    
+protected:
+    int m_channel;    
     
 };
 

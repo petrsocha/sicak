@@ -1,6 +1,6 @@
 /*
 *  SICAK - SIde-Channel Analysis toolKit
-*  Copyright (C) 2018 Petr Socha, FIT, CTU in Prague
+*  Copyright (C) 2018-2019 Petr Socha, FIT, CTU in Prague
 *
 *  This program is free software: you can redistribute it and/or modify
 *  it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
 *
 *
 * \author Petr Socha
-* \version 1.0
+* \version 1.1
 */
 
 #include <QString>
@@ -36,7 +36,7 @@
 #include "filehandling.hpp"
 #include "global_calls.hpp"
 
-Random128CO::Random128CO(){
+Random128CO::Random128CO(): m_channel(1) {
     
 }
 
@@ -53,7 +53,24 @@ QString Random128CO::getPluginInfo() {
 }
 
 void Random128CO::init(const char * param){
-    Q_UNUSED(param)
+    
+    QStringList params = QString(param).split(";");
+    QString paramVal;
+    
+    for (int i = 0; i < params.size(); ++i){ // iterate thru all parameters
+        
+         if(params.at(i).startsWith("ch=")){
+             
+             paramVal = params.at(i);
+             paramVal.remove(0,3);
+             
+             m_channel = paramVal.toInt();
+             if(m_channel < 0) throw RuntimeException("Invalid measurement channel param");                          
+             
+         } 
+         
+    }        
+    
 }
 
 void Random128CO::deInit(){
@@ -78,6 +95,13 @@ void Random128CO::run(const char * measurementId, size_t measurements, Oscillosc
         throw InvalidInputException("Oscilloscope and measurement parameter mismatch: number of measurements must be divisible by the number of oscilloscope captures without remainder");
     }        
     
+    // Print intro info
+    QTextStream cout(stdout);
+    
+    cout << QString("Downloading power traces from channel %1\n").arg(m_channel);
+    cout.flush();
+    
+    // Begin progress bar
     CoutProgress::get().start(measurements);
         
     // Alloc space
@@ -154,7 +178,7 @@ void Random128CO::run(const char * measurementId, size_t measurements, Oscillosc
         size_t measuredCaptures;
         
         // Download the sampled data from oscilloscope
-        oscilloscope->getValues(1, &( measuredTraces(0, run * capturesPerRun) ), capturesPerRun * samplesPerTrace, measuredSamples, measuredCaptures);
+        oscilloscope->getValues(m_channel, &( measuredTraces(0, run * capturesPerRun) ), capturesPerRun * samplesPerTrace, measuredSamples, measuredCaptures);
         
         if(measuredSamples != samplesPerTrace || measuredCaptures != capturesPerRun){
             throw RuntimeException("Measurement went wrong: samples*captures mismatch");
@@ -191,7 +215,6 @@ void Random128CO::run(const char * measurementId, size_t measurements, Oscillosc
         tracesDocFile.write(tracesDoc.toJson());
     }
     
-    QTextStream cout(stdout);
     cout << QString("Measured %1 power traces, %5 samples per trace, and saved them to '%2'.\nUsed plaintext blocks were saved to '%3', retrieved ciphertext blocks were saved to '%4'.\n").arg(measurements).arg(tracesFilename).arg(plaintextFilename).arg(ciphertextFilename).arg(samplesPerTrace);
     
 }
