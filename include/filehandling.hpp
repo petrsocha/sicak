@@ -1,6 +1,6 @@
 /*
 *  SICAK - SIde-Channel Analysis toolKit
-*  Copyright (C) 2018 Petr Socha, FIT, CTU in Prague
+*  Copyright (C) 2018-2019 Petr Socha, FIT, CTU in Prague
 *
 *  This program is free software: you can redistribute it and/or modify
 *  it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
 *
 *
 * \author Petr Socha
-* \version 1.0
+* \version 1.1
 */
 
 
@@ -32,6 +32,7 @@
 
 #include <fstream>
 #include <string>
+#include <cstring>
 #include "types_basic.hpp"
 #include "types_power.hpp"
 #include "types_stat.hpp"
@@ -213,30 +214,42 @@ void writeArrayToFile(std::fstream & fs, const ArrayType<T> & arr){
 *
 */
 template<class T>
-UnivariateContext<T> readContextFromFile(std::fstream & fs){
+Moments2DContext<T> readContextFromFile(std::fstream & fs){    
     
-    uint64_t ctxAttrs[7];
+    // Read and compare ID signature
+    Vector<uint8_t> ctxIdAttr(256);
     
-    fs.read(reinterpret_cast<char *>(ctxAttrs), sizeof(uint64_t) * 7);
+    fillArrayFromFile(fs, ctxIdAttr);
     
-    if(fs.fail())
-        throw RuntimeException("Failed to read context from file");
+    if(strcmp(reinterpret_cast<char *>(ctxIdAttr.data()), "cz.cvut.fit.Sicak.Moments2DContext/1.1")) throw RuntimeException("Error reading a context from a file: invalid ID signature. Maybe incompatible version?");
+        
+    // Read size parameters
+    Vector<uint64_t> ctxSizeAttrs(9);
     
-    UnivariateContext<T> ret(ctxAttrs[0], ctxAttrs[1], ctxAttrs[4], ctxAttrs[5], ctxAttrs[6]);
-    ret.p1Card() = ctxAttrs[2];
-    ret.p2Card() = ctxAttrs[3];
+    fillArrayFromFile(fs, ctxSizeAttrs);
+        
+    Moments2DContext<T> ret(ctxSizeAttrs(0), ctxSizeAttrs(1), ctxSizeAttrs(2), ctxSizeAttrs(3), ctxSizeAttrs(4), ctxSizeAttrs(5), ctxSizeAttrs(6));
+    ret.p1Card() = ctxSizeAttrs(7);
+    ret.p2Card() = ctxSizeAttrs(8);
     
-    for(size_t order = 1; order <= ret.mOrder(); order++){
+    // Read the data
+    for(size_t order = 1; order <= ret.p1MOrder(); order++){
         fillArrayFromFile(fs, ret.p1M(order));
+    }
+    
+    for(size_t order = 1; order <= ret.p2MOrder(); order++){
         fillArrayFromFile(fs, ret.p2M(order));
     }
         
-    for(size_t order = 2; order <= ret.csOrder(); order++){
+    for(size_t order = 2; order <= ret.p1CSOrder(); order++){
         fillArrayFromFile(fs, ret.p1CS(order));
+    }
+    
+    for(size_t order = 2; order <= ret.p2CSOrder(); order++){
         fillArrayFromFile(fs, ret.p2CS(order));
     }
     
-    for(size_t order = 1; order <= ret.acsOrder(); order++){
+    for(size_t order = 1; order <= ret.p12ACSOrder(); order++){
         fillArrayFromFile(fs, ret.p12ACS(order));
     }
     
@@ -251,33 +264,51 @@ UnivariateContext<T> readContextFromFile(std::fstream & fs){
 *
 */
 template<class T>
-void writeContextToFile(std::fstream & fs, const UnivariateContext<T> & ctx){
+void writeContextToFile(std::fstream & fs, const Moments2DContext<T> & ctx){
      
-    uint64_t ctxAttrs[7];
-    ctxAttrs[0] = ctx.p1Width();
-    ctxAttrs[1] = ctx.p2Width();
-    ctxAttrs[2] = ctx.p1Card();
-    ctxAttrs[3] = ctx.p2Card();
-    ctxAttrs[4] = ctx.mOrder();
-    ctxAttrs[5] = ctx.csOrder();
-    ctxAttrs[6] = ctx.acsOrder();
+    // Write ID signature
+    const char * ctxId = ctx.getId();            
+    if(strlen(ctxId) > 255) throw RuntimeException("Context ID overflow.");
     
-    fs.write(reinterpret_cast<char *>(ctxAttrs), sizeof(uint64_t) * 7);
+    Vector<uint8_t> ctxIdAttr(256, 0);
+    for(size_t i = 0; i < strlen(ctxId); i++){
+        ctxIdAttr(i) = ctxId[i];
+    }
     
-    if(fs.fail())
-        throw RuntimeException("Failed to write context to file");
+    writeArrayToFile(fs, ctxIdAttr);      
     
-    for(size_t order = 1; order <= ctx.mOrder(); order++){
+    // Write size attributes
+    Vector<uint64_t> ctxSizeAttrs(9);
+    ctxSizeAttrs(0) = ctx.p1Width();
+    ctxSizeAttrs(1) = ctx.p2Width();
+    ctxSizeAttrs(2) = ctx.p1MOrder();
+    ctxSizeAttrs(3) = ctx.p2MOrder();
+    ctxSizeAttrs(4) = ctx.p1CSOrder();
+    ctxSizeAttrs(5) = ctx.p2CSOrder();
+    ctxSizeAttrs(6) = ctx.p12ACSOrder();
+    ctxSizeAttrs(7) = ctx.p1Card();
+    ctxSizeAttrs(8) = ctx.p2Card();
+    
+    writeArrayToFile(fs, ctxSizeAttrs); 
+    
+    // Write the data
+    for(size_t order = 1; order <= ctx.p1MOrder(); order++){
         writeArrayToFile(fs, ctx.p1M(order));
+    }
+    
+    for(size_t order = 1; order <= ctx.p2MOrder(); order++){
         writeArrayToFile(fs, ctx.p2M(order));
     }
         
-    for(size_t order = 2; order <= ctx.csOrder(); order++){
+    for(size_t order = 2; order <= ctx.p1CSOrder(); order++){
         writeArrayToFile(fs, ctx.p1CS(order));
+    }
+    
+    for(size_t order = 2; order <= ctx.p2CSOrder(); order++){
         writeArrayToFile(fs, ctx.p2CS(order));
     }
     
-    for(size_t order = 1; order <= ctx.acsOrder(); order++){
+    for(size_t order = 1; order <= ctx.p12ACSOrder(); order++){
         writeArrayToFile(fs, ctx.p12ACS(order));
     }
 

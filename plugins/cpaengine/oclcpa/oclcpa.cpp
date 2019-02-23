@@ -1,6 +1,6 @@
 /*
 *  SICAK - SIde-Channel Analysis toolKit
-*  Copyright (C) 2018 Petr Socha, FIT, CTU in Prague
+*  Copyright (C) 2018-2019 Petr Socha, FIT, CTU in Prague
 *
 *  This program is free software: you can redistribute it and/or modify
 *  it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
 *
 *
 * \author Petr Socha
-* \version 1.0
+* \version 1.1
 */
 
 #include "oclcpa.h"
@@ -45,7 +45,7 @@ QString OclCPA::getPluginInfo() {
 }
 
 void OclCPA::init(int platform, int device, size_t noOfTraces, size_t samplesPerTrace, size_t noOfCandidates, const char * param) {
-    if(noOfTraces*samplesPerTrace == 0 || noOfTraces*noOfCandidates == 0) return;
+    if(noOfTraces*samplesPerTrace == 0 || noOfTraces*noOfCandidates == 0) throw RuntimeException("Invalid computation parameters (sizes).");
     m_handle = new OclCpaEngine<double, int16_t, uint8_t>(platform, device, samplesPerTrace, noOfCandidates, noOfTraces);
     Q_UNUSED(param);
 }
@@ -65,7 +65,7 @@ void OclCPA::setConstTraces(bool constTraces){
     m_tracesLoaded = false;
 }    
     
-UnivariateContext<double> OclCPA::createContext(const PowerTraces<int16_t> & powerTraces, const PowerPredictions<uint8_t> & powerPredictions) {
+Moments2DContext<double> OclCPA::createContext(const PowerTraces<int16_t> & powerTraces, const PowerPredictions<uint8_t> & powerPredictions) {
     
     if(m_handle == nullptr)
         throw RuntimeException("The Ocl engine needs to be properly initialized first");        
@@ -82,7 +82,7 @@ UnivariateContext<double> OclCPA::createContext(const PowerTraces<int16_t> & pow
     // If program is not built yet, build it now
     m_handle->buildProgram();
         
-    UnivariateContext<double> context;
+    Moments2DContext<double> context;
     
     // Launch the computation
     m_handle->compute(context, 1000); 
@@ -91,12 +91,12 @@ UnivariateContext<double> OclCPA::createContext(const PowerTraces<int16_t> & pow
         
 }
 
-void OclCPA::mergeContexts(UnivariateContext<double> & firstAndOut, const UnivariateContext<double> & second) {
+void OclCPA::mergeContexts(Moments2DContext<double> & firstAndOut, const Moments2DContext<double> & second) {
     // Not a time-demanding operation, use OpenMP version
     UniFoCpaMergeContexts(firstAndOut, second);
 }
 
-Matrix<double> OclCPA::finalizeContext(const UnivariateContext<double> & context) {
+Matrix<double> OclCPA::finalizeContext(const Moments2DContext<double> & context) {
     Matrix<double> correlations;
     // Not a time-demanding operation, use OpenMP version
     UniFoCpaComputeCorrelationMatrix(context, correlations);

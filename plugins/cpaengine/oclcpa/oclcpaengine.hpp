@@ -1,6 +1,6 @@
 /*
 *  SICAK - SIde-Channel Analysis toolKit
-*  Copyright (C) 2018 Petr Socha, FIT, CTU in Prague
+*  Copyright (C) 2018-2019 Petr Socha, FIT, CTU in Prague
 *
 *  This program is free software: you can redistribute it and/or modify
 *  it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
 *
 *
 * \author Petr Socha
-* \version 1.0
+* \version 1.1
 */
 
 #ifndef OCLCPAENGINE_HPP
@@ -81,8 +81,8 @@ public:
         void loadPredictionsToDevice(const PowerPredictions<Tp> & pp, bool blocking = false);
         /// Load power traces from local memory to device buffers
         void loadTracesToDevice(const PowerTraces<Tt> & pt, bool blocking = false);
-        /// Launch the computation kernel, divide the work by sliceSize (long running GPU kernel is not good), return result in UnivariateContext context
-        void compute(UnivariateContext<Tc> & context, unsigned int sliceSize);
+        /// Launch the computation kernel, divide the work by sliceSize (long running GPU kernel is not good), return result in Moments2DContext context
+        void compute(Moments2DContext<Tc> & context, unsigned int sliceSize);
 
 };
 
@@ -312,9 +312,9 @@ void OclCpaEngine<Tc, Tt, Tp>::loadTracesToDevice(const PowerTraces<Tt>& pt, boo
 
 
 template<class Tc, class Tt, class Tp>
-void OclCpaEngine<Tc, Tt, Tp>::compute(UnivariateContext<Tc> & corrContext, unsigned int sliceSize) {
+void OclCpaEngine<Tc, Tt, Tp>::compute(Moments2DContext<Tc> & corrContext, unsigned int sliceSize) {
 
-        corrContext.init(m_samplesPerTrace, m_noOfCandidates, 1, 2, 1);
+        corrContext.init(m_samplesPerTrace, m_noOfCandidates, 1, 1, 2, 2, 1);
         cl_int ret;
         unsigned int noOfSlices = m_noOfTraces / sliceSize;
         unsigned int remaindingSliceSize = m_noOfTraces - noOfSlices * sliceSize;

@@ -1,6 +1,6 @@
 /*
 *  SICAK - SIde-Channel Analysis toolKit
-*  Copyright (C) 2018 Petr Socha, FIT, CTU in Prague
+*  Copyright (C) 2018-2019 Petr Socha, FIT, CTU in Prague
 *
 *  This program is free software: you can redistribute it and/or modify
 *  it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@
 *
 *
 * \author Petr Socha
-* \version 1.0
+* \version 1.1
 */
 
 #ifndef OMPCPA_H
@@ -44,13 +44,13 @@
 
 /**
 *
-* \brief Adds given random and constant power traces to the given statistical context. Use zeroed or meaningful UnivariateContext c!
+* \brief Adds given random and constant power traces to the given statistical context. Use zeroed or meaningful Moments2DContext c!
 *
 */
 template <class T, class U>
-void UniFoTTestAddTraces(UnivariateContext<T>& c, const PowerTraces<U>& randTraces, const PowerTraces<U>& constTraces) {
+void UniFoTTestAddTraces(Moments2DContext<T>& c, const PowerTraces<U>& randTraces, const PowerTraces<U>& constTraces) {
     
-    if(c.mOrder() != 1 || c.csOrder() != 2 || c.acsOrder() != 0 || c.p1Width() != c.p2Width())
+    if(c.p1MOrder() != 1 || c.p1CSOrder() != 2 || c.p12ACSOrder() != 0 || c.p1MOrder() != c.p2MOrder() || c.p1CSOrder() != c.p2CSOrder() || c.p1Width() != c.p2Width())
         throw RuntimeException("Not a valid first-order univariate t-test context!");
 
     if (c.p1Width() != randTraces.samplesPerTrace() || c.p1Width() != constTraces.samplesPerTrace())
@@ -90,14 +90,17 @@ void UniFoTTestAddTraces(UnivariateContext<T>& c, const PowerTraces<U>& randTrac
 
 /**
 *
-* \brief Merges two UnivariateContext and leaves the result in first context given
+* \brief Merges two Moments2DContext and leaves the result in first context given
 *
 */
 template <class T>
-void UniFoTTestMergeContexts(UnivariateContext<T>& firstAndOut, const UnivariateContext<T>& second) {
+void UniFoTTestMergeContexts(Moments2DContext<T>& firstAndOut, const Moments2DContext<T>& second) {
     
-    if(firstAndOut.mOrder() != 1 || firstAndOut.csOrder() != 2 || firstAndOut.acsOrder() != 0 || second.mOrder() != 1 || second.csOrder() != 2 || second.acsOrder() != 0 || 
-       firstAndOut.p1Width() != firstAndOut.p2Width() || second.p1Width() != second.p2Width())    
+    if(firstAndOut.p1MOrder() != 1 || firstAndOut.p1CSOrder() != 2 || firstAndOut.p12ACSOrder() != 0 
+        || firstAndOut.p1MOrder() != firstAndOut.p2MOrder() || firstAndOut.p1CSOrder() != firstAndOut.p2CSOrder()
+        || second.p1MOrder() != 1 || second.p1CSOrder() != 2 || second.p12ACSOrder() != 0
+        || second.p1MOrder() != second.p2MOrder() || second.p1CSOrder() != second.p2CSOrder()
+        || firstAndOut.p1Width() != firstAndOut.p2Width() || second.p1Width() != second.p2Width()) 
         throw RuntimeException("Not valid first-order univariate t-test contexts!");        
     
     if(firstAndOut.p1Width() != second.p1Width())
@@ -149,13 +152,13 @@ void UniFoTTestMergeContexts(UnivariateContext<T>& firstAndOut, const Univariate
 
 /**
 *
-* \brief Computes final t-values and degrees of freedom based on a UnivariateContext given, stores t-vals in first row, d.o.f. in second row of output matrix
+* \brief Computes final t-values and degrees of freedom based on a Moments2DContext given, stores t-vals in first row, d.o.f. in second row of output matrix
 *
 */
 template <class T>
-void UniFoTTestComputeTValsDegs(const UnivariateContext<T> & c, MatrixType<T> & tValsDegs){
+void UniFoTTestComputeTValsDegs(const Moments2DContext<T> & c, MatrixType<T> & tValsDegs){
     
-    if(c.mOrder() != 1 || c.csOrder() != 2 || c.acsOrder() != 0 || c.p1Width() != c.p2Width())
+    if(c.p1MOrder() != 1 || c.p1CSOrder() != 2 || c.p12ACSOrder() != 0 || c.p1MOrder() != c.p2MOrder() || c.p1CSOrder() != c.p2CSOrder() || c.p1Width() != c.p2Width())
         throw RuntimeException("Not a valid first-order univariate t-test context!");
 
     size_t samplesPerTrace = c.p1Width();

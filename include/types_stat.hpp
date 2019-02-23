@@ -1,6 +1,6 @@
 /*
 *  SICAK - SIde-Channel Analysis toolKit
-*  Copyright (C) 2018 Petr Socha, FIT, CTU in Prague
+*  Copyright (C) 2018-2019 Petr Socha, FIT, CTU in Prague
 *
 *  This program is free software: you can redistribute it and/or modify
 *  it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
 *
 *
 * \author Petr Socha
-* \version 1.0
+* \version 1.1
 */
 
 #ifndef TYPES_STAT_HPP
@@ -33,60 +33,72 @@
 
 
 /**
-* \class UnivariateContext
+* \class Moments2DContext
 * \ingroup SicakData
 *
 * \brief A class representing a Two-population Univariate Moment-based statistical context
 *
 */
 template <class T>
-class UnivariateContext : public ComputationalContext<T> {
+class Moments2DContext : public ComputationalContext<T> {
+    
+#define Moments2DContext_iid "cz.cvut.fit.Sicak.Moments2DContext/1.1"
   
-public:
+public:        
     
     /// Constructs an empty context, needs to be initialized first (init)
-    UnivariateContext():
-        m_p1Width(0), m_p2Width(0), m_p1Card(0), m_p2Card(0), m_mOrder(0), m_csOrder(0), m_acsOrder(0),
+    Moments2DContext():
+        m_p1Width(0), m_p2Width(0), m_p1Card(0), m_p2Card(0), 
+        m_p1MOrder(0), m_p2MOrder(0), m_p1CSOrder(0), m_p2CSOrder(0), m_p12ACSOrder(0),
         m_p1M(nullptr), m_p2M(nullptr), m_p1CS(nullptr), m_p2CS(nullptr), m_p12ACS(nullptr)
     {}
     
     /// Constructs an initialized context
-    UnivariateContext(size_t firstWidth, size_t secondWidth, size_t mOrder, size_t csOrder, size_t acsOrder):
-        m_p1Width(0), m_p2Width(0), m_p1Card(0), m_p2Card(0), m_mOrder(0), m_csOrder(0), m_acsOrder(0),
-        m_p1M(nullptr), m_p2M(nullptr), m_p1CS(nullptr), m_p2CS(nullptr), m_p12ACS(nullptr){
+    Moments2DContext(size_t p1Width, size_t p2Width, size_t p1MOrder, size_t p2MOrder, size_t p1CSOrder, size_t p2CSOrder, size_t p12ACSOrder):
+        m_p1Width(0), m_p2Width(0), m_p1Card(0), m_p2Card(0), 
+        m_p1MOrder(0), m_p2MOrder(0), m_p1CSOrder(0), m_p2CSOrder(0), m_p12ACSOrder(0),
+        m_p1M(nullptr), m_p2M(nullptr), m_p1CS(nullptr), m_p2CS(nullptr), m_p12ACS(nullptr)
+    {
             
-        (*this).init(firstWidth, secondWidth, mOrder, csOrder, acsOrder);
+        (*this).init(p1Width, p2Width, p1MOrder, p2MOrder, p1CSOrder, p2CSOrder, p12ACSOrder);
         
     }
     
     /// Constructs an initialized context and fills it with val
-    UnivariateContext(size_t firstWidth, size_t secondWidth, size_t mOrder, size_t csOrder, size_t acsOrder, T val):
-        m_p1Width(0), m_p2Width(0), m_p1Card(0), m_p2Card(0), m_mOrder(0), m_csOrder(0), m_acsOrder(0),
-        m_p1M(nullptr), m_p2M(nullptr), m_p1CS(nullptr), m_p2CS(nullptr), m_p12ACS(nullptr){
+    Moments2DContext(size_t p1Width, size_t p2Width, size_t p1MOrder, size_t p2MOrder, size_t p1CSOrder, size_t p2CSOrder, size_t p12ACSOrder, T val):
+        m_p1Width(0), m_p2Width(0), m_p1Card(0), m_p2Card(0), 
+        m_p1MOrder(0), m_p2MOrder(0), m_p1CSOrder(0), m_p2CSOrder(0), m_p12ACSOrder(0),
+        m_p1M(nullptr), m_p2M(nullptr), m_p1CS(nullptr), m_p2CS(nullptr), m_p12ACS(nullptr)
+    {
             
-        (*this).init(firstWidth, secondWidth, mOrder, csOrder, acsOrder);
+        (*this).init(p1Width, p2Width, p1MOrder, p2MOrder, p1CSOrder, p2CSOrder, p12ACSOrder);
         (*this).fill(val);
         
     }
     
     /// Move constructor
-    UnivariateContext(UnivariateContext&& other): m_p1Width(other.m_p1Width), m_p2Width(other.m_p2Width), 
+    Moments2DContext(Moments2DContext&& other): m_p1Width(other.m_p1Width), m_p2Width(other.m_p2Width), 
                                                   m_p1Card(other.m_p1Card), m_p2Card(other.m_p2Card),
-                                                  m_mOrder(other.m_mOrder), m_csOrder(other.m_csOrder), m_acsOrder(other.m_acsOrder),
+                                                  m_p1MOrder(other.m_p1MOrder), m_p2MOrder(other.m_p2MOrder), 
+                                                  m_p1CSOrder(other.m_p1CSOrder), m_p2CSOrder(other.m_p2CSOrder), 
+                                                  m_p12ACSOrder(other.m_p12ACSOrder),
                                                   m_p1M(std::move(other.m_p1M)), m_p2M(std::move(other.m_p2M)), 
                                                   m_p1CS(std::move(other.m_p1CS)), m_p2CS(std::move(other.m_p2CS)), 
                                                   m_p12ACS(std::move(other.m_p12ACS)) 
                                                   {}
     
     /// Move assignment operator
-    UnivariateContext& operator=(UnivariateContext&& other) {
+    Moments2DContext& operator=(Moments2DContext&& other) {
             m_p1Width = other.m_p1Width;
             m_p2Width = other.m_p2Width;
             m_p1Card = other.m_p1Card;
             m_p2Card = other.m_p2Card;
-            m_mOrder = other.m_mOrder;
-            m_csOrder = other.m_csOrder;
-            m_acsOrder = other.m_acsOrder;
+            m_p1MOrder = other.m_p1MOrder;
+            m_p2MOrder = other.m_p2MOrder;
+            m_p1CSOrder = other.m_p1CSOrder;
+            m_p2CSOrder = other.m_p2CSOrder;
+            m_p12ACSOrder = other.m_p12ACSOrder;
+            m_p12ACSOrder = other.m_p12ACSOrder;
             m_p1M = std::move(other.m_p1M);
             m_p2M = std::move(other.m_p2M);
             m_p1CS = std::move(other.m_p1CS);
@@ -96,44 +108,59 @@ public:
     }
 
     /// Empty destructor
-    virtual ~UnivariateContext() {}
+    virtual ~Moments2DContext() {}
     
-    virtual void init(size_t firstWidth, size_t secondWidth, size_t mOrder, size_t csOrder, size_t acsOrder) {
+    virtual void init(size_t p1Width, size_t p2Width, size_t p1MOrder, size_t p2MOrder, size_t p1CSOrder, size_t p2CSOrder, size_t p12ACSOrder) {
         
-        if(firstWidth == m_p1Width && secondWidth == m_p2Width && mOrder == m_mOrder && csOrder == m_csOrder && acsOrder == m_acsOrder)
+        if(p1Width == m_p1Width && p2Width == m_p2Width && p1MOrder == m_p1MOrder && p2MOrder == m_p2MOrder && p1CSOrder == m_p1CSOrder && p2CSOrder == m_p2CSOrder && p12ACSOrder == m_p12ACSOrder)
             return; // already there, nothing to do
         
         try{
             
-            m_p1Width = firstWidth;
+            m_p1Width = p1Width;
             m_p1Card = 0;
-            m_p2Width = secondWidth;
+            m_p2Width = p2Width;
             m_p2Card = 0;
-            m_mOrder = mOrder;
-            m_csOrder = csOrder;
-            m_acsOrder = acsOrder;            
+            m_p1MOrder = p1MOrder;
+            m_p2MOrder = p2MOrder;
+            m_p1CSOrder = p1CSOrder;
+            m_p2CSOrder = p2CSOrder;
+            m_p12ACSOrder = p12ACSOrder;            
             
             // M
-            m_p1M.reset(new Vector<T>[mOrder]);
-            m_p2M.reset(new Vector<T>[mOrder]);
-            for(size_t order = 0; order < mOrder; order++){
-                m_p1M[order].init(firstWidth);
-                m_p2M[order].init(secondWidth);
+            m_p1M.reset(new Vector<T>[m_p1MOrder]);
+            m_p2M.reset(new Vector<T>[m_p2MOrder]);
+            
+            for(size_t order = 0; order < m_p1MOrder; order++){
+                m_p1M[order].init(p1Width);
             }
+            
+            for(size_t order = 0; order < m_p2MOrder; order++){
+                m_p2M[order].init(p2Width);
+            }
+            
             
             // CS            
-            size_t csLen = (m_csOrder > 1) ? m_csOrder - 1 : 0; // 1st order CS is a constant '0', dont allocate a Vector for that   
-            m_p1CS.reset(new Vector<T>[csLen]);
-            m_p2CS.reset(new Vector<T>[csLen]);
-            for(size_t order = 0; order < csLen; order++){
-                m_p1CS[order].init(firstWidth);
-                m_p2CS[order].init(secondWidth);
+            size_t p1CSLen = (m_p1CSOrder > 1) ? m_p1CSOrder - 1 : 0; // 1st order CS is a constant '0', dont allocate a Vector for that   
+            size_t p2CSLen = (m_p2CSOrder > 1) ? m_p2CSOrder - 1 : 0; // 1st order CS is a constant '0', dont allocate a Vector for that   
+            
+            m_p1CS.reset(new Vector<T>[p1CSLen]);
+            m_p2CS.reset(new Vector<T>[p2CSLen]);
+            
+            for(size_t order = 0; order < p1CSLen; order++){
+                m_p1CS[order].init(p1Width);
             }
             
+            for(size_t order = 0; order < p2CSLen; order++){
+                m_p2CS[order].init(p2Width);
+            }
+            
+            
             // ACS
-            m_p12ACS.reset(new Matrix<T>[acsOrder]);
-            for(size_t order = 0; order < acsOrder; order++){
-                m_p12ACS[order].init(firstWidth, secondWidth);
+            m_p12ACS.reset(new Matrix<T>[m_p12ACSOrder]);
+            
+            for(size_t order = 0; order < m_p12ACSOrder; order++){
+                m_p12ACS[order].init(p1Width, p2Width);
             }
             
         } catch (std::bad_alloc & e) {
@@ -141,27 +168,38 @@ public:
         } 
     }
     
-    virtual void init(size_t firstWidth, size_t secondWidth, size_t mOrder, size_t csOrder, size_t acsOrder, T val) {
-        (*this).init(firstWidth, secondWidth, mOrder, csOrder, acsOrder);
+    virtual void init(size_t p1Width, size_t p2Width, size_t p1MOrder, size_t p2MOrder, size_t p1CSOrder, size_t p2CSOrder, size_t p12ACSOrder, T val) {
+        (*this).init(p1Width, p2Width, p1MOrder, p2MOrder, p1CSOrder, p2CSOrder, p12ACSOrder);
         (*this).fill(val);
     }
     
-    virtual void fill(T val) {
+    virtual void fill(T val) {                
         
-        for(size_t order = 0; order < m_mOrder; order++){
+        // M
+        for(size_t order = 0; order < m_p1MOrder; order++){
             m_p1M[order].fill(val);
+        }
+        
+        for(size_t order = 0; order < m_p2MOrder; order++){
             m_p2M[order].fill(val);
         }
+                
+        // CS            
+        size_t p1CSLen = (m_p1CSOrder > 1) ? m_p1CSOrder - 1 : 0; // 1st order CS is a constant '0', dont allocate a Vector for that   
+        size_t p2CSLen = (m_p2CSOrder > 1) ? m_p2CSOrder - 1 : 0; // 1st order CS is a constant '0', dont allocate a Vector for that   
         
-        size_t csLen = (m_csOrder > 1) ? m_csOrder - 1 : 0;
-        for(size_t order = 0; order < csLen; order++){
+        for(size_t order = 0; order < p1CSLen; order++){
             m_p1CS[order].fill(val);
+        }
+        
+        for(size_t order = 0; order < p2CSLen; order++){
             m_p2CS[order].fill(val);
         }
-        
-        for(size_t order = 0; order < m_acsOrder; order++){
+                
+        // ACS        
+        for(size_t order = 0; order < m_p12ACSOrder; order++){
             m_p12ACS[order].fill(val);
-        }
+        }        
                 
     }
     
@@ -174,17 +212,27 @@ public:
         
     }
     
+    virtual const char * getId() const { return Moments2DContext_iid; }
+    
     /// Width of the first population
     virtual size_t p1Width() const { return m_p1Width; }
     /// Width of the second population
     virtual size_t p2Width() const { return m_p2Width; }
     
     /// Maximum order of the raw moments, 1 upto mOrder
-    virtual size_t mOrder() const { return m_mOrder; }
+    virtual size_t p1MOrder() const { return m_p1MOrder; }
+    
+    /// Maximum order of the raw moments, 1 upto mOrder
+    virtual size_t p2MOrder() const { return m_p2MOrder; }
+    
     /// Maximum order of the central moment sums, 2 upto csOrder
-    virtual size_t csOrder() const { return m_csOrder; }
+    virtual size_t p1CSOrder() const { return m_p1CSOrder; }
+    
+    /// Maximum order of the central moment sums, 2 upto csOrder
+    virtual size_t p2CSOrder() const { return m_p2CSOrder; }
+    
     /// Maximum order of the adjusted central moment sums, 1 upto acsOrder
-    virtual size_t acsOrder() const { return m_acsOrder; }
+    virtual size_t p12ACSOrder() const { return m_p12ACSOrder; }
         
     /// Cardinality of the first population
     virtual          size_t    & p1Card() { return m_p1Card; }
@@ -230,9 +278,13 @@ protected:
     size_t m_p1Card;
     size_t m_p2Card;
     
-    size_t m_mOrder;
-    size_t m_csOrder;
-    size_t m_acsOrder;        
+    size_t m_p1MOrder;
+    size_t m_p2MOrder;
+    
+    size_t m_p1CSOrder;
+    size_t m_p2CSOrder;
+    
+    size_t m_p12ACSOrder;        
     
     std::unique_ptr<Vector<T>[]> m_p1M;
     std::unique_ptr<Vector<T>[]> m_p2M;

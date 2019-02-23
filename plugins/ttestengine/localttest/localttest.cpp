@@ -1,6 +1,6 @@
 /*
 *  SICAK - SIde-Channel Analysis toolKit
-*  Copyright (C) 2018 Petr Socha, FIT, CTU in Prague
+*  Copyright (C) 2018-2019 Petr Socha, FIT, CTU in Prague
 *
 *  This program is free software: you can redistribute it and/or modify
 *  it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
 *
 *
 * \author Petr Socha
-* \version 1.0
+* \version 1.1
 */
 
 #include "localttest.h"
@@ -62,10 +62,10 @@ QString LocalTTest::queryDevices() {
     return "    * Platform ID: '0', name: 'localcpu'\n        * Device ID: '0', name: 'localcpu'\n";
 }    
     
-UnivariateContext<double> LocalTTest::createContext(const PowerTraces<int16_t> & randTraces, const PowerTraces<int16_t> & constTraces) {
+Moments2DContext<double> LocalTTest::createContext(const PowerTraces<int16_t> & randTraces, const PowerTraces<int16_t> & constTraces) {
     
     // Create an empty context    
-    UnivariateContext<double> context(randTraces.samplesPerTrace(), constTraces.samplesPerTrace(), 1, 2, 0);
+    Moments2DContext<double> context(randTraces.samplesPerTrace(), constTraces.samplesPerTrace(), 1, 1, 2, 2, 0);
     context.reset();
     // Compute context (covariance, variances and means)
     UniFoTTestAddTraces(context, randTraces, constTraces);
@@ -73,13 +73,13 @@ UnivariateContext<double> LocalTTest::createContext(const PowerTraces<int16_t> &
     
 }
 
-void LocalTTest::mergeContexts(UnivariateContext<double> & firstAndOut, const UnivariateContext<double> & second) {
+void LocalTTest::mergeContexts(Moments2DContext<double> & firstAndOut, const Moments2DContext<double> & second) {
     
     UniFoTTestMergeContexts(firstAndOut, second);
     
 }
 
-Matrix<double> LocalTTest::finalizeContext(const UnivariateContext<double> & context) {
+Matrix<double> LocalTTest::finalizeContext(const Moments2DContext<double> & context) {
  
     Matrix<double> correlations;
     UniFoTTestComputeTValsDegs(context, correlations);

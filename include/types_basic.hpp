@@ -205,6 +205,10 @@ public:
         virtual ~ComputationalContext() {}
         /// Fills the context's containers (vectors, matrices,...) with the 'val'
         virtual       void   fill(T val) = 0;
+        /// Fill the whole context with zeroes
+        virtual       void   reset() = 0;
+        /// Return id of the context
+        virtual const char * getId() const = 0;
 
 };
 

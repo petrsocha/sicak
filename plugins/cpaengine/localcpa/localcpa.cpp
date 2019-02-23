@@ -1,6 +1,6 @@
 /*
 *  SICAK - SIde-Channel Analysis toolKit
-*  Copyright (C) 2018 Petr Socha, FIT, CTU in Prague
+*  Copyright (C) 2018-2019 Petr Socha, FIT, CTU in Prague
 *
 *  This program is free software: you can redistribute it and/or modify
 *  it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
 *
 *
 * \author Petr Socha
-* \version 1.0
+* \version 1.1
 */
 
 #include "localcpa.h"
@@ -67,10 +67,10 @@ void LocalCPA::setConstTraces(bool constTraces){
     return;
 }
     
-UnivariateContext<double> LocalCPA::createContext(const PowerTraces<int16_t> & powerTraces, const PowerPredictions<uint8_t> & powerPredictions) {
+Moments2DContext<double> LocalCPA::createContext(const PowerTraces<int16_t> & powerTraces, const PowerPredictions<uint8_t> & powerPredictions) {
     
     // Create an empty context    
-    UnivariateContext<double> context(powerTraces.samplesPerTrace(), powerPredictions.noOfCandidates(), 1, 2, 1);
+    Moments2DContext<double> context(powerTraces.samplesPerTrace(), powerPredictions.noOfCandidates(), 1, 1, 2, 2, 1);
     context.reset();
     // Compute context (covariance, variances and means)
     UniFoCpaAddTraces(context, powerTraces, powerPredictions);
@@ -78,13 +78,13 @@ UnivariateContext<double> LocalCPA::createContext(const PowerTraces<int16_t> & p
     
 }
 
-void LocalCPA::mergeContexts(UnivariateContext<double> & firstAndOut, const UnivariateContext<double> & second) {
+void LocalCPA::mergeContexts(Moments2DContext<double> & firstAndOut, const Moments2DContext<double> & second) {
     
     UniFoCpaMergeContexts(firstAndOut, second);
     
 }
 
-Matrix<double> LocalCPA::finalizeContext(const UnivariateContext<double> & context) {
+Matrix<double> LocalCPA::finalizeContext(const Moments2DContext<double> & context) {
  
     Matrix<double> correlations;    
     UniFoCpaComputeCorrelationMatrix(context, correlations);

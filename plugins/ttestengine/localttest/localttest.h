@@ -1,6 +1,6 @@
 /*
 *  SICAK - SIde-Channel Analysis toolKit
-*  Copyright (C) 2018 Petr Socha, FIT, CTU in Prague
+*  Copyright (C) 2018-2019 Petr Socha, FIT, CTU in Prague
 *
 *  This program is free software: you can redistribute it and/or modify
 *  it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
 *
 *
 * \author Petr Socha
-* \version 1.0
+* \version 1.1
 */
 
 #ifndef LOCALTTEST_H
@@ -45,7 +45,7 @@
 class LocalTTest : public QObject, TTestEngine {
     
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID "cz.cvut.fit.Sicak.TTestInterface/1.0" FILE "localttest.json")
+    Q_PLUGIN_METADATA(IID "cz.cvut.fit.Sicak.TTestInterface/1.1" FILE "localttest.json")
     Q_INTERFACES(TTestEngine)
         
 public:
@@ -61,9 +61,9 @@ public:
     
     virtual QString queryDevices() override;
         
-    virtual UnivariateContext<double> createContext(const PowerTraces<int16_t> & randTraces, const PowerTraces<int16_t> & constTraces) override;    
-    virtual void mergeContexts(UnivariateContext<double> & firstAndOut, const UnivariateContext<double> & second) override;
-    virtual Matrix<double> finalizeContext(const UnivariateContext<double> & context) override;
+    virtual Moments2DContext<double> createContext(const PowerTraces<int16_t> & randTraces, const PowerTraces<int16_t> & constTraces) override;    
+    virtual void mergeContexts(Moments2DContext<double> & firstAndOut, const Moments2DContext<double> & second) override;
+    virtual Matrix<double> finalizeContext(const Moments2DContext<double> & context) override;
             
 };
 

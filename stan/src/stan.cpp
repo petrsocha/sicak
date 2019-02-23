@@ -1,6 +1,6 @@
 /*
 *  SICAK - SIde-Channel Analysis toolKit
-*  Copyright (C) 2018 Petr Socha, FIT, CTU in Prague
+*  Copyright (C) 2018-2019 Petr Socha, FIT, CTU in Prague
 *
 *  This program is free software: you can redistribute it and/or modify
 *  it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
 *
 *
 * \author Petr Socha
-* \version 1.0
+* \version 1.1
 */
 
 #include <QtGlobal>
@@ -506,7 +506,7 @@ void Stan::cpaCreate() {
         return;
     }      
     
-    UnivariateContext<double> context;
+    Moments2DContext<double> context;
     
     // Traces are the same for the whole computation
     m_cpaEngine->setConstTraces(true);
@@ -660,8 +660,8 @@ void Stan::cpaMerge() {
         return;
     }
     
-    UnivariateContext<double> firstContext;
-    UnivariateContext<double> secondContext;        
+    Moments2DContext<double> firstContext;
+    Moments2DContext<double> secondContext;        
     
     CoutProgress::get().start(m_predictionsSetsCount);
     
@@ -802,7 +802,7 @@ void Stan::cpaFinalize() {
         return;
     }
     
-    UnivariateContext<double> context;    
+    Moments2DContext<double> context;    
     Matrix<double> correlations;
     
     CoutProgress::get().start(m_predictionsSetsCount);
@@ -992,7 +992,7 @@ void Stan::tTestCreate() {
         return;
     }
     
-    UnivariateContext<double> context;
+    Moments2DContext<double> context;
     
     CoutProgress::get().start(100);
     
@@ -1109,8 +1109,8 @@ void Stan::tTestMerge() {
         return;
     }        
     
-    UnivariateContext<double> firstContext;
-    UnivariateContext<double> secondContext;     
+    Moments2DContext<double> firstContext;
+    Moments2DContext<double> secondContext;     
     
     // Read context from first file
     try {
@@ -1231,7 +1231,7 @@ void Stan::tTestFinalize() {
     std::fstream outputFile;
     std::fstream ctxFile;
     
-    UnivariateContext<double> context;    
+    Moments2DContext<double> context;    
     Matrix<double> tVals;
     
     // Open context file

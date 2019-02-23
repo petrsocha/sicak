@@ -1,6 +1,6 @@
 /*
 *  SICAK - SIde-Channel Analysis toolKit
-*  Copyright (C) 2018 Petr Socha, FIT, CTU in Prague
+*  Copyright (C) 2018-2019 Petr Socha, FIT, CTU in Prague
 *
 *  This program is free software: you can redistribute it and/or modify
 *  it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
 *
 *
 * \author Petr Socha
-* \version 1.0
+* \version 1.1
 */
 
 #ifndef CPAENGINE_H
@@ -63,15 +63,15 @@ public:
     virtual void setConstTraces(bool constTraces = false) = 0;
     
     /// Create a CPA computation context based on given power traces and power predictions
-    virtual UnivariateContext<double> createContext(const PowerTraces<int16_t> & powerTraces, const PowerPredictions<uint8_t> & powerPredictions) = 0;    
+    virtual Moments2DContext<double> createContext(const PowerTraces<int16_t> & powerTraces, const PowerPredictions<uint8_t> & powerPredictions) = 0;    
     /// Merge the two CPA contexts, stores the result in the first of the contexts
-    virtual void mergeContexts(UnivariateContext<double> & firstAndOut, const UnivariateContext<double> & second) = 0;
+    virtual void mergeContexts(Moments2DContext<double> & firstAndOut, const Moments2DContext<double> & second) = 0;
     /// Compute correlation matrix based on given context
-    virtual Matrix<double> finalizeContext(const UnivariateContext<double> & context) = 0;
+    virtual Matrix<double> finalizeContext(const Moments2DContext<double> & context) = 0;
     
 };        
 
-#define CpaEngine_iid "cz.cvut.fit.Sicak.CpaEngineInterface/1.0"
+#define CpaEngine_iid "cz.cvut.fit.Sicak.CpaEngineInterface/1.1"
 
 Q_DECLARE_INTERFACE(CpaEngine, CpaEngine_iid)
 

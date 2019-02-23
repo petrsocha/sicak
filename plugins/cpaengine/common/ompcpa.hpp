@@ -1,6 +1,6 @@
 /*
 *  SICAK - SIde-Channel Analysis toolKit
-*  Copyright (C) 2018 Petr Socha, FIT, CTU in Prague
+*  Copyright (C) 2018-2019 Petr Socha, FIT, CTU in Prague
 *
 *  This program is free software: you can redistribute it and/or modify
 *  it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@
 *
 *
 * \author Petr Socha
-* \version 1.0
+* \version 1.1
 */
 
 #ifndef OMPCPA_H
@@ -44,13 +44,13 @@
 
 /**
 *
-* \brief Adds given power traces and power predictions to the given statistical context. Use zeroed or meaningful UnivariateContext c! Accelerated using OpenMP
+* \brief Adds given power traces and power predictions to the given statistical context. Use zeroed or meaningful Moments2DContext c! Accelerated using OpenMP
 *
 */
 template <class T, class U, class V>
-void UniFoCpaAddTraces(UnivariateContext<T>& c, const PowerTraces<U>& pt, const PowerPredictions<V>& pp) {
+void UniFoCpaAddTraces(Moments2DContext<T>& c, const PowerTraces<U>& pt, const PowerPredictions<V>& pp) {
     
-    if(c.mOrder() != 1 || c.csOrder() != 2 || c.acsOrder() != 1)
+    if(c.p1MOrder() != 1 || c.p1CSOrder() != 2 || c.p12ACSOrder() != 1 || c.p1MOrder() != c.p2MOrder() || c.p1CSOrder() != c.p2CSOrder())
         throw RuntimeException("Not a valid first-order univariate CPA context!");
 
     if (c.p1Width() != pt.samplesPerTrace())
@@ -112,13 +112,16 @@ void UniFoCpaAddTraces(UnivariateContext<T>& c, const PowerTraces<U>& pt, const 
 
 /**
 *
-* \brief Merges two UnivariateContext and leaves the result in first context given
+* \brief Merges two Moments2DContext and leaves the result in first context given
 *
 */
 template <class T>
-void UniFoCpaMergeContexts(UnivariateContext<T>& firstAndOut, const UnivariateContext<T>& second) {
+void UniFoCpaMergeContexts(Moments2DContext<T>& firstAndOut, const Moments2DContext<T>& second) {
     
-    if(firstAndOut.mOrder() != 1 || firstAndOut.csOrder() != 2 || firstAndOut.acsOrder() != 1 || second.mOrder() != 1 || second.csOrder() != 2 || second.acsOrder() != 1)
+    if(firstAndOut.p1MOrder() != 1 || firstAndOut.p1CSOrder() != 2 || firstAndOut.p12ACSOrder() != 1 
+        || firstAndOut.p1MOrder() != firstAndOut.p2MOrder() || firstAndOut.p1CSOrder() != firstAndOut.p2CSOrder()
+        || second.p1MOrder() != 1 || second.p1CSOrder() != 2 || second.p12ACSOrder() != 1
+        || second.p1MOrder() != second.p2MOrder() || second.p1CSOrder() != second.p2CSOrder())
         throw RuntimeException("Not valid first-order univariate CPA contexts!");
     
     if(firstAndOut.p1Card() != firstAndOut.p2Card() || second.p1Card() != second.p2Card())
@@ -183,13 +186,13 @@ void UniFoCpaMergeContexts(UnivariateContext<T>& firstAndOut, const UnivariateCo
 
 /**
 *
-* \brief Computes final correlation matrix based on a UnivariateContext given, stores results in correlations
+* \brief Computes final correlation matrix based on a Moments2DContext given, stores results in correlations
 *
 */
 template <class T>
-void UniFoCpaComputeCorrelationMatrix(const UnivariateContext<T> & c, MatrixType<T> & correlations){
+void UniFoCpaComputeCorrelationMatrix(const Moments2DContext<T> & c, MatrixType<T> & correlations){
     
-    if(c.mOrder() != 1 || c.csOrder() != 2 || c.acsOrder() != 1 || c.p1Card() != c.p2Card())
+    if(c.p1MOrder() != 1 || c.p1CSOrder() != 2 || c.p12ACSOrder() != 1 || c.p1MOrder() != c.p2MOrder() || c.p1CSOrder() != c.p2CSOrder() || c.p1Card() != c.p2Card())
         throw RuntimeException("Not a valid first-order univariate CPA context!");
 
     size_t samplesPerTrace = c.p1Width();
