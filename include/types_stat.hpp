@@ -97,8 +97,7 @@ public:
             m_p2MOrder = other.m_p2MOrder;
             m_p1CSOrder = other.m_p1CSOrder;
             m_p2CSOrder = other.m_p2CSOrder;
-            m_p12ACSOrder = other.m_p12ACSOrder;
-            m_p12ACSOrder = other.m_p12ACSOrder;
+            m_p12ACSOrder = other.m_p12ACSOrder;            
             m_p1M = std::move(other.m_p1M);
             m_p2M = std::move(other.m_p2M);
             m_p1CS = std::move(other.m_p1CS);
