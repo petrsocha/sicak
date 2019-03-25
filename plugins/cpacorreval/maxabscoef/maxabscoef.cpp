@@ -1,6 +1,6 @@
 /*
 *  SICAK - SIde-Channel Analysis toolKit
-*  Copyright (C) 2018 Petr Socha, FIT, CTU in Prague
+*  Copyright (C) 2018-2019 Petr Socha, FIT, CTU in Prague
 *
 *  This program is free software: you can redistribute it and/or modify
 *  it under the terms of the GNU General Public License as published by
@@ -69,7 +69,7 @@ void MaxAbsCoef::evaluateCorrelations(MatrixType<double> & correlationMatrix, si
 
                     if (fabs(correlationMatrix(col, row)) > max) {
 
-                            max = correlationMatrix(col, row);
+                            max = fabs(correlationMatrix(col, row));
                             maxCol = col;
                             maxRow = row;
 
