@@ -3,7 +3,8 @@
 }
 
 TEMPLATE    = subdirs
-SUBDIRS     += localcpa
+SUBDIRS     += localcpa \
+               hocpa
 
 #
 # OpenCL plugin
