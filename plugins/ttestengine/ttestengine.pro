@@ -3,7 +3,8 @@
 }
 
 TEMPLATE    = subdirs
-SUBDIRS     += localttest
+SUBDIRS     += localttest \
+               hottest
 
 #
 # OpenCL plugin
