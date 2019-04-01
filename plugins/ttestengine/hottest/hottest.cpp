@@ -37,7 +37,7 @@ HOTTest::~HOTTest() {
 }
 
 QString HOTTest::getPluginName() {
-    return "Higher-Order Non-Specific Univariate Welch's t-test";
+    return "Higher-Order Non-Specific Univariate Welch's t-test, use --param=\"order=N\"";
 }
 
 QString HOTTest::getPluginInfo() {

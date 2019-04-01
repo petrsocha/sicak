@@ -37,7 +37,7 @@ HOCPA::~HOCPA() {
 }
 
 QString HOCPA::getPluginName() {
-    return "Higher-Order Univariate CPA";
+    return "Higher-Order Univariate CPA, use --param=\"order=N\"";
 }
 
 QString HOCPA::getPluginInfo() {
