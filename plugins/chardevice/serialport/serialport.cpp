@@ -378,7 +378,7 @@ size_t SerialPort::send(const uint8_t * buffer, size_t len) {
 
 size_t SerialPort::send(const VectorType<uint8_t> & data, size_t len) {
     
-    if(len >= data.size()) throw InvalidInputException("Not enough data to send");    
+    if(len > data.size()) throw InvalidInputException("Not enough data to send");    
     
     return (*this).send(data.data(), len);
     
