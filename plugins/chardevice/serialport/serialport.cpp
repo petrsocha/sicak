@@ -108,7 +108,13 @@ void SerialPort::init(const char * filename, int baudrate, int parity, int stopB
         case 115200: serialParams.BaudRate = CBR_115200; break;
         case 128000: serialParams.BaudRate = CBR_128000; break;
         case 256000: serialParams.BaudRate = CBR_256000; break;
-        default: throw InvalidInputException("Unsupported baud rate: use one of 110, 300, 600, 1200, 2400, 4800, 9600, 19200, 38400, 57600, 115200, 128000, 256000"); break;
+        default: 
+            if(baudrate > 0) {
+                serialParams.BaudRate = (DWORD) baudrate;
+            } else {
+                throw InvalidInputException("Unsupported baud rate: supported rates are 110, 300, 600, 1200, 2400, 4800, 9600, 19200, 38400, 57600, 115200, 128000, 256000, or any other positive number (not guaranteed to work)"); 
+            }
+            break;
 
     }
 
