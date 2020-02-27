@@ -23,10 +23,11 @@
 *
 *
 * \author Petr Socha
-* \version 1.1
+* \version 1.1.1
 */
 
 #include "ps6000.h"
+#include <memory>
 
 // multi-platform Sleep(ms)
 #ifdef _WIN32
@@ -340,7 +341,7 @@ size_t Ps6000::getValues(int channel, int16_t * buffer, size_t len, size_t & sam
     if(m_captures > 1){
         
         PICO_STATUS status;
-        int16_t over = 0;            
+        std::unique_ptr <int16_t> over(new int16_t[m_captures]);            
         
         for (uint32_t i = 0; i < m_captures; i++) {                
             status = ps6000SetDataBufferBulk(m_handle, tbsChannel, reinterpret_cast<short *>(buffer) + i * samples_tmp, samples_tmp, i, PS6000_RATIO_MODE_NONE);
@@ -350,7 +351,7 @@ size_t Ps6000::getValues(int channel, int16_t * buffer, size_t len, size_t & sam
         samples = samples_tmp;
         samples_tmp *= m_captures;
         
-        status = ps6000GetValuesBulk(m_handle, &samples_tmp, 0, m_captures - 1, 0, PS6000_RATIO_MODE_NONE, &over);          
+        status = ps6000GetValuesBulk(m_handle, &samples_tmp, 0, m_captures - 1, 0, PS6000_RATIO_MODE_NONE, over.get());          
         if (status) throw RuntimeException("Failed to receive the data");            
         
         captures = m_captures;
