@@ -356,7 +356,7 @@ size_t Ps6000::getValues(int channel, int16_t * buffer, size_t len, size_t & sam
         samples_tmp *= m_captures;
         
         status = ps6000GetValuesBulk(m_handle, &samples_tmp, 0, m_captures - 1, 0, PS6000_RATIO_MODE_NONE, over.get());          
-        if (status) throw RuntimeException("Failed to receive the data");            
+        if (status || samples_tmp != ((m_preTriggerSamples + m_postTriggerSamples)*m_captures)) throw RuntimeException("Failed to receive the data");            
         
         captures = m_captures;
         
