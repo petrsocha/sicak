@@ -343,6 +343,10 @@ size_t Ps6000::getValues(int channel, int16_t * buffer, size_t len, size_t & sam
         PICO_STATUS status;
         std::unique_ptr <int16_t> over(new int16_t[m_captures]);            
         
+        uint32_t captures;
+        status = ps6000GetNoOfCaptures(m_handle, &captures);
+        if (status || captures != m_captures) throw RuntimeException("Failed to capture specified number of traces per run"); 
+        
         for (uint32_t i = 0; i < m_captures; i++) {                
             status = ps6000SetDataBufferBulk(m_handle, tbsChannel, reinterpret_cast<short *>(buffer) + i * samples_tmp, samples_tmp, i, PS6000_RATIO_MODE_NONE);
             if (status) throw RuntimeException("Failed to set up receiving buffer");
